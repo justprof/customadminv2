@@ -8,11 +8,11 @@ import React from "react";
  } from "@chakra-ui/react";
  import SidebarContent from "./SidebarContent";
  import MobileNav from "./MobileNav";
- const SidebarWithHeader = () => {
+ const SidebarWithHeader = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
   
     return ( 
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+      <Box>
     <SidebarContent
       onClose={onClose}
       display={{ base: "none", md: "block" }}
@@ -30,8 +30,8 @@ import React from "react";
          </DrawerContent>
        </Drawer>
        <MobileNav onOpen={onOpen} />
-       <Box ml={{ base: 0, md: 60 }} p="4">
-         {/* Content */}
+       <Box ml={{ base: 0, md: 60 }} p="4" flex="1" bg="gray.100" minH={'100vh'}>
+         {children}
        </Box>
      </Box>
    );
