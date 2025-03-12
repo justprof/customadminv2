@@ -139,7 +139,7 @@ import React, { useState, useEffect, useMemo } from "react";
 
 
    return (
-     <Box bg={tableBgColor} p={4} boxShadow="sm" borderRadius="md">
+    <Box bg={tableBgColor} p={4} boxShadow="sm" borderRadius="md" overflow={'auto'}>
        <Flex justify="space-between" mb={4}>
          <Input
            placeholder="Search..."
