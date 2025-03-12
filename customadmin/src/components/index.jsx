@@ -10,6 +10,7 @@ import React from "react";
  import MobileNav from "./MobileNav";
  const SidebarWithHeader = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const bgColor = useColorModeValue("gray.100", "gray.900");
   
     return ( 
       <Box>
@@ -30,7 +31,7 @@ import React from "react";
          </DrawerContent>
        </Drawer>
        <MobileNav onOpen={onOpen} />
-       <Box ml={{ base: 0, md: 60 }} p="4" flex="1" bg="gray.100" minH={'100vh'}>
+       <Box ml={{ base: 0, md: 60 }} p="4" flex="1" bg={bgColor} minH={'100vh'}>
          {children}
        </Box>
      </Box>
