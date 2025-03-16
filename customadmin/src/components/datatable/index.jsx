@@ -92,7 +92,7 @@ import React, { useState, useEffect, useMemo } from "react";
        borderRadius="md"
        overflow={"auto"}
      >
-       <Flex justify="space-between" mb={4}>
+       <Flex justify="space-between" mb={4} gap={4}>
          <Input
            placeholder="Search..."
            value={searchTerm}

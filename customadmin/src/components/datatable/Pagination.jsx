@@ -80,7 +80,7 @@ import { Button, HStack, Select } from "@chakra-ui/react";
    };
  
    return (
-    <HStack justify="space-between" mt={4}>
+    <HStack justify="space-between" mt={4} gap={4}>
     <HStack>
       <Button
         onClick={handlePreviousPage}
