@@ -42,16 +42,16 @@ import React, { useState, useEffect, useMemo } from "react";
    const [searchTerm, setSearchTerm] = useState("");
    const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
    const [hiddenColumns, setHiddenColumns] = useState([]);
+   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPage);
 
    const tableBgColor = useColorModeValue("white", "gray.800");
    const tableBorderColor = useColorModeValue("gray.200", "gray.600");
  
    useEffect(() => {
     if (onPageChange) {
-      onPageChange(currentPage, rowsPerPage, searchTerm);
+      onPageChange(currentPage, rowsPerPageState, searchTerm);
     }
-  }, [currentPage, rowsPerPage, searchTerm, onPageChange]);
-
+  }, [currentPage, rowsPerPageState, searchTerm, onPageChange])
   const handleRefresh = () => {
     if (onRefresh) {
       onRefresh();
@@ -74,9 +74,12 @@ import React, { useState, useEffect, useMemo } from "react";
     [sortedData, columns, searchTerm] 
   );
  
-   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-   const startIndex = (currentPage - 1) * rowsPerPage;
-   const selectedData = filteredData.slice(startIndex, startIndex + rowsPerPage);
+  const totalPages = Math.ceil(filteredData.length / rowsPerPageState);
+   const startIndex = (currentPage - 1) * rowsPerPageState;
+   const selectedData = filteredData.slice(
+     startIndex,
+     startIndex + rowsPerPageState
+   );
  
    
 
@@ -185,6 +188,8 @@ import React, { useState, useEffect, useMemo } from "react";
          currentPage={currentPage}
          totalPages={totalPages}
          setCurrentPage={setCurrentPage}
+         rowsPerPage={rowsPerPageState}
+         setRowsPerPage={setRowsPerPageState}
        />
      </Box>
    );
