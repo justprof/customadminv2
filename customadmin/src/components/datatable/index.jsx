@@ -10,9 +10,14 @@ import React, { useState, useEffect, useMemo } from "react";
    Input,
    Flex,
    useColorModeValue,
+   Button,
+   HStack,
+   Tooltip,
  } from "@chakra-ui/react";
  import Pagination from "./Pagination";
  import { requestSort, getSortedData, getFilteredData } from "./helpers";
+ import { IoMdRefresh } from "react-icons/io";
+ import { FaFilterCircleXmark } from "react-icons/fa6";
  
  const DataTable = ({
     columns,
@@ -20,6 +25,7 @@ import React, { useState, useEffect, useMemo } from "react";
     totalCount,
     rowsPerPage = 10,
     onPageChange,
+    onRefresh,
   }) => {
    const [currentPage, setCurrentPage] = useState(1);
    const [searchTerm, setSearchTerm] = useState("");
@@ -32,6 +38,18 @@ import React, { useState, useEffect, useMemo } from "react";
       onPageChange(currentPage, rowsPerPage, searchTerm);
     }
   }, [currentPage, rowsPerPage, searchTerm, onPageChange]);
+
+  const handleRefresh = () => {
+    if (onRefresh) {
+      onRefresh();
+    }
+  };
+
+  const handleClearFilter = () => {
+    setSearchTerm("");
+    setSortConfig({ key: null, direction: null });
+    setCurrentPage(1);
+  };
 
   const sortedData = useMemo(
     () => getSortedData(data, sortConfig),
@@ -65,6 +83,18 @@ import React, { useState, useEffect, useMemo } from "react";
            onChange={(e) => setSearchTerm(e.target.value)}
            width="auto"
          />
+          <HStack spacing={2}>
+           <Tooltip label="Refresh data" placement="top-start">
+             <Button onClick={handleRefresh}>
+               <IoMdRefresh />
+             </Button>
+           </Tooltip>
+           <Tooltip label="Clear filter" placement="top-start">
+             <Button onClick={handleClearFilter}>
+               <FaFilterCircleXmark />
+             </Button>
+           </Tooltip>
+         </HStack>
        </Flex>
        <Table variant="striped" colorScheme="gray" bg={tableBgColor}>
          <Thead>
@@ -93,11 +123,7 @@ import React, { useState, useEffect, useMemo } from "react";
            {selectedData.map((item, rowIndex) => (
              <Tr key={rowIndex}>
                {columns.map((col) => (
-                  <Td
-                  key={col.key}
-                  border="1px solid"
-                  borderColor={tableBorderColor}
-                >
+                  <Td key={col.key}>
                    {col.render ? col.render(item[col.key], item) : item[col.key]}
                  </Td>
                ))}
