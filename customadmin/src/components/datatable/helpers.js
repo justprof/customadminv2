@@ -32,3 +32,9 @@ export const getFilteredData = (data, columns, searchTerm) => {
         )
     );
 };
+
+export const toggleColumnVisibility = (key, hiddenColumns, setHiddenColumns) => {
+    setHiddenColumns((prev) =>
+        prev.includes(key) ? prev.filter((col) => col !== key) : [...prev, key]
+    );
+};
