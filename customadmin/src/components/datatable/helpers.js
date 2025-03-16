@@ -1,19 +1,4 @@
-export const handleResponse = async (response) => {
-    const data = await response.json();
 
-    if (!response.ok) {
-        let message = "An error occurred...";
-
-        if (data?.message) {
-            message = data.message;
-        } else {
-            message = data;
-        }
-        return { error: true, message };
-    }
-
-    return data;
-};
 
 export const requestSort = (key, sortConfig, setSortConfig) => {
     let direction = "ascending";
@@ -40,6 +25,7 @@ export const getSortedData = (data, sortConfig) => {
 };
 
 export const getFilteredData = (data, columns, searchTerm) => {
+    if (!searchTerm) return data;
     return data.filter((item) =>
         columns.some((col) =>
             String(item[col.key]).toLowerCase().includes(searchTerm.toLowerCase())
