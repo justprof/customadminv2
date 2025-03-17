@@ -29,6 +29,7 @@ import React, { useState, useEffect, useMemo } from "react";
 } from "./helpers";
  import { FaFilterCircleXmark } from "react-icons/fa6";
  import { BiHide } from "react-icons/bi";
+ import { MdDeleteForever, MdEdit } from "react-icons/md";
  
  const DataTable = ({
     columns,
@@ -37,6 +38,10 @@ import React, { useState, useEffect, useMemo } from "react";
     rowsPerPage = 10,
     onPageChange,
     onRefresh,
+    deleteActive = false,
+   onDelete,
+   editActive = false,
+   onEdit,
   }) => {
    const [currentPage, setCurrentPage] = useState(1);
    const [searchTerm, setSearchTerm] = useState("");
@@ -165,6 +170,24 @@ import React, { useState, useEffect, useMemo } from "react";
                    </Th>
                  )
              )}
+             {editActive && (
+               <Th
+                 maxW={"20px"}
+                 border="1px solid"
+                 borderColor={tableBorderColor}
+               >
+                 Edit
+               </Th>
+             )}
+             {deleteActive && (
+               <Th
+                 maxW={"20px"}
+                 border="1px solid"
+                 borderColor={tableBorderColor}
+               >
+                 Delete
+               </Th>
+             )}
            </Tr>
          </Thead>
          <Tbody>
@@ -179,6 +202,24 @@ import React, { useState, useEffect, useMemo } from "react";
                          : item[col.key]}
                      </Td>
                    )
+               )}
+                {editActive && (
+                 <Td maxW={"20px"}>
+                   <Flex justify="center">
+                     <Button colorScheme="blue" onClick={() => onEdit(item.id)}>
+                       <MdEdit />
+                     </Button>
+                   </Flex>
+                 </Td>
+               )}
+               {deleteActive && (
+                 <Td maxW={"20px"}>
+                   <Flex justify="center">
+                     <Button colorScheme="red" onClick={() => onDelete(item.id)}>
+                       <MdDeleteForever />
+                     </Button>
+                   </Flex>
+                 </Td>
                )}
              </Tr>
            ))}
