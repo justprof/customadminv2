@@ -15,7 +15,7 @@ import {
   } from "@chakra-ui/react";
   import { useState } from "react";
   import { FaEye, FaEyeSlash } from "react-icons/fa";
-  import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+  
   import { Link } from "react-router-dom";
   
   export default function Signup() {
@@ -74,7 +74,8 @@ import {
                       }
                     >
                       {/* {showPassword ? <FaEye /> : <FaEyeSlash />} */}
-                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                      {showPassword ? <FaEye /> : <FaEyeSlash />}
+
                     </Button>
                   </InputRightElement>
                 </InputGroup>

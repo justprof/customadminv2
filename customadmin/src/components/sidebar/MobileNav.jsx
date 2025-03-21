@@ -16,7 +16,7 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { FiMenu, FiChevronDown } from "react-icons/fi";
-import { SunIcon, MoonIcon } from "@chakra-ui/icons";
+import { AiOutlineSun, AiOutlineMoon } from "react-icons/ai";
 
 const MobileNav = ({ onOpen, ...rest }) => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -55,7 +55,8 @@ const MobileNav = ({ onOpen, ...rest }) => {
           variant="ghost"
           aria-label="toggle dark mode"
           onClick={toggleColorMode}
-          icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          icon={colorMode === "light" ? <AiOutlineMoon /> : <AiOutlineSun />}
+
         />
         <Flex alignItems={"center"}>
           <Menu>
