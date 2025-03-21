@@ -26,6 +26,8 @@ import React, { useState, useEffect, useMemo } from "react";
   getSortedData,
   getFilteredData,
   toggleColumnVisibility,
+  handleSelectRow,
+  handleSelectAll,
 } from "./helpers";
  import { FaFilterCircleXmark } from "react-icons/fa6";
  import { BiHide } from "react-icons/bi";
@@ -88,25 +90,6 @@ import React, { useState, useEffect, useMemo } from "react";
      startIndex,
      startIndex + rowsPerPageState
    );
-
-   const handleSelectRow = (id) => {
-    setSelectedRows((prevSelectedRows) =>
-      prevSelectedRows.includes(id)
-        ? prevSelectedRows.filter((rowId) => rowId !== id)
-        : [...prevSelectedRows, id]
-    );
-  };
-
-  const handleSelectAll = () => {
-    if (selectedRows.length === selectedData.length) {
-      setSelectedRows([]);
-    } else {
-      setSelectedRows(selectedData.map((item) => item.id));
-    }
-  };
- 
-   
-
 
    return (
     <Box
@@ -184,8 +167,9 @@ import React, { useState, useEffect, useMemo } from "react";
                >
                  <Checkbox
                    isChecked={selectedRows.length === selectedData.length}
-                   onChange={handleSelectAll}
-                 />
+                   onChange={() =>
+                    handleSelectAll(selectedData, selectedRows, setSelectedRows)
+                  }                 />
                </Th>
              )}
            {columns.map(
@@ -242,8 +226,9 @@ import React, { useState, useEffect, useMemo } from "react";
                  >
                    <Checkbox
                      isChecked={selectedRows.includes(item.id)}
-                     onChange={() => handleSelectRow(item.id)}
-                   />
+                     onChange={() =>
+                      handleSelectRow(item.id, selectedRows, setSelectedRows)
+                    }                   />
                  </Td>
                )}
                 {columns.map(
