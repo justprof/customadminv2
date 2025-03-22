@@ -1,8 +1,6 @@
 import {
   Flex,
   Box,
-  FormControl,
-  FormLabel,
   Input,
   Checkbox,
   Stack,
@@ -10,7 +8,7 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
-
+import { Field } from "@chakra-ui/react";
 import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
 
 
@@ -39,14 +37,14 @@ export default function Login() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
+            <Field.Root id="email">
+              <Field.Label>Email address</Field.Label>
               <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
+            </Field.Root>
+            <Field.Root id="password">
+              <Field.Label>Password</Field.Label>
               <Input type="password" />
-            </FormControl>
+            </Field.Root>
             <Stack spacing={10}>
               <Stack
                 direction={{ base: "column", sm: "row" }}
