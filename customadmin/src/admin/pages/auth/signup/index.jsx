@@ -1,8 +1,6 @@
 import {
     Flex,
     Box,
-    FormControl,
-    FormLabel,
     Input,
     InputGroup,
     HStack,
@@ -17,6 +15,7 @@ import {
   import { FaEye, FaEyeSlash } from "react-icons/fa";
   import { Link } from "react-router-dom";
   import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
+  import { Field } from "@chakra-ui/react"
   
   
   export default function Signup() {
@@ -47,16 +46,16 @@ import {
             <Stack spacing={4}>
               <HStack>
                 <Box>
-                  <FormControl id="firstName" isRequired>
-                    <FormLabel>First Name</FormLabel>
+                  <Field.Root id="firstName" isRequired>
+                    <Field.Label>First Name</Field.Label>
                     <Input type="text" />
-                  </FormControl>
+                  </Field.Root>
                 </Box>
                 <Box>
-                  <FormControl id="lastName">
-                    <FormLabel>Last Name</FormLabel>
+                  <Field.Root id="lastName">
+                    <Field.Label>Last Name</Field.Label>
                     <Input type="text" />
-                  </FormControl>
+                  </Field.Root>
                 </Box>
               </HStack>
               <FormControl id="email" isRequired>
