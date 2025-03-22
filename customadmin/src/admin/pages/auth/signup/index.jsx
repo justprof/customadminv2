@@ -4,7 +4,6 @@ import {
     Input,
     InputGroup,
     HStack,
-    InputRightElement,
     Stack,
     Button,
     Heading,
@@ -58,12 +57,12 @@ import {
                   </Field.Root>
                 </Box>
               </HStack>
-              <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
+              <Field.Root id="email" isRequired>
+                <Field.Label>Email address</Field.Label>
                 <Input type="email" />
-              </FormControl>
-              <FormControl id="password" isRequired>
-                <FormLabel>Password</FormLabel>
+              </Field.Root>
+              <Field.Root id="password" isRequired>
+                <Field.Label>Password</Field.Label>
                 <InputGroup>
                   <Input type={showPassword ? "text" : "password"} />
                   <InputRightElement h={"full"}>
@@ -79,7 +78,7 @@ import {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-              </FormControl>
+              </Field.Root>
               <Stack spacing={10} pt={2}>
                 <Button
                   loadingText="Submitting"
