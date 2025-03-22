@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, VStack, Heading } from "@chakra-ui/react";
 import DataTable from "../../../components/datatable";
 import { data } from "../../../data/FakeUserData";
-import {avatar} from "../../../assets/pp.webp";
+import avatar from "../../../assets/pp.webp";
 
 const Dashboard = () => {
     

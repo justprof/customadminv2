@@ -4,13 +4,15 @@ import React from "react";
    Drawer,
    DrawerContent,
    useDisclosure,
-   useColorModeValue,
  } from "@chakra-ui/react";
+ import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
+
  import SidebarContent from "./SidebarContent";
  import MobileNav from "./MobileNav";
  const SidebarWithHeader = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const bgColor = useColorModeValue("gray.100", "gray.900");
+    const bgColor = useCustomColorModeValue("gray.100", "gray.900");
+
   
     return ( 
       <Box>

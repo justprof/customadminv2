@@ -1,34 +1,17 @@
 import React, { useState, useEffect, useMemo } from "react";
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   Box,
   Input,
   Flex,
-  useColorModeValue,
   Button,
   HStack,
   Tooltip,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Checkbox,
 } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
+import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
 import Pagination from "./Pagination";
 import { IoMdRefresh } from "react-icons/io";
-import {
-  requestSort,
-  getSortedData,
-  getFilteredData,
-  toggleColumnVisibility,
-  handleSelectRow,
-  handleSelectAll,
-} from "./helpers";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import { BiHide } from "react-icons/bi";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
@@ -37,7 +20,7 @@ const DataTable = ({
   columns,
   data,
   totalCount,
-  rowsPerPage = 10, // 🔹 `rowsPerPage` props olarak geliyor
+  rowsPerPage = 10,
   onPageChange,
   onRefresh,
   deleteActive = false,
@@ -51,11 +34,11 @@ const DataTable = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [hiddenColumns, setHiddenColumns] = useState([]);
-  const [rowsPerPageState, setRowsPerPageState] = useState(rowsPerPage); // 🔥 Değişken adı değiştirildi
+  const [rowsPerPageState, setRowsPerPageState] = useState(rowsPerPage);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const tableBgColor = useColorModeValue("white", "gray.800");
-  const tableBorderColor = useColorModeValue("gray.200", "gray.600");
+  const tableBgColor = useCustomColorModeValue("white", "gray.800");
+  const tableBorderColor = useCustomColorModeValue("gray.200", "gray.600");
 
   useEffect(() => {
     if (onPageChange) {
@@ -144,91 +127,89 @@ const DataTable = ({
           </Tooltip>
         </HStack>
       </Flex>
-      <Table variant="striped" colorScheme="gray" bg={tableBgColor}>
-        <Thead>
-          <Tr>
+
+      {/* New table structure */}
+      <Table.Root variant="striped" colorScheme="gray" bg={tableBgColor}>
+        <Table.Header>
+          <Table.Row>
             {selectable && (
-              <Th maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
+              <Table.Head maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
                 <Checkbox
                   isChecked={selectedRows.length === selectedData.length}
                   onChange={() =>
                     handleSelectAll(selectedData, selectedRows, setSelectedRows)
                   }
                 />
-              </Th>
+              </Table.Head>
             )}
             {columns.map(
               (col) =>
                 !hiddenColumns.includes(col.key) && (
-                  <Th
-                    key={col.key}
-                    border="1px solid"
-                    borderColor={tableBorderColor}
-                    onClick={() => requestSort(col.key, sortConfig, setSortConfig)}
-                    cursor="pointer"
-                  >
+                  <Table.Head key={col.key} border="1px solid" borderColor={tableBorderColor}>
                     {col.header}
                     {sortConfig.key === col.key ? (
                       sortConfig.direction === "ascending" ? <span> ↑</span> : <span> ↓</span>
                     ) : null}
-                  </Th>
+                  </Table.Head>
                 )
             )}
             {editActive && (
-              <Th maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
+              <Table.Head maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
                 Edit
-              </Th>
+              </Table.Head>
             )}
             {deleteActive && (
-              <Th maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
+              <Table.Head maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
                 Delete
-              </Th>
+              </Table.Head>
             )}
-          </Tr>
-        </Thead>
-        <Tbody>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>
           {selectedData.map((item, rowIndex) => (
-            <Tr key={rowIndex}>
+            <Table.Row key={rowIndex}>
               {selectable && (
-                <Td maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
+                <Table.Cell maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
                   <Checkbox
                     isChecked={selectedRows.includes(item.id)}
                     onChange={() =>
                       handleSelectRow(item.id, selectedRows, setSelectedRows)
                     }
                   />
-                </Td>
+                </Table.Cell>
               )}
               {columns.map(
                 (col) =>
                   !hiddenColumns.includes(col.key) && (
-                    <Td key={col.key}>
+                    <Table.Cell key={col.key} border="1px solid" borderColor={tableBorderColor}>
                       {col.render ? col.render(item[col.key], item) : item[col.key]}
-                    </Td>
+                    </Table.Cell>
                   )
               )}
               {editActive && (
-                <Td maxW={"20px"}>
+                <Table.Cell maxW={"20px"}>
                   <Flex justify="center">
                     <Button colorScheme="blue" onClick={() => onEdit(item.id)}>
                       <MdEdit />
                     </Button>
                   </Flex>
-                </Td>
+                </Table.Cell>
               )}
               {deleteActive && (
-                <Td maxW={"20px"}>
+                <Table.Cell maxW={"20px"}>
                   <Flex justify="center">
                     <Button colorScheme="red" onClick={() => onDelete([item.id])}>
                       <MdDeleteForever />
                     </Button>
                   </Flex>
-                </Td>
+                </Table.Cell>
               )}
-            </Tr>
+            </Table.Row>
           ))}
-        </Tbody>
-      </Table>
+        </Table.Body>
+      </Table.Root>
+
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

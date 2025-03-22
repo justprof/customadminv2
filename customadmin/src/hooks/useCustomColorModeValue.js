@@ -1,7 +1,7 @@
-import {useColorMode} from "Chakra-ui/React";
-
-export const useCustomModeValue = (lightValue, darkValue) => {
-    const {colorMode} = useColorMode();
-    return colorMode == "light" ? lightValue : darkValue;
-
-};
+const useCustomColorModeValue = (lightValue, darkValue) => {
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return isDark ? darkValue : lightValue;
+  };
+  
+  export default useCustomColorModeValue;
+  
