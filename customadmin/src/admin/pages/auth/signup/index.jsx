@@ -2,7 +2,6 @@ import {
     Flex,
     Box,
     Input,
-    InputGroup,
     HStack,
     Stack,
     Button,
@@ -63,21 +62,26 @@ import {
               </Field.Root>
               <Field.Root id="password" isRequired>
                 <Field.Label>Password</Field.Label>
-                <InputGroup>
+                <box position = "relative">
                   <Input type={showPassword ? "text" : "password"} />
-                  <InputRightElement h={"full"}>
+                  
                     <Button
                       variant={"ghost"}
+                      position="absolute"
+                      top="50%"
+                      right="0.5rem"
+                      transform="translateY(-50%)"
                       onClick={() =>
-                        setShowPassword((showPassword) => !showPassword)
-                      }
+                        setShowPassword((showPassword) => !showPassword)}
+                        size="sm"
+                      
                     >
                       {/* {showPassword ? <FaEye /> : <FaEyeSlash />} */}
                       {showPassword ? <FaEye /> : <FaEyeSlash />}
 
                     </Button>
-                  </InputRightElement>
-                </InputGroup>
+                    </box>
+                
               </Field.Root>
               <Stack spacing={10} pt={2}>
                 <Button
