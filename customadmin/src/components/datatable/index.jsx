@@ -29,6 +29,7 @@ const DataTable = ({
   onEdit,
   selectable = false,
   onDeleteSelected,
+  rowsPerPageOptions = [5, 10, 20, 50],
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -170,6 +171,7 @@ const DataTable = ({
           {selectedData.map((item, rowIndex) => (
             <Table.Row key={rowIndex}>
               {selectable && (
+
                 <Table.Cell maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
                   <Checkbox
                     isChecked={selectedRows.includes(item.id)}
@@ -216,6 +218,7 @@ const DataTable = ({
         setCurrentPage={setCurrentPage}
         rowsPerPage={rowsPerPageState}
         setRowsPerPage={setRowsPerPageState}
+        rowsPerPageOptions={rowsPerPageOptions}
       />
     </Box>
   );
