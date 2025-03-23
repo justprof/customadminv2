@@ -184,9 +184,16 @@ const DataTable = ({
               {columns.map(
                 (col) =>
                   !hiddenColumns.includes(col.key) && (
-                    <Table.Cell key={col.key} border="1px solid" borderColor={tableBorderColor}>
+                    <Table.Cell
+                      key={col.key}
+                      onClick={() => handleSelectRow(item.id, selectedRows, setSelectedRows)}
+                      border="1px solid"
+                      borderColor={tableBorderColor}
+                      cursor="pointer"
+                     >
                       {col.render ? col.render(item[col.key], item) : item[col.key]}
-                    </Table.Cell>
+                  </Table.Cell>
+
                   )
               )}
               {editActive && (
