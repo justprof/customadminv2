@@ -21,7 +21,7 @@ const DataTable = ({
   data,
   totalCount,
   rowsPerPage = 10,
-  onPageChange,
+  onDataChange,
   onRefresh,
   deleteActive = false,
   onDelete,
@@ -41,10 +41,10 @@ const DataTable = ({
   const tableBorderColor = useCustomColorModeValue("gray.200", "gray.600");
 
   useEffect(() => {
-    if (onPageChange) {
-      onPageChange(currentPage, rowsPerPageState, searchTerm);
+    if (onDataChange) {
+      onDataChange(currentPage, rowsPerPageState, searchTerm);
     }
-  }, [currentPage, rowsPerPageState, searchTerm, onPageChange]);
+  }, [currentPage, rowsPerPageState, searchTerm, onDataChange]);
 
   const handleRefresh = () => {
     if (onRefresh) {
