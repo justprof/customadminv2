@@ -5,6 +5,9 @@ import { data } from "../../../data/FakeUserData";
 import avatar from "../../../assets/pp.webp";
 
 const Dashboard = () => {
+
+  const [tableData, setTableData] = useState(data);
+  const [totalCount, setTotalCount] = useState(data.length);
     
   const columns = [
     {
@@ -24,6 +27,17 @@ const Dashboard = () => {
      { key: "age", header: "Age" },
      { key: "email", header: "Email" },
   ];
+  
+  const fetchData = ({ currentPage, rowsPerPageState, searchTerm}) => {
+    console.log("Fetching data with Params", {
+      currentPage,
+      rowsPerpageState,
+      searchTerm,
+    });
+
+    setTableData(data);
+    setTotalCount(data.length);
+  }
 
   return (
     <Box p={4}>
@@ -33,12 +47,10 @@ const Dashboard = () => {
         </Heading>
         <DataTable
            columns={columns}
-           data={data}
-           totalCount={data.length}
+           data={dataTable}
+           totalCount={(totalCount)}
            rowsPerPage={5}
-           onDataChange={(e) => {
-            console.log(e);
-           }}
+           onDataChange={fetchData}
            handleRefresh={() => {
             return data;
            }}
