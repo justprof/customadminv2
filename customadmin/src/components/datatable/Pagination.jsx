@@ -78,7 +78,10 @@ import { Button, HStack, Select } from "@chakra-ui/react";
  
      return pageNumbers;
    };
- 
+   const rowsPerPageOptions = Array.from(
+    { length: 5 },
+    (_, i) => rowsPerPage * (i + 1)
+  );
    return (
     <HStack justify="flex-end" mt={4} gap={4}>
     <HStack>
@@ -104,10 +107,11 @@ import { Button, HStack, Select } from "@chakra-ui/react";
             setCurrentPage(1);
           }}           width="auto"
          >
-           <option value={5}>5</option>
-           <option value={10}>10</option>
-           <option value={20}>20</option>
-           <option value={50}>50</option>
+           {rowsPerPageOptions.map((option) => (
+             <option key={option} value={option}>
+               {option}
+             </option>
+           ))}
          </Select>
     </HStack>
     
