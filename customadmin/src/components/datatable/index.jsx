@@ -146,12 +146,18 @@ const DataTable = ({
             {columns.map(
               (col) =>
                 !hiddenColumns.includes(col.key) && (
-                  <Table.Head key={col.key} border="1px solid" borderColor={tableBorderColor}>
-                    {col.header}
-                    {sortConfig.key === col.key ? (
+                  <Table.Head
+                      key={col.key}
+                      border="1px solid"
+                      borderColor={tableBorderColor}
+                      maxW={col.width ? col.width : "auto"}  // ✨ buraya bunu ekliyorsun
+                  >
+                      {col.header}
+                      {sortConfig.key === col.key ? (
                       sortConfig.direction === "ascending" ? <span> ↑</span> : <span> ↓</span>
-                    ) : null}
+                      ) : null}
                   </Table.Head>
+
                 )
             )}
             {editActive && (
@@ -178,6 +184,7 @@ const DataTable = ({
                     onChange={() =>
                       handleSelectRow(item.id, selectedRows, setSelectedRows)
                     }
+                    
                   />
                 </Table.Cell>
               )}
@@ -190,6 +197,9 @@ const DataTable = ({
                       border="1px solid"
                       borderColor={tableBorderColor}
                       cursor="pointer"
+                      maxW={col.width ? col.width : "auto"}
+                      
+                      
                      >
                       {col.render ? col.render(item[col.key], item) : item[col.key]}
                   </Table.Cell>
