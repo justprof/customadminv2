@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, VStack, Heading } from "@chakra-ui/react";
 import DataTable from "../../../components/datatable";
 import { data } from "../../../data/FakeUserData";
 import avatar from "../../../assets/pp.webp";
+import { setPageHeader } from "../../../store/root/rootSlice";
+import { useDispatch } from "react-redux";
 
 const Dashboard = () => {
-
+  const dispatch = useDispatch();
   const [tableData, setTableData] = useState(data);
   const [totalCount, setTotalCount] = useState(data.length);
     
+  useEffect(() => {
+    dispatch(setPageHeader("Dashboard"));
+  }, [dispatch]);
+
   const columns = [
     {
       key: "avatar",
@@ -43,9 +49,7 @@ const Dashboard = () => {
   return (
     <Box p={4}>
       <VStack spacing={4} align="stretch">
-        <Heading as="h1" size="lg">
-          Dashboard
-        </Heading>
+        
         <DataTable
            columns={columns}
            data={dataTable}

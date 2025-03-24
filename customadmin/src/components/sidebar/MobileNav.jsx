@@ -7,6 +7,7 @@ import {
   Box,
   Avatar,
   VStack,
+  Heading,
   
 } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuDivider, MenuItem, MenuList } from "@chakra-ui/menu";
@@ -48,7 +49,9 @@ const toggleColorMode = () => {}; // boş bir fonksiyon
         fontFamily="monospace"
         fontWeight="bold"
       >
-        {pageHeader ? pageHeader : " "}
+        <Heading as="h1" size="lg">
+           {pageHeader ? pageHeader : " "}
+         </Heading>
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
