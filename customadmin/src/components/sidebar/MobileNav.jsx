@@ -13,12 +13,14 @@ import { Menu, MenuButton, MenuDivider, MenuItem, MenuList } from "@chakra-ui/me
 import { FiMenu, FiChevronDown } from "react-icons/fi";
 import { AiOutlineSun, AiOutlineMoon } from "react-icons/ai";
 import  useCustomColorModeValue  from "../../hooks/useCustomColorModeValue";
+import { useSelector } from "react-redux";
 
 const MobileNav = ({ onOpen, ...rest }) => {
 const colorMode = "light";
 const toggleColorMode = () => {}; // boş bir fonksiyon
   const bgColor = useCustomColorModeValue("white", "gray.900");
   const borderColor = useCustomColorModeValue("gray.200", "gray.700");
+  const { pageHeader } = useSelector((state) => state.root);
 
   return (
     <Flex
@@ -29,7 +31,7 @@ const toggleColorMode = () => {}; // boş bir fonksiyon
       bg={bgColor}
       borderBottomWidth="1px"
       borderBottomColor={borderColor}
-      justifyContent={{ base: "space-between", md: "flex-end" }}
+      justifyContent={{ base: "space-between" }}
       {...rest}
     >
       <IconButton
@@ -41,12 +43,12 @@ const toggleColorMode = () => {}; // boş bir fonksiyon
       />
 
       <Text
-        display={{ base: "flex", md: "none" }}
+        display={{ base: "flex" }}
         fontSize="2xl"
         fontFamily="monospace"
         fontWeight="bold"
       >
-        Logo
+        {pageHeader ? pageHeader : " "}
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
