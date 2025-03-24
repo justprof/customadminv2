@@ -5,6 +5,7 @@ import { data } from "../../../data/FakeUserData";
 import avatar from "../../../assets/pp.webp";
 import { setPageHeader } from "../../../store/root/rootSlice";
 import { useDispatch } from "react-redux";
+import { MdEdit, MdDeleteForever } from "react-icons/md";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,13 @@ const Dashboard = () => {
      { key: "age", header: "Age" },
      { key: "email", header: "Email" },
   ];
+
+  //ContexMenu items
+ const contextMenuItems = [
+  { key: "edit", text: "Edit", icon: MdEdit },
+  { key: "delete", text: "Delete", icon: MdDeleteForever },
+];
+
   
   const fetchData = ({ currentPage, rowsPerPageState, searchTerm}) => {
     console.log("Fetching data with Params", {
@@ -45,6 +53,15 @@ const Dashboard = () => {
     setTableData(data);
     setTotalCount(data.length);
   }
+
+  const handleItemClick = (key, rowData) => {
+    if (key === "edit") {
+      console.log("Edit", rowData);
+    } else if (key === "delete") {
+      console.log("Delete", rowData);
+    }
+  };
+
 
   return (
     <Box p={4}>
@@ -71,6 +88,8 @@ const Dashboard = () => {
            onDeleteSelected={(e) => {
              console.log(e);
            }}
+           contextMenuItems={contextMenuItems}
+           onItemClick={handleItemClick}
          />
        </VStack>
      </Box>
