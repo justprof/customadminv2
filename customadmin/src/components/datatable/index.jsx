@@ -16,6 +16,7 @@ import { FaFilterCircleXmark } from "react-icons/fa6";
 import { BiHide } from "react-icons/bi";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import ContextMenu from "./ContextMenu";
+import ShowConfirm from "./ShowConfirm";
 
 const DataTable = ({
   columns,
@@ -41,6 +42,9 @@ const DataTable = ({
   const [rowsPerPageState, setRowsPerPageState] = useState(rowsPerPage);
   const [selectedRows, setSelectedRows] = useState([]);
   const [contextMenu, setContextMenu] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deletePromiseResolve, setDeletePromiseResolve] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const tableBgColor = useCustomColorModeValue("white", "gray.800");
   const tableBorderColor = useCustomColorModeValue("gray.200", "gray.600");
@@ -75,6 +79,42 @@ const DataTable = ({
     setContextMenu(null);
   };
 
+  const handleDeleteSelected = async (selectedRows) => {
+    setDeleteTarget(selectedRows);
+    const confirm = await showConfirmModal();
+    if (confirm) {
+      onDeleteSelected(selectedRows);
+    }
+  };
+
+  const handleDelete = async (rowId) => {
+    setDeleteTarget(rowId);
+    const confirm = await showConfirmModal();
+    if (confirm) {
+      onDelete(rowId);
+    }
+  };
+
+  const showConfirmModal = () => {
+    return new Promise((resolve) => {
+      setDeletePromiseResolve(() => resolve);
+      setIsModalOpen(true);
+    });
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    if (deletePromiseResolve) {
+      deletePromiseResolve(false);
+    }
+  };
+
+  const handleModalConfirm = () => {
+    setIsModalOpen(false);
+    if (deletePromiseResolve) {
+      deletePromiseResolve(true);
+    }
+  };
 
   const sortedData = useMemo(
     () => getSortedData(data, sortConfig),
@@ -105,7 +145,9 @@ const DataTable = ({
         <HStack spacing={2}>
           {selectable && selectedRows.length > 0 && (
             <Tooltip label="Tümünü Sil" placement="top-start">
-              <Button colorScheme="red" onClick={() => onDeleteSelected(selectedRows)}>
+              <Button colorScheme="red" 
+              onClick={() => handleDeleteSelected(selectedRows)}
+              >
                 <MdDeleteForever />
               </Button>
             </Tooltip>
@@ -178,12 +220,17 @@ const DataTable = ({
                 )
             )}
             {editActive && (
-              <Table.Head maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
+              <Table.Head maxW={"20px"} border="1px solid"
+               borderColor={tableBorderColor}
+               >
                 Edit
               </Table.Head>
             )}
             {deleteActive && (
-              <Table.Head maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
+              <Table.Head maxW={"20px"} border="1px solid"
+               borderColor={tableBorderColor}
+               onClick={() => handleDelete(selectedRows)}
+              >
                 Delete
               </Table.Head>
             )}
@@ -238,7 +285,9 @@ const DataTable = ({
               {deleteActive && (
                 <Table.Cell maxW={"20px"}>
                   <Flex justify="center">
-                    <Button colorScheme="red" onClick={() => onDelete([item.id])}>
+                    <Button colorScheme="red" 
+                    onClick={() => handleDelete([item.id])}
+                    >
                       <MdDeleteForever />
                     </Button>
                   </Flex>
@@ -258,7 +307,12 @@ const DataTable = ({
            onItemClick={onItemClick}
          />
        )}
-
+        
+       <ShowConfirm
+         isOpen={isModalOpen}
+         onClose={handleModalClose}
+         onConfirm={handleModalConfirm}
+       />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
