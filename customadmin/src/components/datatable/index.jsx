@@ -17,6 +17,7 @@ import { BiHide } from "react-icons/bi";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import ContextMenu from "./ContextMenu";
 import ShowConfirm from "./ShowConfirm";
+import useDeleteConfirmation from "./helpers ";
 
 const DataTable = ({
   columns,
@@ -42,12 +43,17 @@ const DataTable = ({
   const [rowsPerPageState, setRowsPerPageState] = useState(rowsPerPage);
   const [selectedRows, setSelectedRows] = useState([]);
   const [contextMenu, setContextMenu] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deletePromiseResolve, setDeletePromiseResolve] = useState(null);
-  const [deleteTarget, setDeleteTarget] = useState(null);
+  
 
   const tableBgColor = useCustomColorModeValue("white", "gray.800");
   const tableBorderColor = useCustomColorModeValue("gray.200", "gray.600");
+
+  const {
+    isModalOpen,
+    showConfirmModal,
+    handleModalClose,
+    handleModalConfirm,
+  } = useDeleteConfirmation();
 
   useEffect(() => {
     if (onDataChange) {
@@ -80,7 +86,7 @@ const DataTable = ({
   };
 
   const handleDeleteSelected = async (selectedRows) => {
-    setDeleteTarget(selectedRows);
+  
     const confirm = await showConfirmModal();
     if (confirm) {
       onDeleteSelected(selectedRows);
@@ -88,33 +94,14 @@ const DataTable = ({
   };
 
   const handleDelete = async (rowId) => {
-    setDeleteTarget(rowId);
+    
     const confirm = await showConfirmModal();
     if (confirm) {
       onDelete(rowId);
     }
   };
 
-  const showConfirmModal = () => {
-    return new Promise((resolve) => {
-      setDeletePromiseResolve(() => resolve);
-      setIsModalOpen(true);
-    });
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    if (deletePromiseResolve) {
-      deletePromiseResolve(false);
-    }
-  };
-
-  const handleModalConfirm = () => {
-    setIsModalOpen(false);
-    if (deletePromiseResolve) {
-      deletePromiseResolve(true);
-    }
-  };
+  
 
   const sortedData = useMemo(
     () => getSortedData(data, sortConfig),
