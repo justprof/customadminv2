@@ -92,3 +92,5 @@ export const useDeleteConfirmation = () => {
         deleteTarget,
     };
 };
+
+export default useDeleteConfirmation;
