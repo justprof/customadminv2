@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
 import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
-import Pagination from "./Pagination";
+import Pagination from "./pagination";
 import { IoMdRefresh } from "react-icons/io";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import { BiHide } from "react-icons/bi";
@@ -53,6 +53,7 @@ const DataTable = ({
     showConfirmModal,
     handleModalClose,
     handleModalConfirm,
+    deleteTarget,
   } = useDeleteConfirmation();
 
   useEffect(() => {
@@ -87,7 +88,7 @@ const DataTable = ({
 
   const handleDeleteSelected = async (selectedRows) => {
   
-    const confirm = await showConfirmModal();
+    const confirm = await showConfirmModal(selectedRows);
     if (confirm) {
       onDeleteSelected(selectedRows);
     }
@@ -95,7 +96,7 @@ const DataTable = ({
 
   const handleDelete = async (rowId) => {
     
-    const confirm = await showConfirmModal();
+    const confirm = await showConfirmModal([rowId]);
     if (confirm) {
       onDelete(rowId);
     }
@@ -299,6 +300,7 @@ const DataTable = ({
          isOpen={isModalOpen}
          onClose={handleModalClose}
          onConfirm={handleModalConfirm}
+         deleteTarget={deleteTarget}
        />
       <Pagination
         currentPage={currentPage}
