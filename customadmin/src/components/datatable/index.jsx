@@ -7,6 +7,8 @@ import {
   HStack,
   Tooltip,
   Checkbox,
+  Spinner,
+  Text,
 } from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
 import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
@@ -234,64 +236,76 @@ const DataTable = ({
         </Table.Header>
 
         <Table.Body>
-          {selectedData.map((item, rowIndex) => (
-            <Table.Row
-             key={rowIndex}
-             onContextMenu={(event) => handleRightClick(event, item)}
-            >
-              {selectable && (
+  {data.length === 0 ? (
+    <Table.Row>
+      <Table.Cell colSpan={columns.length + (selectable ? 1 : 0)}>
+        <Flex justify="center" align="center" py={4}>
+          {/* Eğer veri yükleniyorsa Spinner da ekleyebilirsin */}
+          {/* <Spinner size="lg" mr={2} /> */}
+          <Text>No data available</Text>
+        </Flex>
+      </Table.Cell>
+    </Table.Row>
+  ) : (
+    selectedData.map((item, rowIndex) => (
+      <Table.Row
+        key={rowIndex}
+        onContextMenu={(event) => handleRightClick(event, item)}
+      >
+        {selectable && (
+          <Table.Cell
+            maxW={"20px"}
+            border="1px solid"
+            borderColor={tableBorderColor}
+          >
+            <Checkbox
+              isChecked={selectedRows.includes(item.id)}
+              onChange={() =>
+                handleSelectRow(item.id, selectedRows, setSelectedRows)
+              }
+            />
+          </Table.Cell>
+        )}
+        {columns.map(
+          (col) =>
+            !hiddenColumns.includes(col.key) && (
+              <Table.Cell
+                key={col.key}
+                onClick={() =>
+                  handleSelectRow(item.id, selectedRows, setSelectedRows)
+                }
+                border="1px solid"
+                borderColor={tableBorderColor}
+                cursor="pointer"
+                maxW={col.width ? col.width : "auto"}
+              >
+                {col.render ? col.render(item[col.key], item) : item[col.key]}
+              </Table.Cell>
+            )
+        )}
+        {editActive && (
+          <Table.Cell maxW={"20px"}>
+            <Flex justify="center">
+              <Button colorScheme="blue" onClick={() => onEdit(item.id)}>
+                <MdEdit />
+              </Button>
+            </Flex>
+          </Table.Cell>
+        )}
+        {deleteActive && (
+          <Table.Cell maxW={"20px"}>
+            <Flex justify="center">
+              <Button colorScheme="red" onClick={() => handleDelete([item.id])}>
+                <MdDeleteForever />
+              </Button>
+            </Flex>
+          </Table.Cell>
+        )}
+      </Table.Row>
+    ))
+  )}
+</Table.Body>
 
-                <Table.Cell maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
-                  <Checkbox
-                    isChecked={selectedRows.includes(item.id)}
-                    onChange={() =>
-                      handleSelectRow(item.id, selectedRows, setSelectedRows)
-                    }
-                    
-                  />
-                </Table.Cell>
-              )}
-              {columns.map(
-                (col) =>
-                  !hiddenColumns.includes(col.key) && (
-                    <Table.Cell
-                      key={col.key}
-                      onClick={() => handleSelectRow(item.id, selectedRows, setSelectedRows)}
-                      border="1px solid"
-                      borderColor={tableBorderColor}
-                      cursor="pointer"
-                      maxW={col.width ? col.width : "auto"}
-                      
-                      
-                     >
-                      {col.render ? col.render(item[col.key], item) : item[col.key]}
-                  </Table.Cell>
-
-                  )
-              )}
-              {editActive && (
-                <Table.Cell maxW={"20px"}>
-                  <Flex justify="center">
-                    <Button colorScheme="blue" onClick={() => onEdit(item.id)}>
-                      <MdEdit />
-                    </Button>
-                  </Flex>
-                </Table.Cell>
-              )}
-              {deleteActive && (
-                <Table.Cell maxW={"20px"}>
-                  <Flex justify="center">
-                    <Button colorScheme="red" 
-                    onClick={() => handleDelete([item.id])}
-                    >
-                      <MdDeleteForever />
-                    </Button>
-                  </Flex>
-                </Table.Cell>
-              )}
-            </Table.Row>
-          ))}
-        </Table.Body>
       </Table.Root>
 
       {contextMenu && (
