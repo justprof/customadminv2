@@ -46,7 +46,7 @@ const DataTable = ({
   const [rowsPerPageState, setRowsPerPageState] = useState(rowsPerPage);
   const [selectedRows, setSelectedRows] = useState([]);
   const [contextMenu, setContextMenu] = useState(null);
-  
+  const [loading, setLoading] = useState(true);
 
   const tableBgColor = useCustomColorModeValue("white", "gray.800");
   const tableBorderColor = useCustomColorModeValue("gray.200", "gray.600");
@@ -60,15 +60,20 @@ const DataTable = ({
   } = useDeleteConfirmation();
 
   useEffect(() => {
+    setLoading(true);
     if (onDataChange) {
       onDataChange({currentPage, rowsPerPageState, searchTerm});
     }
+    setLoading(false);
   }, [currentPage, rowsPerPageState, searchTerm, onDataChange]);
 
   const handleRefresh = () => {
+    setLoading(true);
     if (onRefresh) {
       onRefresh();
+      
     }
+    setLoading(false);
   };
 
   const handleClearFilter = () => {
@@ -229,12 +234,27 @@ const DataTable = ({
         </Table.Header>
 
         <Table.Body>
-  {data.length === 0 ? (
+        {loading ? (
     <Table.Row>
-      <Table.Cell colSpan={columns.length + (selectable ? 1 : 0)}>
-        <Flex justify="center" align="center" py={4}>
-          {/* Eğer veri yükleniyorsa Spinner da ekleyebilirsin */}
-          {/* <Spinner size="lg" mr={2} /> */}
+      <Table.Cell colSpan={columns.length + (selectable ? 3 : 2)}>
+         <Flex
+           justify="center"
+           align="center"
+           minH={"300px"}
+         >
+          <Spinner size="lg" />
+                 </Flex>
+               </Table.Cell>
+             </Table.Row>
+           ) : selectedData.length === 0 ? (
+             <Table.Row>
+               <Table.Cell colSpan={columns.length + (selectable ? 3 : 2)}>
+                 <Flex
+                   justifyContent="center"
+                   alignItems="center"
+                   minH={"300px"}
+                 >
+          
           <Text>No data available</Text>
         </Flex>
       </Table.Cell>
