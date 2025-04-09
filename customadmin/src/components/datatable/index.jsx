@@ -20,14 +20,7 @@ import { MdDeleteForever, MdEdit } from "react-icons/md";
 import ContextMenu from "./ContextMenu";
 import ShowConfirm from "./ShowConfirm";
 import useDeleteConfirmation from "./helpers";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogContent,
-  DialogTrigger,
-  DialogTitle,
-  DialogDescription,
-} from "@chakra-ui/react";
+
 
 const DataTable = ({
   columns,

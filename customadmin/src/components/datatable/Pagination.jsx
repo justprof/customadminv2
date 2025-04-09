@@ -7,6 +7,7 @@ import { Button, HStack, Select } from "@chakra-ui/react";
   setCurrentPage,
   rowsPerPage,
   setRowsPerPage,
+  rowsPerPageOptions,
  }) => {
    const handlePreviousPage = () => {
      setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
@@ -78,10 +79,7 @@ import { Button, HStack, Select } from "@chakra-ui/react";
  
      return pageNumbers;
    };
-   const rowsPerPageOptions = Array.from(
-    { length: 5 },
-    (_, i) => rowsPerPage * (i + 1)
-  );
+   
    return (
     <HStack justify="flex-end" mt={4} gap={4}>
     <HStack>
