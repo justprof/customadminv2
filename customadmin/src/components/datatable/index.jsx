@@ -16,10 +16,11 @@ import Pagination from "./pagination";
 import { IoMdRefresh } from "react-icons/io";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import { BiHide } from "react-icons/bi";
-import { MdDeleteForever, MdEdit } from "react-icons/md";
 import ContextMenu from "./ContextMenu";
 import ShowConfirm from "./ShowConfirm";
 import useDeleteConfirmation from "./helpers";
+import TheadComponent from "./TheadComponent";
+import TbodyComponent from "./TbodyComponent";
 
 
 const DataTable = ({
@@ -187,136 +188,41 @@ const DataTable = ({
       {/* New table structure */}
       <Table.Root variant="striped" colorScheme="gray" bg={tableBgColor}>
         <Table.Header>
-          <Table.Row>
-            {selectable && (
-              <Table.Head maxW={"20px"} border="1px solid" borderColor={tableBorderColor}>
-                <Checkbox
-                  isChecked={selectedRows.length === selectedData.length}
-                  onChange={() =>
-                    handleSelectAll(selectedData, selectedRows, setSelectedRows)
-                  }
-                />
-              </Table.Head>
-            )}
-            {columns.map(
-              (col) =>
-                !hiddenColumns.includes(col.key) && (
-                  <Table.Head
-                      key={col.key}
-                      border="1px solid"
-                      borderColor={tableBorderColor}
-                      maxW={col.width ? col.width : "auto"}  // ✨ buraya bunu ekliyorsun
-                  >
-                      {col.header}
-                      {sortConfig.key === col.key ? (
-                      sortConfig.direction === "ascending" ? <span> ↑</span> : <span> ↓</span>
-                      ) : null}
-                  </Table.Head>
-
-                )
-            )}
-            {editActive && (
-              <Table.Head maxW={"20px"} border="1px solid"
-               borderColor={tableBorderColor}
-               >
-                Edit
-              </Table.Head>
-            )}
-            {deleteActive && (
-              <Table.Head maxW={"20px"} border="1px solid"
-               borderColor={tableBorderColor}
-               onClick={() => handleDelete(selectedRows)}
-              >
-                Delete
-              </Table.Head>
-            )}
-          </Table.Row>
+          
+            
+             <TheadComponent
+             columns={columns}
+             sortConfig={sortConfig}
+             setSortConfig={setSortConfig}
+             hiddenColumns={hiddenColumns}
+             selectable={selectable}
+             selectedData={selectedData}
+             selectedRows={selectedRows}
+             setSelectedRows={setSelectedRows}
+             tableBorderColor={tableBorderColor}
+             editActive={editActive}
+             deleteActive={deleteActive}
+             handleDelete={handleDelete}
+           />
+          
         </Table.Header>
 
         <Table.Body>
-        {loading ? (
-    <Table.Row>
-      <Table.Cell colSpan={columns.length + (selectable ? 3 : 2)}>
-         <Flex
-           justify="center"
-           align="center"
-           minH={"300px"}
-         >
-          <Spinner size="lg" />
-                 </Flex>
-               </Table.Cell>
-             </Table.Row>
-           ) : selectedData.length === 0 ? (
-             <Table.Row>
-               <Table.Cell colSpan={columns.length + (selectable ? 3 : 2)}>
-                 <Flex
-                   justifyContent="center"
-                   alignItems="center"
-                   minH={"300px"}
-                 >
-          
-          <Text>No data available</Text>
-        </Flex>
-      </Table.Cell>
-    </Table.Row>
-  ) : (
-    selectedData.map((item, rowIndex) => (
-      <Table.Row
-        key={rowIndex}
-        onContextMenu={(event) => handleRightClick(event, item)}
-      >
-        {selectable && (
-          <Table.Cell
-            maxW={"20px"}
-            border="1px solid"
-            borderColor={tableBorderColor}
-          >
-            <Checkbox
-              isChecked={selectedRows.includes(item.id)}
-              onChange={() =>
-                handleSelectRow(item.id, selectedRows, setSelectedRows)
-              }
-            />
-          </Table.Cell>
-        )}
-        {columns.map(
-          (col) =>
-            !hiddenColumns.includes(col.key) && (
-              <Table.Cell
-                key={col.key}
-                onClick={() =>
-                  handleSelectRow(item.id, selectedRows, setSelectedRows)
-                }
-                border="1px solid"
-                borderColor={tableBorderColor}
-                cursor="pointer"
-                maxW={col.width ? col.width : "auto"}
-              >
-                {col.render ? col.render(item[col.key], item) : item[col.key]}
-              </Table.Cell>
-            )
-        )}
-        {editActive && (
-          <Table.Cell maxW={"20px"}>
-            <Flex justify="center">
-              <Button colorScheme="blue" onClick={() => onEdit(item.id)}>
-                <MdEdit />
-              </Button>
-            </Flex>
-          </Table.Cell>
-        )}
-        {deleteActive && (
-          <Table.Cell maxW={"20px"}>
-            <Flex justify="center">
-              <Button colorScheme="red" onClick={() => handleDelete([item.id])}>
-                <MdDeleteForever />
-              </Button>
-            </Flex>
-          </Table.Cell>
-        )}
-      </Table.Row>
-    ))
-  )}
+        <TbodyComponent
+             columns={columns}
+             selectedData={selectedData}
+             hiddenColumns={hiddenColumns}
+             selectable={selectable}
+             selectedRows={selectedRows}
+             setSelectedRows={setSelectedRows}
+             handleSelectRow={handleSelectRow}
+             handleRightClick={handleRightClick}
+             handleDelete={handleDelete}
+             editActive={editActive}
+             onEdit={onEdit}
+             deleteActive={deleteActive}
+             loading={loading}
+           />
 </Table.Body>
 
       </Table.Root>
