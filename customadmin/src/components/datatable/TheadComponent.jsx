@@ -21,7 +21,10 @@ const TheadComponent = ({
       {selectable && (
         <th style={{ maxWidth: "20px", border: `1px solid ${tableBorderColor}` }}>
           <Checkbox
-            isChecked={selectedRows.length === selectedData.length}
+             isChecked={
+              selectedRows.length === selectedData.length &&
+              selectedData.length > 0
+            }
             onChange={() =>
               handleSelectAll(selectedData, selectedRows, setSelectedRows)
             }
