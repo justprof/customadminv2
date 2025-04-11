@@ -1,27 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {
-  Box,
-  Input,
-  Flex,
-  Button,
-  HStack,
-  Tooltip,
-  Checkbox,
-  Spinner,
-  Text,
-} from "@chakra-ui/react";
-import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
+
+
 import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
 import Pagination from "./pagination";
-import { IoMdRefresh } from "react-icons/io";
-import { FaFilterCircleXmark } from "react-icons/fa6";
-import { BiHide } from "react-icons/bi";
 import ContextMenu from "./ContextMenu";
 import ShowConfirm from "./ShowConfirm";
 import useDeleteConfirmation from "./helpers";
 import TheadComponent from "./TheadComponent";
 import TbodyComponent from "./TbodyComponent";
-
+import TableControls from "./TableControls";
 
 const DataTable = ({
   columns,
@@ -132,60 +119,20 @@ const DataTable = ({
 
   return (
     <Box bg={tableBgColor} p={4} boxShadow="sm" borderRadius="md" overflow={"auto"}>
-      <Flex justify="space-between" mb={4} gap={4}>
-        <Input
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          width="auto"
-        />
-        <HStack spacing={2}>
-          {selectable && selectedRows.length > 0 && (
-            <Tooltip label="Tümünü Sil" placement="top-start">
-              <Button colorScheme="red" 
-              onClick={() => handleDeleteSelected(selectedRows)}
-              >
-                <MdDeleteForever />
-              </Button>
-            </Tooltip>
-          )}
-          <Tooltip label="Refresh data" placement="top-start">
-            <Button onClick={handleRefresh}>
-              <IoMdRefresh />
-            </Button>
-          </Tooltip>
-
-          <Menu closeOnSelect={false}>
-            <Tooltip label="Hide/Show columns" placement="top-start">
-              <MenuButton as={Button}>
-                <BiHide />
-              </MenuButton>
-            </Tooltip>
-            <MenuList>
-              {columns.map((col) => (
-                <MenuItem key={col.key}>
-                  <Checkbox
-                    isChecked={!hiddenColumns.includes(col.key)}
-                    onChange={() =>
-                      toggleColumnVisibility(col.key, hiddenColumns, setHiddenColumns)
-                    }
-                  >
-                    {col.header}
-                  </Checkbox>
-                </MenuItem>
-              ))}
-            </MenuList>
-          </Menu>
-
-          <Tooltip label="Clear filter" placement="top-start">
-            <Button onClick={handleClearFilter}>
-              <FaFilterCircleXmark />
-            </Button>
-          </Tooltip>
-        </HStack>
-      </Flex>
-
-      {/* New table structure */}
+      <TableControls
+         searchTerm={searchTerm}
+         setSearchTerm={setSearchTerm}
+         selectable={selectable}
+         selectedRows={selectedRows}
+         handleDeleteSelected={handleDeleteSelected}
+         handleRefresh={handleRefresh}
+         handleClearFilter={handleClearFilter}
+         columns={columns}
+         hiddenColumns={hiddenColumns}
+         toggleColumnVisibility={toggleColumnVisibility}
+         setHiddenColumns={setHiddenColumns}
+       />
+      
       <Table.Root variant="striped" colorScheme="gray" bg={tableBgColor}>
         <Table.Header>
           
