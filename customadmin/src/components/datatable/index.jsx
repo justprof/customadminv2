@@ -11,6 +11,7 @@ import TbodyComponent from "./TbodyComponent";
 import TableControls from "./TableControls";
 
 const DataTable = ({
+  
   columns,
   data,
   totalCount,
@@ -38,6 +39,30 @@ const DataTable = ({
 
   const tableBgColor = useCustomColorModeValue("white", "gray.800");
   const tableBorderColor = useCustomColorModeValue("gray.200", "gray.600");
+
+  const getSortedData = (data, sortConfig) => {
+    if (!sortConfig || !sortConfig.key) return data;
+  
+    return [...data].sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+  };
+  
+  const getFilteredData = (data, columns, searchTerm) => {
+    if (!searchTerm) return data;
+  
+    return data.filter((row) =>
+      columns.some((col) =>
+        String(row[col.key])
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      )
+    );
+  };
 
   const {
     isModalOpen,

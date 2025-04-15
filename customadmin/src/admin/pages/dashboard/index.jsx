@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Box, VStack, Heading } from "@chakra-ui/react";
 import DataTable from "../../../components/datatable";
 import { data } from "../../../data/FakeUserData";
@@ -69,7 +69,7 @@ const Dashboard = () => {
         
         <DataTable
            columns={columns}
-           data={dataTable}
+           data={tableData}
            totalCount={(totalCount)}
            rowsPerPage={5}
            onDataChange={fetchData}
