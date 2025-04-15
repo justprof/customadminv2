@@ -14,6 +14,7 @@ const DataTable = ({
   
   columns,
   data,
+  Box,
   totalCount,
   rowsPerPage = 10,
   onDataChange,
@@ -36,6 +37,14 @@ const DataTable = ({
   const [selectedRows, setSelectedRows] = useState([]);
   const [contextMenu, setContextMenu] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const toggleColumnVisibility = (key, hiddenColumns, setHiddenColumns) => {
+    if (hiddenColumns.includes(key)) {
+      setHiddenColumns(hiddenColumns.filter((col) => col !== key));
+    } else {
+      setHiddenColumns([...hiddenColumns, key]);
+    }
+  };
 
   const tableBgColor = useCustomColorModeValue("white", "gray.800");
   const tableBorderColor = useCustomColorModeValue("gray.200", "gray.600");
