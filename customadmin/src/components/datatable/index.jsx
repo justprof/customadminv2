@@ -9,6 +9,7 @@ import useDeleteConfirmation from "./helpers";
 import TheadComponent from "./TheadComponent";
 import TbodyComponent from "./TbodyComponent";
 import TableControls from "./TableControls";
+import * as Table from "@chakra-ui/react";
 
 const DataTable = ({
   
