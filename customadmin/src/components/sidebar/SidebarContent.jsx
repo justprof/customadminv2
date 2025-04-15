@@ -4,22 +4,19 @@ import {
   CloseButton,
   Flex,
   Text,
+  
 } from "@chakra-ui/react";
 import NavItem from "./NavItem";
 import LinkItems from "./LinkItems";
-import  useCustomColorModeValue from "/src/hooks/useCustomColorModeValue";
-
+import { useColorModeValue } from "@chakra-ui/color-mode";
 
 const SidebarContent = ({ onClose, ...rest }) => {
-  const bg = useCustomColorModeValue("white", "gray.900");
-  const borderColor = useCustomColorModeValue("gray.200", "gray.700");
-
   return (
     <Box
       transition="3s ease"
-      bg={bg}
+      bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
-      borderRightColor={borderColor}
+      borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"

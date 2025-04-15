@@ -7,16 +7,13 @@ import React from "react";
    Button,
    Checkbox,
  } from "@chakra-ui/react";
+ import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/menu";
  import { IoMdRefresh } from "react-icons/io";
  import { FaFilterCircleXmark } from "react-icons/fa6";
  import { BiHide } from "react-icons/bi";
  import { MdDeleteForever } from "react-icons/md";
- import {
-    Menu,
-    MenuItem,
-    MenuList,
-    MenuButton,
-  } from "@chakra-ui/menu";
+ 
+
  const TableControls = ({
    searchTerm,
    setSearchTerm,
