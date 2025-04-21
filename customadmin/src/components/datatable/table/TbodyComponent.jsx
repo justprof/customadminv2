@@ -1,6 +1,13 @@
 import React from "react";
-import { Checkbox, Flex, Button, Spinner, Text, Table } from "@chakra-ui/react";
-import { MdDeleteForever, MdEdit } from "react-icons/md";
+import {
+  Checkbox,
+  Table,
+  Flex,
+  Spinner,
+  Text,
+  Button,
+} from "@chakra-ui/react";
+import { MdEdit, MdDeleteForever } from "react-icons/md";
 
 const TbodyComponent = ({
   columns,
@@ -51,15 +58,15 @@ const TbodyComponent = ({
         >
           {selectable && (
             <Table.Cell>
-              <Checkbox.Root>
-              <Checkbox.HiddenInput />
-                <Checkbox.Control
-                isChecked={selectedRows.includes(item.id)}
-                onChange={() =>
+              <Checkbox.Root
+                defaultChecked={selectedRows.includes(item.id)}
+                onCheckedChange={() =>
                   handleSelectRow(item.id, selectedRows, setSelectedRows)
                 }
               >
-                <Checkbox.Indicator />
+                <Checkbox.HiddenInput />
+                <Checkbox.Control>
+                  <Checkbox.Indicator />
                 </Checkbox.Control>
               </Checkbox.Root>
             </Table.Cell>
@@ -67,12 +74,7 @@ const TbodyComponent = ({
 
           {columns.map(({ key, render }) =>
             !hiddenColumns.includes(key) ? (
-              <Table.Cell
-                key={key}
-                onClick={() =>
-                  handleSelectRow(item.id, selectedRows, setSelectedRows)
-                }
-              >
+              <Table.Cell key={key}>
                 {render ? render(item[key], item) : item[key]}
               </Table.Cell>
             ) : null

@@ -11,7 +11,6 @@ const TheadComponent = ({
   selectedData,
   selectedRows,
   setSelectedRows,
-  tableBorderColor,
   editActive,
   deleteActive,
   handleDelete,
@@ -20,18 +19,18 @@ const TheadComponent = ({
     <Table.Row>
       {selectable && (
         <Table.ColumnHeader>
-          <Checkbox.Root>
-          <Checkbox.HiddenInput />
-            <Checkbox.Control
-            isChecked={
+          <Checkbox.Root
+            defaultChecked={
               selectedRows.length === selectedData.length &&
               selectedData.length > 0
             }
-            onChange={() =>
+            onCheckedChange={() =>
               handleSelectAll(selectedData, selectedRows, setSelectedRows)
             }
           >
-          <Checkbox.Indicator />
+            <Checkbox.HiddenInput />
+            <Checkbox.Control>
+              <Checkbox.Indicator />
             </Checkbox.Control>
           </Checkbox.Root>
         </Table.ColumnHeader>
