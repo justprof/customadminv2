@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Box} from "@chakra-ui/react";
 import { Table } from "@chakra-ui/react";
 import Pagination from "../plugin/Pagination";
-
+import PropTypes from "prop-types";
 
 import {
   getSortedData,
@@ -204,6 +204,39 @@ const DataTable = ({
       />
     </Box>
   );
+};
+
+DataTable.propTypes = {
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      header: PropTypes.string.isRequired,
+      primaryKey: PropTypes.bool,
+      visible: PropTypes.bool,
+      render: PropTypes.func,
+      width: PropTypes.string,
+    })
+  ).isRequired,
+  data: PropTypes.array.isRequired,
+  totalCount: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number,
+  onDataChange: PropTypes.func.isRequired,
+  onRefresh: PropTypes.func,
+  deleteActive: PropTypes.bool,
+  onDelete: PropTypes.func,
+  editActive: PropTypes.bool,
+  onEdit: PropTypes.func,
+  selectable: PropTypes.bool,
+  onDeleteSelected: PropTypes.func,
+  rowsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
+  contextMenuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      icon: PropTypes.elementType.isRequired,
+    })
+  ),
+  onItemClick: PropTypes.func.isRequired,
 };
 
 export default DataTable;
