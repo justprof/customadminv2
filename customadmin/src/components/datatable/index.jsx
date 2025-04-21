@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { Table, Box, Checkbox, IconButton, Spinner } from "@chakra-ui/react";
 
-
-import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
+import { MdEdit, MdDelete } from "react-icons/md";
+import useCustomColorModeValue from "/src/hooks/useCustomColorModeValue";
 import Pagination from "./pagination";
 import ContextMenu from "./ContextMenu";
 import ShowConfirm from "./ShowConfirm";
 import useDeleteConfirmation from "./helpers";
-import TheadComponent from "./TheadComponent";
-import TbodyComponent from "./TbodyComponent";
 import TableControls from "./TableControls";
-import * as Table from "@chakra-ui/react";
 
 const DataTable = ({
-  
   columns,
   data,
-  Box,
   totalCount,
   rowsPerPage = 10,
   onDataChange,
@@ -39,40 +35,8 @@ const DataTable = ({
   const [contextMenu, setContextMenu] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const toggleColumnVisibility = (key, hiddenColumns, setHiddenColumns) => {
-    if (hiddenColumns.includes(key)) {
-      setHiddenColumns(hiddenColumns.filter((col) => col !== key));
-    } else {
-      setHiddenColumns([...hiddenColumns, key]);
-    }
-  };
-
   const tableBgColor = useCustomColorModeValue("white", "gray.800");
   const tableBorderColor = useCustomColorModeValue("gray.200", "gray.600");
-
-  const getSortedData = (data, sortConfig) => {
-    if (!sortConfig || !sortConfig.key) return data;
-  
-    return [...data].sort((a, b) => {
-      const aValue = a[sortConfig.key];
-      const bValue = b[sortConfig.key];
-      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
-      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
-      return 0;
-    });
-  };
-  
-  const getFilteredData = (data, columns, searchTerm) => {
-    if (!searchTerm) return data;
-  
-    return data.filter((row) =>
-      columns.some((col) =>
-        String(row[col.key])
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      )
-    );
-  };
 
   const {
     isModalOpen,
@@ -85,17 +49,22 @@ const DataTable = ({
   useEffect(() => {
     setLoading(true);
     if (onDataChange) {
-      onDataChange({currentPage, rowsPerPageState, searchTerm});
+      onDataChange({ currentPage, rowsPerPageState, searchTerm });
     }
     setLoading(false);
   }, [currentPage, rowsPerPageState, searchTerm, onDataChange]);
 
+  const toggleColumnVisibility = (key) => {
+    setHiddenColumns((prev) =>
+      prev.includes(key)
+        ? prev.filter((col) => col !== key)
+        : [...prev, key]
+    );
+  };
+
   const handleRefresh = () => {
     setLoading(true);
-    if (onRefresh) {
-      onRefresh();
-      
-    }
+    if (onRefresh) onRefresh();
     setLoading(false);
   };
 
@@ -104,36 +73,55 @@ const DataTable = ({
     setSortConfig({ key: null, direction: null });
     setCurrentPage(1);
   };
-  const handleRightClick = (event, item) => {
-    event.preventDefault();
+
+  const handleRightClick = (e, rowData) => {
+    e.preventDefault();
     setContextMenu({
-      mouseX: event.clientX - 2,
-      mouseY: event.clientY - 4,
-      rowData: item,
+      mouseX: e.clientX - 2,
+      mouseY: e.clientY - 4,
+      rowData,
     });
   };
 
-  const handleClose = () => {
-    setContextMenu(null);
+  const handleClose = () => setContextMenu(null);
+
+  const handleDeleteSelected = async (selected) => {
+    const confirm = await showConfirmModal(selected);
+    if (confirm) onDeleteSelected(selected);
   };
 
-  const handleDeleteSelected = async (selectedRows) => {
-  
-    const confirm = await showConfirmModal(selectedRows);
-    if (confirm) {
-      onDeleteSelected(selectedRows);
-    }
+  const handleDelete = async (id) => {
+    const confirm = await showConfirmModal([id]);
+    if (confirm) onDelete(id);
   };
 
-  const handleDelete = async (rowId) => {
-    
-    const confirm = await showConfirmModal([rowId]);
-    if (confirm) {
-      onDelete(rowId);
-    }
+  const handleSelectRow = (id) => {
+    setSelectedRows((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
   };
 
-  
+  const getSortedData = (data, sortConfig) => {
+    if (!sortConfig || !sortConfig.key) return data;
+    return [...data].sort((a, b) => {
+      const aVal = a[sortConfig.key];
+      const bVal = b[sortConfig.key];
+      if (aVal < bVal) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+  };
+
+  const getFilteredData = (data, columns, searchTerm) => {
+    if (!searchTerm) return data;
+    return data.filter((row) =>
+      columns.some((col) =>
+        String(row[col.key] ?? "")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      )
+    );
+  };
 
   const sortedData = useMemo(
     () => getSortedData(data, sortConfig),
@@ -153,78 +141,109 @@ const DataTable = ({
   );
 
   return (
-    <Box bg={tableBgColor} p={4} boxShadow="sm" borderRadius="md" overflow={"auto"}>
+    <Box bg={tableBgColor} p={4} boxShadow="sm" borderRadius="md" overflow="auto">
       <TableControls
-         searchTerm={searchTerm}
-         setSearchTerm={setSearchTerm}
-         selectable={selectable}
-         selectedRows={selectedRows}
-         handleDeleteSelected={handleDeleteSelected}
-         handleRefresh={handleRefresh}
-         handleClearFilter={handleClearFilter}
-         columns={columns}
-         hiddenColumns={hiddenColumns}
-         toggleColumnVisibility={toggleColumnVisibility}
-         setHiddenColumns={setHiddenColumns}
-       />
-      
-      <Table.Root variant="striped" colorScheme="gray" bg={tableBgColor}>
-        <Table.Header>
-          
-            
-             <TheadComponent
-             columns={columns}
-             sortConfig={sortConfig}
-             setSortConfig={setSortConfig}
-             hiddenColumns={hiddenColumns}
-             selectable={selectable}
-             selectedData={selectedData}
-             selectedRows={selectedRows}
-             setSelectedRows={setSelectedRows}
-             tableBorderColor={tableBorderColor}
-             editActive={editActive}
-             deleteActive={deleteActive}
-             handleDelete={handleDelete}
-           />
-          
-        </Table.Header>
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        selectable={selectable}
+        selectedRows={selectedRows}
+        handleDeleteSelected={handleDeleteSelected}
+        handleRefresh={handleRefresh}
+        handleClearFilter={handleClearFilter}
+        columns={columns}
+        hiddenColumns={hiddenColumns}
+        toggleColumnVisibility={toggleColumnVisibility}
+        setHiddenColumns={setHiddenColumns}
+      />
 
-        <Table.Body>
-        <TbodyComponent
-             columns={columns}
-             selectedData={selectedData}
-             hiddenColumns={hiddenColumns}
-             selectable={selectable}
-             selectedRows={selectedRows}
-             setSelectedRows={setSelectedRows}
-             handleSelectRow={handleSelectRow}
-             handleRightClick={handleRightClick}
-             handleDelete={handleDelete}
-             editActive={editActive}
-             onEdit={onEdit}
-             deleteActive={deleteActive}
-             loading={loading}
-           />
-</Table.Body>
+<Table.Root variant="striped" colorScheme="gray" bg={tableBgColor}>
+  <Table.Header>
+    <Table.Row>
+      {selectable && <Table.ColumnHeader></Table.ColumnHeader>}
+      {columns.map(
+        (col) =>
+          !hiddenColumns.includes(col.key) && (
+            <Table.ColumnHeader key={col.key}>{col.header}</Table.ColumnHeader>
+          )
+      )}
+      {(editActive || deleteActive) && <Table.ColumnHeader>Actions</Table.ColumnHeader>}
+    </Table.Row>
+  </Table.Header>
 
-      </Table.Root>
+  <Table.Body>
+    {loading ? (
+      <Table.Row>
+        <Table.Cell colSpan={columns.length + 2} textAlign="center">
+          <Spinner />
+        </Table.Cell>
+      </Table.Row>
+    ) : (
+      selectedData.map((row) => (
+        <Table.Row
+          key={row.id}
+          onContextMenu={(e) => handleRightClick(e, row)}
+          _hover={{ bg: "gray.100" }}
+        >
+          {selectable && (
+            <Table.Cell>
+              <Checkbox
+                isChecked={selectedRows.includes(row.id)}
+                onChange={() => handleSelectRow(row.id)}
+              />
+            </Table.Cell>
+          )}
+          {columns.map(
+            (col) =>
+              !hiddenColumns.includes(col.key) && (
+                <Table.Cell key={col.key}>
+                  {col.render ? col.render(row) : row[col.key]}
+                </Table.Cell>
+              )
+          )}
+          {(editActive || deleteActive) && (
+            <Table.Cell>
+              {editActive && (
+                <IconButton
+                  size="sm"
+                  icon={<MdEdit />}
+                  mr={2}
+                  onClick={() => onEdit(row.id)}
+                />
+              )}
+              {deleteActive && (
+                <IconButton
+                  size="sm"
+                  icon={<MdDelete />}
+                  colorScheme="red"
+                  onClick={() => handleDelete(row.id)}
+                />
+              )}
+            </Table.Cell>
+          )}
+        </Table.Row>
+      ))
+    )}
+  </Table.Body>
+</Table.Root>
+
 
       {contextMenu && (
-         <ContextMenu
-           items={contextMenuItems}
-           onClose={handleClose}
-           rowData={contextMenu.rowData}
-           position={contextMenu}
-           onItemClick={onItemClick}
-         />
-       )}
-        
-       <ShowConfirm
-         isOpen={isModalOpen}
-         onClose={handleModalClose}
-         onConfirm={handleModalConfirm}
-         deleteTarget={deleteTarget}
-       />
+        <ContextMenu
+          items={contextMenuItems}
+          onClose={handleClose}
+          rowData={contextMenu.rowData}
+          position={contextMenu}
+          onItemClick={onItemClick}
+        />
+      )}
+
+      <ShowConfirm
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onConfirm={handleModalConfirm}
+        deleteTarget={deleteTarget}
+      />
+
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
