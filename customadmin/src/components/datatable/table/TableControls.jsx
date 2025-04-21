@@ -5,15 +5,28 @@ import {
   Flex,
   HStack,
   Input,
-  Tooltip,
-  Checkbox,
   Portal,
 } from "@chakra-ui/react";
 import { Menu } from "@chakra-ui/react";
+import { Tooltip as ChakraTooltip } from "@chakra-ui/react";
+import { Checkbox } from "@chakra-ui/react";
 import { IoMdRefresh } from "react-icons/io";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import { BiHide } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
+
+const Tooltip = ({ label, children }) => {
+  return (
+    <ChakraTooltip.Root>
+      <ChakraTooltip.Trigger asChild>{children}</ChakraTooltip.Trigger>
+      <Portal>
+        <ChakraTooltip.Positioner>
+          <ChakraTooltip.Content>{label}</ChakraTooltip.Content>
+        </ChakraTooltip.Positioner>
+      </Portal>
+    </ChakraTooltip.Root>
+  );
+};
 
 const TableControls = ({
   searchTerm,
@@ -31,7 +44,7 @@ const TableControls = ({
   return (
     <Flex justify="space-between" mb={4} gap={4}>
       <Input
-       placeholder="Ara..."
+        placeholder="Ara..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         width="auto"
@@ -39,7 +52,7 @@ const TableControls = ({
 
       <HStack spacing={2}>
         {selectable && selectedRows.length > 0 && (
-          <Tooltip label="Tümünü Sil" placement="top-start">
+          <Tooltip label="Tümünü Sil">
             <Button
               colorScheme="red"
               onClick={() => handleDeleteSelected(selectedRows)}
@@ -49,13 +62,13 @@ const TableControls = ({
           </Tooltip>
         )}
 
-        <Tooltip label="Yenile" placement="top-start">
+        <Tooltip label="Yenile">
           <Button onClick={handleRefresh}>
             <IoMdRefresh />
           </Button>
         </Tooltip>
 
-        <Tooltip label="Filtreleri Temizle" placement="top-start">
+        <Tooltip label="Filtreleri Temizle">
           <Button onClick={handleClearFilter}>
             <FaFilterCircleXmark />
           </Button>
@@ -70,25 +83,29 @@ const TableControls = ({
           <Portal>
             <Menu.Positioner>
               <Menu.Content>
-              {columns.map(
-               (col) =>
-                 col.visible !== false && (
-                   <MenuItem key={col.key}>
-                     <Checkbox
-                       isChecked={!hiddenColumns.includes(col.key)}
-                       onChange={() =>
-                         toggleColumnVisibility(
-                           col.key,
-                           hiddenColumns,
-                           setHiddenColumns
-                         )
-                       }
-                     >
-                       {col.header}
-                     </Checkbox>
-                   </MenuItem>
-                 )
-             )}
+                {columns.map(
+                  (col) =>
+                    col.visible !== false && (
+                      <Menu.Item key={col.key}>
+                        <Checkbox.Root
+                          defaultChecked={!hiddenColumns.includes(col.key)}
+                          onCheckedChange={() =>
+                            toggleColumnVisibility(
+                              col.key,
+                              hiddenColumns,
+                              setHiddenColumns
+                            )
+                          }
+                        >
+                          <Checkbox.HiddenInput />
+                          <Checkbox.Control>
+                            <Checkbox.Indicator />
+                          </Checkbox.Control>
+                          <Checkbox.Label>{col.header}</Checkbox.Label>
+                        </Checkbox.Root>
+                      </Menu.Item>
+                    )
+                )}
               </Menu.Content>
             </Menu.Positioner>
           </Portal>
