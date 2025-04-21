@@ -70,22 +70,25 @@ const TableControls = ({
           <Portal>
             <Menu.Positioner>
               <Menu.Content>
-                {columns.map((col) => (
-                  <Menu.Item key={col.key}>
-                    <Checkbox
-                      isChecked={!hiddenColumns.includes(col.key)}
-                      onChange={() =>
-                        toggleColumnVisibility(
-                          col.key,
-                          hiddenColumns,
-                          setHiddenColumns
-                        )
-                      }
-                    >
-                      {col.header}
-                    </Checkbox>
-                  </Menu.Item>
-                ))}
+              {columns.map(
+               (col) =>
+                 col.visible !== false && (
+                   <MenuItem key={col.key}>
+                     <Checkbox
+                       isChecked={!hiddenColumns.includes(col.key)}
+                       onChange={() =>
+                         toggleColumnVisibility(
+                           col.key,
+                           hiddenColumns,
+                           setHiddenColumns
+                         )
+                       }
+                     >
+                       {col.header}
+                     </Checkbox>
+                   </MenuItem>
+                 )
+             )}
               </Menu.Content>
             </Menu.Positioner>
           </Portal>
