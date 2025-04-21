@@ -51,12 +51,17 @@ const TbodyComponent = ({
         >
           {selectable && (
             <Table.Cell>
-              <Checkbox
+              <Checkbox.Root>
+              <Checkbox.HiddenInput />
+                <Checkbox.Control
                 isChecked={selectedRows.includes(item.id)}
                 onChange={() =>
                   handleSelectRow(item.id, selectedRows, setSelectedRows)
                 }
-              />
+              >
+                <Checkbox.Indicator />
+                </Checkbox.Control>
+              </Checkbox.Root>
             </Table.Cell>
           )}
 

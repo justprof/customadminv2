@@ -20,7 +20,9 @@ const TheadComponent = ({
     <Table.Row>
       {selectable && (
         <Table.ColumnHeader>
-          <Checkbox
+          <Checkbox.Root>
+          <Checkbox.HiddenInput />
+            <Checkbox.Control
             isChecked={
               selectedRows.length === selectedData.length &&
               selectedData.length > 0
@@ -28,7 +30,10 @@ const TheadComponent = ({
             onChange={() =>
               handleSelectAll(selectedData, selectedRows, setSelectedRows)
             }
-          />
+          >
+          <Checkbox.Indicator />
+            </Checkbox.Control>
+          </Checkbox.Root>
         </Table.ColumnHeader>
       )}
       {columns.map(
