@@ -17,6 +17,7 @@ const Dashboard = () => {
   }, [dispatch]);
 
   const columns = [
+    { key: "id", header: "ID", primaryKey: true, visible: false },
     {
       key: "avatar",
       header: "Avatar",
@@ -30,16 +31,15 @@ const Dashboard = () => {
         ),
         width:"80px",
     },
-    { key: "id", header: "ID", primaryKey: true },
-     { key: "name", header: "Name" },
-     { key: "age", header: "Age" },
+    { key: "name", header: "Ad" },
+   { key: "age", header: "Yaş" },
      { key: "email", header: "Email" },
   ];
 
   //ContexMenu items
  const contextMenuItems = [
-  { key: "Edit", text: "Edit", icon: MdEdit },
-  { key: "Delete", text: "Delete", icon: MdDeleteForever },
+  { key: "Edit", text: "Düzenle", icon: MdEdit },
+   { key: "Delete", text: "Sil", icon: MdDeleteForever },
 ];
 
   
