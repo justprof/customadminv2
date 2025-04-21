@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox } from "@chakra-ui/react";
+import { Checkbox, Table } from "@chakra-ui/react";
 import { requestSort, handleSelectAll } from "../functions/helpers";
 
 const TheadComponent = ({
@@ -17,11 +17,11 @@ const TheadComponent = ({
   handleDelete,
 }) => {
   return (
-    <tr>
+    <Table.Row>
       {selectable && (
-        <th style={{ maxWidth: "20px", border: `1px solid ${tableBorderColor}` }}>
+        <Table.ColumnHeader>
           <Checkbox
-             isChecked={
+            isChecked={
               selectedRows.length === selectedData.length &&
               selectedData.length > 0
             }
@@ -29,19 +29,15 @@ const TheadComponent = ({
               handleSelectAll(selectedData, selectedRows, setSelectedRows)
             }
           />
-        </th>
+        </Table.ColumnHeader>
       )}
       {columns.map(
         (col) =>
           !hiddenColumns.includes(col.key) && (
-            <th
+            <Table.ColumnHeader
               key={col.key}
-              style={{
-                border: `1px solid ${tableBorderColor}`,
-                maxWidth: col.width || "auto",
-                cursor: "pointer",
-              }}
               onClick={() => requestSort(col.key, sortConfig, setSortConfig)}
+              style={{ cursor: "pointer" }}
             >
               {col.header}
               {sortConfig.key === col.key ? (
@@ -51,23 +47,16 @@ const TheadComponent = ({
                   <span> ↓</span>
                 )
               ) : null}
-            </th>
+            </Table.ColumnHeader>
           )
       )}
-      {editActive && (
-        <th style={{ maxWidth: "20px", border: `1px solid ${tableBorderColor}` }}>
-          Edit
-        </th>
-      )}
+      {editActive && <Table.ColumnHeader>Edit</Table.ColumnHeader>}
       {deleteActive && (
-        <th
-          style={{ maxWidth: "20px", border: `1px solid ${tableBorderColor}` }}
-          onClick={() => handleDelete(selectedRows)}
-        >
+        <Table.ColumnHeader onClick={() => handleDelete(selectedRows)}>
           Delete
-        </th>
+        </Table.ColumnHeader>
       )}
-    </tr>
+    </Table.Row>
   );
 };
 
