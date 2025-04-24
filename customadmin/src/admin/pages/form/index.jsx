@@ -5,7 +5,7 @@ import React, { useState } from "react";
  const MyForm = () => {
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
-   const [error, setError] = useState("");
+   
  
    const handleNameChange = (value) => {
      setName(value);
@@ -16,13 +16,9 @@ import React, { useState } from "react";
    };
  
    const handleSubmit = () => {
-     if (!name) {
-       setError("Name is required");
-     } else {
-       setError("");
-       console.log("Final submitted name:", name);
-       console.log("Final submitted email:", email);
-     }
+    console.log("Final submitted name:", name);
+    console.log("Final submitted email:", email);
+     
    };
  
    return (
@@ -34,7 +30,7 @@ import React, { useState } from "react";
          initialValue={name}
          getFinalValue={handleNameChange}
          isRequired={true}
-         error={name ? "" : error}
+         
        />
        <TextBox
          label="Email"
@@ -44,7 +40,7 @@ import React, { useState } from "react";
          getFinalValue={handleEmailChange}
          type="email"
          isRequired={true}
-         error={email ? "" : error}
+        
        />
        <Button mt={4} onClick={handleSubmit}>
          Submit
