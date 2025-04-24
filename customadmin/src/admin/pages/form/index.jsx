@@ -24,26 +24,29 @@ import React, { useState } from "react";
    return (
      <Box>
        <TextBox
-         label="Name"
+         label="İsim"
          name="name"
-         placeholder="Enter your name"
+         placeholder="İsminizi Girin"
          initialValue={name}
          getFinalValue={handleNameChange}
          isRequired={true}
+         maxLength={20}
+         helpText="Tam isminiz"
          
        />
        <TextBox
-         label="Email"
+         label="E-Posta"
          name="email"
-         placeholder="Enter your email"
+         placeholder="E-posta Adresinizi Girin."
          initialValue={email}
          getFinalValue={handleEmailChange}
          type="email"
          isRequired={true}
+         helpText="E-posta adresiniz"
         
        />
        <Button mt={4} onClick={handleSubmit}>
-         Submit
+         Gönder
        </Button>
      </Box>
    );
