@@ -1,10 +1,11 @@
 import React, { useState } from "react";
  import { Box, Button } from "@chakra-ui/react";
- import TextBox from "../../../components/textbox/TextBox";
+ import { TextBox, TextArea } from "../../../components/textbox";
  
  const MyForm = () => {
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
+   const [description, setDescription] = useState("");
    
  
    const handleNameChange = (value) => {
@@ -14,10 +15,15 @@ import React, { useState } from "react";
    const handleEmailChange = (value) => {
      setEmail(value);
    };
+   const handleDescriptionChange = (value) => {
+    setDescription(value);
+  };
+
  
    const handleSubmit = () => {
     console.log("Final submitted name:", name);
     console.log("Final submitted email:", email);
+    console.log("Final submitted description:", description);
      
    };
  
@@ -32,6 +38,7 @@ import React, { useState } from "react";
          isRequired={true}
          maxLength={20}
          helpText="Tam isminiz"
+         showCharacterCount={true}
          
        />
        <TextBox
@@ -44,6 +51,17 @@ import React, { useState } from "react";
          isRequired={true}
          helpText="E-posta adresiniz"
         
+       />
+
+<TextArea
+         label="Açıklama"
+         name="description"
+         placeholder="Açıklamanızı girin"
+         initialValue={description}
+         getFinalValue={handleDescriptionChange}
+         isRequired={true}
+         maxLength={100}
+         helpText="Açıklamanız"
        />
        <Button mt={4} onClick={handleSubmit}>
          Gönder
