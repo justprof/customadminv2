@@ -1,12 +1,12 @@
 import React, { useState } from "react";
  import { Box, Button } from "@chakra-ui/react";
- import { TextBox, TextArea } from "../../../components/textbox";
+ import { TextBox,NumberBox, TextArea } from "../../../components/textbox";
  
  const MyForm = () => {
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
    const [description, setDescription] = useState("");
-   
+   const [age,setAge] = useState("");
  
    const handleNameChange = (value) => {
      setName(value);
@@ -19,11 +19,15 @@ import React, { useState } from "react";
     setDescription(value);
   };
 
+  const handleAgeChange = (value) => {
+    setAge(value);
+  };
  
    const handleSubmit = () => {
     console.log("Final submitted name:", name);
     console.log("Final submitted email:", email);
     console.log("Final submitted description:", description);
+    console.log("Final submitted age:", age);
      
    };
  
@@ -53,7 +57,7 @@ import React, { useState } from "react";
         
        />
 
-<TextArea
+        <TextArea
          label="Açıklama"
          name="description"
          placeholder="Açıklamanızı girin"
@@ -62,6 +66,20 @@ import React, { useState } from "react";
          isRequired={true}
          maxLength={100}
          helpText="Açıklamanız"
+       />
+
+        <NumberBox
+         label="Yaş"
+         name="age"
+         placeholder="Yaşınızı girin"
+         initialValue={age}
+         getFinalValue={handleAgeChange}
+         isRequired={true}
+         min={0}
+         max={120}
+         precision={2}
+         step={0.2}
+         helpText="Yaşınız"
        />
        <Button mt={4} onClick={handleSubmit}>
          Gönder
