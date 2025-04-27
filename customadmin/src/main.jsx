@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import store from "./store/store.js";
 import { createSystem, defaultConfig, ChakraProvider } from "@chakra-ui/react";
 
-// Chakra v3 uyumlu tema
 const system = createSystem(defaultConfig, {
   theme: {
     tokens: {

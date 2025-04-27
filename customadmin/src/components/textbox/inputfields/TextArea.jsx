@@ -22,7 +22,7 @@ const CustomTextArea = ({
   helpText,
   autoFocus = false,
   customValidation,
-  customErrorMessage,
+  customErrorMessage = "",
   ...props
 }) => {
   const [value, setValue] = useState(initialValue);
@@ -92,21 +92,6 @@ const CustomTextArea = ({
   );
 };
 
-CustomTextArea.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  placeholder: PropTypes.string,
-  initialValue: PropTypes.string,
-  getFinalValue: PropTypes.func.isRequired,
-  isRequired: PropTypes.bool,
-  disabled: PropTypes.bool,
-  readOnly: PropTypes.bool,
-  maxLength: PropTypes.number,
-  minLength: PropTypes.number,
-  helpText: PropTypes.string,
-  autoFocus: PropTypes.bool,
-  customValidation: PropTypes.func,
-  customErrorMessage: PropTypes.string,
-};
+
 
 export default CustomTextArea;
