@@ -5,6 +5,8 @@ import {
   FieldHelperText,
   FieldErrorText,
   Textarea,
+  InputGroup,
+  
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
@@ -23,6 +25,9 @@ const CustomTextArea = ({
   autoFocus = false,
   customValidation,
   customErrorMessage = "",
+  showCharacterCount=false,
+  startAddon,
+  endAddon,
   ...props
 }) => {
   const [value, setValue] = useState(initialValue);
@@ -71,6 +76,7 @@ const CustomTextArea = ({
   return (
     <Field.Root required={isRequired} invalid={!!error && isTouched}>
       {label && <FieldLabel>{label}</FieldLabel>}
+      <InputGroup startAddon={startAddon} endAddon={endAddon}>
       <Textarea
         name={name}
         placeholder={placeholder}
@@ -84,6 +90,7 @@ const CustomTextArea = ({
         borderColor={error && isTouched && !isFocused ? "red.500" : undefined}
         {...props}
       />
+      </InputGroup>
       {helpText && !error && <FieldHelperText>{helpText}</FieldHelperText>}
       {isTouched && error && !isFocused && (
         <FieldErrorText>{error}</FieldErrorText>

@@ -68,6 +68,7 @@ import React, { useState } from "react";
          isRequired={true}
          maxLength={100}
          helpText="Açıklamanız"
+         showCharacterCount={true}
        />
 
         <NumberBox
