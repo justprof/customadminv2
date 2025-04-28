@@ -43,6 +43,7 @@ import React, { useState } from "react";
          maxLength={20}
          helpText="Tam isminiz"
          showCharacterCount={true}
+         startAddon="#"
          
        />
        <TextBox
@@ -54,6 +55,7 @@ import React, { useState } from "react";
          type="email"
          isRequired={true}
          helpText="E-posta adresiniz"
+         endAddon="@example.com"
         
        />
 

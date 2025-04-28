@@ -5,8 +5,9 @@ import {
   FieldLabel,
   FieldErrorText,
   FieldHelperText,
+  InputGroup
+  
 } from "@chakra-ui/react";
-import PropTypes from "prop-types";
 
 const TextBox = ({
   name,
@@ -25,6 +26,8 @@ const TextBox = ({
   customValidation,
   customErrorMessage ="",
   showCharacterCount = false,
+  startAddon,
+  endAddon,
   ...props
 }) => {
   const [value, setValue] = useState(initialValue);
@@ -78,6 +81,7 @@ const TextBox = ({
   return (
     <Field.Root required={isRequired} invalid={!!error && isTouched}>
       {label && <FieldLabel>{label}</FieldLabel>}
+      <InputGroup startAddon="startAddon" endAddon={endAddon}>
       <Input
         type={type}
         name={name}
@@ -92,6 +96,7 @@ const TextBox = ({
         borderColor={error && isTouched && !isFocused ? "red.500" : undefined}
         {...props}
       />
+      </InputGroup>
       {showCharacterCount && maxLength && (
         <FieldHelperText mt={0}>
           {value.length}/{maxLength}
