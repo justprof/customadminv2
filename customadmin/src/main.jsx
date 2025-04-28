@@ -1,3 +1,4 @@
+import { ColorModeProvider } from "@/components/ui/color-mode"; 
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";

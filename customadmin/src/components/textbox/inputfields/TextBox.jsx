@@ -93,7 +93,7 @@ const TextBox = ({
         {...props}
       />
       {showCharacterCount && maxLength && (
-        <FieldHelperText>
+        <FieldHelperText mt={0}>
           {value.length}/{maxLength}
         </FieldHelperText>
       )}
