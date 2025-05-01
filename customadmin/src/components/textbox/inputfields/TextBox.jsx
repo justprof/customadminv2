@@ -81,7 +81,9 @@ const TextBox = ({
   return (
     <Field.Root required={isRequired} invalid={!!error && isTouched}>
       {label && <FieldLabel>{label}</FieldLabel>}
-      <InputGroup startAddon="startAddon" endAddon={endAddon}>
+      <InputGroup  
+         startAddon={name === "fullname" ? startAddon : undefined}
+         endAddon={endAddon}>
       <Input
         type={type}
         name={name}
@@ -98,7 +100,7 @@ const TextBox = ({
       />
       </InputGroup>
       {showCharacterCount && maxLength && (
-        <FieldHelperText mt={0}>
+        <FieldHelperText width="4.5rem" mr= {startAddon ? 10 : 0} mt={0} >
           {value.length}/{maxLength}
         </FieldHelperText>
       )}

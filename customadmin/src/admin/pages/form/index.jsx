@@ -56,7 +56,8 @@ import React, { useState } from "react";
          isRequired={true}
          helpText="E-posta adresiniz"
          endAddon="@example.com"
-        
+         startAddon="tl"
+
        />
 
         <TextArea

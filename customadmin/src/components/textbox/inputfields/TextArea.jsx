@@ -6,7 +6,7 @@ import {
   FieldErrorText,
   Textarea,
   InputGroup,
-  
+  Flex
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
