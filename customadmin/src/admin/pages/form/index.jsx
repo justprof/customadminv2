@@ -1,12 +1,13 @@
 import React, { useState } from "react";
  import { Box, Button } from "@chakra-ui/react";
- import { TextBox,NumberBox, TextArea } from "../../../components/textbox";
+ import { TextBox,NumberBox, TextArea, SelectBox, } from "../../../components/textbox";
  
  const MyForm = () => {
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
    const [description, setDescription] = useState("");
    const [age,setAge] = useState("");
+   const [gender, setGender] = useState("");
  
    const handleNameChange = (value) => {
      setName(value);
@@ -28,8 +29,15 @@ import React, { useState } from "react";
     console.log("Final submitted email:", email);
     console.log("Final submitted description:", description);
     console.log("Final submitted age:", age);
-     
+    console.log("Final submitted gender:", gender);
+
+
    };
+
+   const handleGenderChange = (value) => {
+    setGender(value);
+  };
+
  
    return (
      <Box>
@@ -85,6 +93,22 @@ import React, { useState } from "react";
          step={0.2}
          helpText="Yaşınız"
        />
+
+        <SelectBox
+         label="Cinsiyet"
+         name="gender"
+         placeholder="Cinsiyetinizi seçin"
+         initialValue={gender}
+         getFinalValue={handleGenderChange}
+         isRequired={true}
+         options={[
+           { value: "male", label: "Erkek" },
+           { value: "female", label: "Kadın" },
+           { value: "other", label: "Diğer" },
+         ]}
+         helpText="Cinsiyetiniz"
+       />
+
        <Button mt={4} onClick={handleSubmit}>
          Gönder
        </Button>
