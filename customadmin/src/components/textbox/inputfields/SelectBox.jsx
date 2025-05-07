@@ -25,6 +25,7 @@ const SelectBox = ({
   startAddon,
   endAddon,
   options = [],
+  icon,
   ...props
 }) => {
   const [value, setValue] = useState(initialValue);
@@ -80,6 +81,7 @@ const SelectBox = ({
           onFocus={handleFocus}
           disabled={disabled}
           autoFocus={autoFocus}
+          icon={icon}
           borderColor={error && isTouched && !isFocused ? "red.500" : undefined}
           {...props}
         >
@@ -120,6 +122,7 @@ SelectBox.propTypes = {
       label: PropTypes.string.isRequired,
     })
   ).isRequired,
+  icon: PropTypes.element,
 };
 
 export default SelectBox;

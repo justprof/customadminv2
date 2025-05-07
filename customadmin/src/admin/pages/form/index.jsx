@@ -1,7 +1,10 @@
 import React, { useState } from "react";
  import { Box, Button } from "@chakra-ui/react";
  import { TextBox,NumberBox, TextArea, SelectBox, } from "../../../components/textbox";
- 
+ import { FaGenderless } from "react-icons/fa";
+ import { Icon } from "@chakra-ui/react";
+
+
  const MyForm = () => {
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
@@ -51,7 +54,7 @@ import React, { useState } from "react";
          maxLength={20}
          helpText="Tam isminiz"
          showCharacterCount={true}
-         startAddon="#"
+         startAddon="@"
          
        />
        <TextBox
@@ -95,7 +98,13 @@ import React, { useState } from "react";
        />
 
         <SelectBox
-         label="Cinsiyet"
+        label={
+          <>
+            <Icon as={FaGenderless} mr={2} />
+            Cinsiyet
+          </>
+        }
+         
          name="gender"
          placeholder="Cinsiyetinizi seçin"
          initialValue={gender}
@@ -106,6 +115,7 @@ import React, { useState } from "react";
            { value: "female", label: "Kadın" },
            { value: "other", label: "Diğer" },
          ]}
+         
          helpText="Cinsiyetiniz"
        />
 
