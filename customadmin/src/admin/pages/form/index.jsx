@@ -10,7 +10,9 @@ import React, { useState } from "react";
    const [email, setEmail] = useState("");
    const [description, setDescription] = useState("");
    const [age,setAge] = useState("");
-   const [gender, setGender] = useState("");
+   const [gender, setGender] = useState([]);
+
+
  
    const handleNameChange = (value) => {
      setName(value);
@@ -115,7 +117,8 @@ import React, { useState } from "react";
            { value: "female", label: "Kadın" },
            { value: "other", label: "Diğer" },
          ]}
-         
+         isMulti={true}
+         isSearchable={true}
          helpText="Cinsiyetiniz"
        />
 
