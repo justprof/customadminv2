@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { FaChevronDown, FaTimes, FaChevronUp } from "react-icons/fa";
 import PropTypes from "prop-types";
+import { useColorModeValue } from "@/components/ui/color-mode";
 
 const SelectBox = ({
   name,
@@ -205,7 +206,7 @@ const SelectBox = ({
                 />
               </Tag.EndElement>
             </Tag.Root>
-          
+         
 
           <Input
             ref={inputRef}
