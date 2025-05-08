@@ -1,8 +1,9 @@
 import React, { useState } from "react";
- import { Box, Button } from "@chakra-ui/react";
- import { TextBox,NumberBox, TextArea, SelectBox, } from "../../../components/textbox";
- import { FaGenderless } from "react-icons/fa";
- import { Icon } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
+import { TextBox, NumberBox, TextArea } from "../../../components/textbox";
+import SelectBox from "../../../components/selectbox";
+import { FaGenderless } from "react-icons/fa";
+import { Icon } from "@chakra-ui/react";
 
 
  const MyForm = () => {
