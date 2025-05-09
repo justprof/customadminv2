@@ -4,7 +4,7 @@ import { TextBox, NumberBox, TextArea } from "../../../components/textbox";
 import SelectBox from "../../../components/selectbox";
 import { FaGenderless } from "react-icons/fa";
 import { Icon } from "@chakra-ui/react";
-
+import { FileUpload, FileTypes } from "../../../components/fileupload";
 
  const MyForm = () => {
    const [name, setName] = useState("");
@@ -13,7 +13,7 @@ import { Icon } from "@chakra-ui/react";
    const [age,setAge] = useState("");
    const [gender, setGender] = useState([]);
    const [country, setCountry] = useState("");
-
+   const [file, setFile] = useState("");
  
    const handleNameChange = (value) => {
      setName(value);
@@ -37,7 +37,7 @@ import { Icon } from "@chakra-ui/react";
     console.log("Final submitted age:", age);
     console.log("Final submitted gender:", gender);
     console.log("Final submitted country:", country);
-
+    console.log("Uploaded file:", file);
    };
 
    const handleGenderChange = (value) => {
@@ -47,6 +47,11 @@ import { Icon } from "@chakra-ui/react";
   const handleCountryChange = (value) => {
     setCountry(value);
   };
+
+  const handleFileChange = (value) => {
+    setFile(value);
+  };
+
 
  
    return (
@@ -141,6 +146,16 @@ import { Icon } from "@chakra-ui/react";
         isMulti={false}
         isSearchable={true}
         helpText="Ülkeniz"
+      />
+       <FileUpload
+        label="Dosya Yükle"
+        name="file"
+        acceptedFileTypes={FileTypes.IMAGE}
+        maxFileSize={2}
+        getFinalValue={handleFileChange}
+        isRequired={true}
+        valueType="base64"
+        helpText="Yüklemek istediğiniz dosyayı seçin."
       />
        <Button mt={4} onClick={handleSubmit}>
          Gönder
