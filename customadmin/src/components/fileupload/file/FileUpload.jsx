@@ -8,7 +8,7 @@ import {
   Icon,
   IconButton,
   VisuallyHidden,
-  
+
 } from "@chakra-ui/react";
 import {
   Field,
@@ -20,7 +20,6 @@ import { FaUpload, FaFileAlt, FaTimes } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { FileTypes } from "../enums";
 
-// ⚠️ useColorModeValue Chakra UI v3'e uygun import edildi:
 import { useColorModeValue } from "@/components/ui/color-mode";
 
 const FileUpload = ({
