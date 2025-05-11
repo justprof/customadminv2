@@ -97,8 +97,29 @@ const CustomTextArea = ({
       )}
     </Field.Root>
   );
+  
 };
 
+CustomTextArea.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  initialValue: PropTypes.string,
+  getFinalValue: PropTypes.func,
+  getFinalValue: PropTypes.func,
+  isRequired: PropTypes.bool,
+  disabled: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  maxLength: PropTypes.number,
+  minLength: PropTypes.number,
+  helpText: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  customValidation: PropTypes.func,
+  customErrorMessage: PropTypes.string,
+  showCharacterCount: PropTypes.bool,
+  leftAddon: PropTypes.node,
+  rightAddon: PropTypes.node,
+};
 
 
 export default CustomTextArea;

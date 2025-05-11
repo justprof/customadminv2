@@ -306,7 +306,7 @@ SelectBox.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  getFinalValue: PropTypes.func.isRequired,
+  getFinalValue: PropTypes.func,
   isRequired: PropTypes.bool,
   disabled: PropTypes.bool,
   readOnly: PropTypes.bool,

@@ -8,7 +8,7 @@ import {
   InputGroup
   
 } from "@chakra-ui/react";
-
+import PropTypes from "prop-types";
 const TextBox = ({
   name,
   label,
@@ -112,6 +112,26 @@ const TextBox = ({
   );
 };
 
-
+TextBox.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  initialValue: PropTypes.string,
+  getFinalValue: PropTypes.func,
+  getFinalValue: PropTypes.func,
+  isRequired: PropTypes.bool,
+  type: PropTypes.oneOf(["text", "email", "password", "number"]),
+  disabled: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  maxLength: PropTypes.number,
+  minLength: PropTypes.number,
+  helpText: PropTypes.string,
+  autoFocus: PropTypes.bool,
+  customValidation: PropTypes.func,
+  customErrorMessage: PropTypes.string,
+  showCharacterCount: PropTypes.bool,
+  startAddon: PropTypes.node,
+  endAddon: PropTypes.node,
+};
 
 export default TextBox;
