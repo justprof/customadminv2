@@ -22,7 +22,7 @@ import { useColorModeValue } from "@/components/ui/color-mode";
    return (
     <Box bg={bgColor} color={textColor} p={4}>
 
-<Form onSubmit={handleSubmit}>
+<Form onSubmit={handleSubmit} buttonPosition="left"> 
         <TextBox
           label="İsim"
           name="name"
