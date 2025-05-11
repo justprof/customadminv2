@@ -38,7 +38,7 @@ import { setPageHeader } from "../../../store/root/rootSlice";
           maxLength={20}
           helpText="Tam isminiz"
           showCharacterCount={true}
-          leftAddon="@"
+          startAddon="#"
         />
         <TextBox
           label="E-posta"
@@ -47,7 +47,7 @@ import { setPageHeader } from "../../../store/root/rootSlice";
           type="email"
           isRequired={true}
           helpText="E-posta adresiniz"
-          rightAddon="@example.com"
+          endAddon="@example.com"
         />
         <TextArea
           label="Açıklama"

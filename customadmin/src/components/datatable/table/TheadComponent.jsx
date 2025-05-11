@@ -55,11 +55,8 @@ const TheadComponent = ({
           )
       )}
       {editActive && <Table.ColumnHeader>Edit</Table.ColumnHeader>}
-      {deleteActive && (
-        <Table.ColumnHeader onClick={() => handleDelete(selectedRows)}>
-          Delete
-        </Table.ColumnHeader>
-      )}
+      {deleteActive && <Table.ColumnHeader>Delete</Table.ColumnHeader>}
+
     </Table.Row>
   );
 };
