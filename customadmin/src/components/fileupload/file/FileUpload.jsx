@@ -31,9 +31,10 @@ const FileUpload = ({
   isRequired = false,
   valueType = "base64",
   helpText,
+  initialValue = null,
   ...props
 }) => {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(initialValue);
   const [error, setError] = useState("");
   const [isTouched, setIsTouched] = useState(false);
 
@@ -43,31 +44,12 @@ const FileUpload = ({
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    if (!selectedFile) return;
-
-    const fileExtension = selectedFile.name.split(".").pop().toLowerCase();
-    const acceptedExtensions = acceptedFileTypes
-      .split(",")
-      .map((type) => type.trim().split("/").pop());
-
-    const mainType = selectedFile.type.split("/")[0];
-
-    if (
-      !acceptedExtensions.includes(fileExtension) &&
-      !acceptedExtensions.includes(mainType)
-    ) {
-      setError(
-        `Bu dosya türü kabul edilmiyor. Kabul edilen türler: ${acceptedFileTypes}`
-      );
-      setFile(null);
-      setIsTouched(true);
-      return;
-    }
+    if (!selectedFile) 
 
     if (maxFileSize && selectedFile.size > maxFileSize * 1024 * 1024) {
       setError(`Dosya boyutu ${maxFileSize} MB'dan büyük olamaz.`);
       setFile(null);
-      setIsTouched(true);
+      
       return;
     }
 
@@ -89,25 +71,26 @@ const FileUpload = ({
     }
 
     setError("");
-    setIsTouched(false);
+    
   };
 
   const handleBlur = () => {
     setIsTouched(true);
     if (isRequired && !file) {
       setError(`${label} zorunludur.`);
+    } else {
+      setError("");
     }
   };
 
   const handleRemove = () => {
     setFile(null);
     getFinalValue?.(null);
-    setError("");
-    setIsTouched(false);
+   
   };
 
   return (
-    <Field.Root required={isRequired} invalid={!!error}>
+    <Field.Root required={isRequired} invalid={!!error && isTouched}>
       {label && <FieldLabel>{label}</FieldLabel>}
 
       <VStack align="start" spacing={2}>
@@ -154,7 +137,7 @@ const FileUpload = ({
         )}
       </VStack>
 
-      {helpText && !error && <FieldHelperText>{helpText}</FieldHelperText>}
+      {helpText && !error && !file && <FieldHelperText>{helpText}</FieldHelperText>}
       {isTouched && error && <FieldErrorText>{error}</FieldErrorText>}
     </Field.Root>
   );
@@ -165,10 +148,11 @@ FileUpload.propTypes = {
   label: PropTypes.string,
   acceptedFileTypes: PropTypes.string.isRequired,
   maxFileSize: PropTypes.number,
-  getFinalValue: PropTypes.func,
+  getFinalValue: PropTypes.func.isRequired,
   isRequired: PropTypes.bool,
   valueType: PropTypes.oneOf(["base64", "file"]),
   helpText: PropTypes.string,
+  initialValue: PropTypes.any,
 };
 
 export default FileUpload;
