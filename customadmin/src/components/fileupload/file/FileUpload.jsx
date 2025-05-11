@@ -137,7 +137,9 @@ const FileUpload = ({
         )}
       </VStack>
 
-      {helpText && !error && !file && <FieldHelperText>{helpText}</FieldHelperText>}
+      {helpText && !error && !file && (
+       <FieldHelperText>{helpText}</FieldHelperText>
+       )}
       {isTouched && error && <FieldErrorText>{error}</FieldErrorText>}
     </Field.Root>
   );
@@ -148,7 +150,7 @@ FileUpload.propTypes = {
   label: PropTypes.string,
   acceptedFileTypes: PropTypes.string.isRequired,
   maxFileSize: PropTypes.number,
-  getFinalValue: PropTypes.func.isRequired,
+  getFinalValue: PropTypes.func,
   isRequired: PropTypes.bool,
   valueType: PropTypes.oneOf(["base64", "file"]),
   helpText: PropTypes.string,
