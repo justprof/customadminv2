@@ -5,7 +5,13 @@ import { data } from "../../../data/FakeUserData";
 import avatar from "../../../assets/pp.webp";
 import { setPageHeader } from "../../../store/root/rootSlice";
 import { useDispatch } from "react-redux";
-import { MdEdit, MdDeleteForever } from "react-icons/md";
+import {
+  MdEdit,
+  MdDeleteForever,
+  MdFileDownload,
+  MdFileUpload,
+} from "react-icons/md";
+import { IoIosAdd } from "react-icons/io";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -40,6 +46,12 @@ const Dashboard = () => {
     { key: "Delete", text: "Sil", icon: MdDeleteForever },
   ];
 
+  const toolbarButtons = [
+    { key: "Add", header: "Yeni Ekle", icon: IoIosAdd },
+    { key: "Export", header: "Export", icon: MdFileDownload },
+    { key: "Import", header: "Import", icon: MdFileUpload },
+  ];
+
   const fetchData = ({ currentPage, rowsPerPageState, searchTerm }) => {
     console.log("Fetching data with Params", {
       currentPage,
@@ -57,6 +69,14 @@ const Dashboard = () => {
     } else if (key === "Delete") {
       console.log(key, rowData);
     }
+  };
+
+const handleToolbarButtonClick = (key) => {
+    console.log("Tıklanan Buton:", key);
+    console.log(
+      "Seçili Satırlar:",
+      tableData.filter((row) => row.selected)
+    );
   };
 
   return (
@@ -85,6 +105,8 @@ const Dashboard = () => {
           }}
           contextMenuItems={contextMenuItems}
           onItemClick={handleItemClick}
+          toolbarButtons={toolbarButtons}
+          onToolbarButtonClick={handleToolbarButtonClick}
         />
       </VStack>
     </Box>
