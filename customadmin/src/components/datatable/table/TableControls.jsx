@@ -10,7 +10,7 @@ import {
 import { Menu } from "@chakra-ui/react";
 import { Tooltip as ChakraTooltip } from "@chakra-ui/react";
 import { Checkbox } from "@chakra-ui/react";
-import { IoMdRefresh } from "react-icons/io";
+import { IoMdRefresh, IoIosAdd } from "react-icons/io";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import { BiHide } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
@@ -43,12 +43,13 @@ const TableControls = ({
 }) => {
   return (
     <Flex justify="space-between" mb={4} gap={4}>
-      <Input
-        placeholder="Ara..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        width="auto"
-      />
+      <HStack spacing={2}>
+        <Tooltip label="Yeni Kayıt Ekle" placement="top-start">
+          <Button>
+            <IoIosAdd size={30} />
+          </Button>
+        </Tooltip>
+      </HStack>
 
       <HStack spacing={2}>
         {selectable && selectedRows.length > 0 && (
@@ -83,6 +84,7 @@ const TableControls = ({
           <Portal>
             <Menu.Positioner>
               <Menu.Content>
+
                 {columns.map(
                   (col) =>
                     col.visible !== false && (
@@ -110,6 +112,12 @@ const TableControls = ({
             </Menu.Positioner>
           </Portal>
         </Menu.Root>
+        <Input
+          placeholder="Ara..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          width="auto"
+        />
       </HStack>
     </Flex>
   );
