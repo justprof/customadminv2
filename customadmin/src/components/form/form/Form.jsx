@@ -45,6 +45,7 @@ Form.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   buttonPosition: PropTypes.oneOf(["left", "center", "right"]),
+  
 };
 
 export default Form;

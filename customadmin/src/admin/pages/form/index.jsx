@@ -74,6 +74,7 @@ import { useColorModeValue } from "@/components/ui/color-mode";
           isMulti={true}
           isSearchable={true}
           helpText="Cinsiyetiniz"
+          isRequired={true}
         />
         <SelectBox
           label="Ülke"
