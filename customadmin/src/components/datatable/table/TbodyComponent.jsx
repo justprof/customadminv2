@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  Checkbox,
   Table,
-  Flex,
-  Spinner,
-  Text,
+  Checkbox,
   Button,
+  Flex,
+  Text,
+  Spinner,
 } from "@chakra-ui/react";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
 
@@ -24,6 +24,8 @@ const TbodyComponent = ({
   deleteActive,
   loading,
 }) => {
+  const primaryKey = columns.find((col) => col.primaryKey)?.key || "id";
+
   if (loading) {
     return (
       <Table.Row>
@@ -50,65 +52,69 @@ const TbodyComponent = ({
 
   return (
     <>
-      {selectedData.map((item) => (
-        <Table.Row
-          key={item.id}
-          onContextMenu={(e) => handleRightClick(e, item)}
-          _hover={{ bg: "gray.100" }}
-        >
-          {selectable && (
-            <Table.Cell>
-              <Checkbox.Root
-                defaultChecked={selectedRows.includes(item.id)}
-                onCheckedChange={() =>
-                  handleSelectRow(item.id, selectedRows, setSelectedRows)
-                }
-              >
-                <Checkbox.HiddenInput />
-                <Checkbox.Control>
-                  <Checkbox.Indicator />
-                </Checkbox.Control>
-              </Checkbox.Root>
-            </Table.Cell>
-          )}
+      {selectedData.map((item) => {
+        const rowId = item[primaryKey];
 
-          {columns.map(({ key, render }) =>
-            !hiddenColumns.includes(key) ? (
-              <Table.Cell key={key}>
-                {render ? render(item[key], item) : item[key]}
+        return (
+          <Table.Row
+            key={rowId}
+            onContextMenu={(e) => handleRightClick(e, item)}
+            _hover={{ bg: "gray.100" }}
+          >
+            {selectable && (
+              <Table.Cell>
+                <Checkbox.Root
+                  defaultChecked={selectedRows.includes(rowId)}
+                  onCheckedChange={() =>
+                    handleSelectRow(rowId, selectedRows, setSelectedRows)
+                  }
+                >
+                  <Checkbox.HiddenInput />
+                  <Checkbox.Control>
+                    <Checkbox.Indicator />
+                  </Checkbox.Control>
+                </Checkbox.Root>
               </Table.Cell>
-            ) : null
-          )}
+            )}
 
-          {editActive && (
-            <Table.Cell>
-              <Flex justify="center">
-              <Button
-                  colorScheme="blue"
-                  onClick={() => {
-                    const primaryKey = columns.find(
-                      (col) => col.primaryKey
-                    ).key;
-                    onEdit(item[primaryKey]);
-                  }}
-                >                
-                  <MdEdit />
-                </Button>
-              </Flex>
-            </Table.Cell>
-          )}
+            {columns.map(
+              ({ key, render, visible, width }) =>
+                !hiddenColumns.includes(key) &&
+                visible !== false && (
+                  <Table.Cell key={key} maxW={width || "auto"}>
+                    {render ? render(item[key], item) : item[key]}
+                  </Table.Cell>
+                )
+            )}
 
-          {deleteActive && (
-            <Table.Cell>
-              <Flex justify="center">
-                <Button colorScheme="red" onClick={() => handleDelete([item.id])}>
-                  <MdDeleteForever />
-                </Button>
-              </Flex>
-            </Table.Cell>
-          )}
-        </Table.Row>
-      ))}
+            {editActive && (
+              <Table.Cell>
+                <Flex justify="center">
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => onEdit(item[primaryKey])}
+                  >
+                    <MdEdit />
+                  </Button>
+                </Flex>
+              </Table.Cell>
+            )}
+
+            {deleteActive && (
+              <Table.Cell>
+                <Flex justify="center">
+                  <Button
+                    colorScheme="red"
+                    onClick={() => handleDelete([item[primaryKey]])}
+                  >
+                    <MdDeleteForever />
+                  </Button>
+                </Flex>
+              </Table.Cell>
+            )}
+          </Table.Row>
+        );
+      })}
     </>
   );
 };

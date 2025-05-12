@@ -46,6 +46,12 @@ const TableControls = ({
   return (
     <Flex justify="space-between" mb={4} gap={4} align={"center"}>
       <HStack spacing={2}>
+      <Input
+          placeholder="Ara..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          width="auto"
+        />
         <Tooltip label="Yeni Kayıt Ekle">
           <Button>
             <IoIosAdd size={30} />
@@ -114,12 +120,7 @@ const TableControls = ({
           </Portal>
         </Menu.Root>
 
-        <Input
-          placeholder="Ara..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          width="auto"
-        />
+        
       </HStack>
     </Flex>
   );
