@@ -6,24 +6,116 @@ import {
   Portal,
   CloseButton,
   Field,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
+import Form from "../../form";
+import { TextBox, NumberBox, TextArea } from "../../../components/textbox";
+import SelectBox from "../../../components/selectbox";
+import { FileTypes, FileUpload } from "../../../components/fileupload";
+import { useColorModeValue } from "@/components/ui/color-mode";
 
 const DataTableDrawer = ({ isOpen, onClose, columnsOptions, onSave }) => {
   const [formData, setFormData] = useState({});
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (name, value) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSave = () => {
+  const handleSubmit = () => {
     onSave(formData);
     onClose();
   };
+  const bgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("black", "white");
 
+  const renderInput = (option) => {
+    switch (option.type) {
+      case "String":
+        return (
+          <TextBox
+            key={option.key}
+            label={option.label}
+            name={option.key}
+            placeholder={option.placeholder || ""}
+            isRequired={option.isRequired || false}
+            maxLength={option.maxLength || undefined}
+            helpText={option.helpText || ""}
+            showCharacterCount={option.showCharacterCount || false}
+            leftAddon={option.leftAddon || null}
+            rightAddon={option.rightAddon || null}
+            onChange={(e) => handleChange(option.key, e.target.value)}
+          />
+        );
+      case "Number":
+        return (
+          <NumberBox
+            key={option.key}
+            label={option.label}
+            name={option.key}
+            placeholder={option.placeholder || ""}
+            isRequired={option.isRequired || false}
+            min={option.min || undefined}
+            max={option.max || undefined}
+            precision={option.precision || undefined}
+            step={option.step || undefined}
+            helpText={option.helpText || ""}
+            onChange={(e) =>
+              handleChange(option.key, parseFloat(e.target.value))
+            }
+          />
+        );
+      case "TextArea":
+        return (
+          <TextArea
+            key={option.key}
+            label={option.label}
+            name={option.key}
+            placeholder={option.placeholder || ""}
+            isRequired={option.isRequired || false}
+            maxLength={option.maxLength || undefined}
+            helpText={option.helpText || ""}
+            showCharacterCount={option.showCharacterCount || false}
+            onChange={(e) => handleChange(option.key, e.target.value)}
+          />
+        );
+      case "Select":
+        return (
+          <SelectBox
+            key={option.key}
+            label={option.label}
+            name={option.key}
+            placeholder={option.placeholder || ""}
+            options={option.options || []}
+            isMulti={option.isMulti || false}
+            isSearchable={option.isSearchable || false}
+            helpText={option.helpText || ""}
+            isRequired={option.isRequired || false}
+            onChange={(value) => handleChange(option.key, value)}
+          />
+        );
+      case "File":
+        return (
+          <FileUpload
+            key={option.key}
+            label={option.label}
+            name={option.key}
+            acceptedFileTypes={option.acceptedFileTypes || FileTypes.ALL}
+            maxFileSize={option.maxFileSize || undefined}
+            isRequired={option.isRequired || false}
+            valueType={option.valueType || "base64"}
+            helpText={option.helpText || ""}
+            onChange={(file) => handleChange(option.key, file)}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+  
   return (
     <Drawer.Root open={isOpen} onClose={onClose}>
       <Portal>
@@ -32,32 +124,27 @@ const DataTableDrawer = ({ isOpen, onClose, columnsOptions, onSave }) => {
           <Drawer.Content maxW="lg">
             <Drawer.Header>
               <Drawer.Title>Yeni Kayıt Ekle</Drawer.Title>
+              <Flex my={2}>
+              <Button colorScheme="blue" onClick={handleSubmit}>
+                Kaydet
+              </Button>
+              </Flex>
             </Drawer.Header>
 
             <Drawer.Body>
-              {columnsOptions.map((option) => (
-                <Field.Root key={option.key} mb={4}>
-                  <Field.Label>{option.label}</Field.Label>
-                  <Field.Control>
-                    <Field.Input
-                      as={Input}
-                      name={option.key}
-                      type={option.type === "Number" ? "number" : "text"}
-                      onChange={handleChange}
-                    />
-                  </Field.Control>
-                </Field.Root>
-              ))}
+            <Box bg={bgColor} color={textColor} p={4}>
+             <Form
+              onSubmit={handleSubmit}
+              buttonPosition="left"
+              defaultButton={false}
+             >
+              {columnsOptions.map((option) => renderInput(option))}
+             </Form>
+            </Box>
+              
             </Drawer.Body>
 
-            <Drawer.Footer display="flex" justifyContent="flex-end" gap={3}>
-              <Button variant="outline" onClick={onClose}>
-                İptal
-              </Button>
-              <Button colorScheme="blue" onClick={handleSave}>
-                Kaydet
-              </Button>
-            </Drawer.Footer>
+            <Drawer.Footer />
 
             <Drawer.CloseTrigger asChild>
               <CloseButton position="absolute" top={2} right={2} />
