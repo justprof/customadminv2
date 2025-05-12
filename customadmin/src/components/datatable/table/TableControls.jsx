@@ -41,6 +41,7 @@ const TableControls = ({
   hiddenColumns,
   toggleColumnVisibility,
   setHiddenColumns,
+  
 }) => {
   return (
     <Flex justify="space-between" mb={4} gap={4} align={"center"}>

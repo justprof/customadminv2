@@ -33,6 +33,8 @@ const DataTable = ({
   rowsPerPageOptions = [5, 10, 20, 50],
   contextMenuItems = [],
   onItemClick,
+  
+  onToolbarButtonClick,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -100,7 +102,10 @@ const DataTable = ({
       onDelete(rowId);
     }
   };
-
+  const handleToolbarButtonClick = (key) => {
+    const selectedData = data.filter((row) => selectedRows.includes(row.id));
+    console.log("Seçili Satırlar:", key, selectedData);
+  };
   const sortedData = useMemo(
     () => getSortedData(data, sortConfig),
     [data, sortConfig]
@@ -232,10 +237,11 @@ DataTable.propTypes = {
     PropTypes.shape({
       key: PropTypes.string.isRequired,
       text: PropTypes.string.isRequired,
-      icon: PropTypes.elementType.isRequired,
+      icon: PropTypes.elementType,
     })
   ),
-  onItemClick: PropTypes.func.isRequired,
+  onToolbarButtonClick: PropTypes.func.isRequired,
+  
 };
 
 export default DataTable;
