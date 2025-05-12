@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react";
 import { Table } from "@chakra-ui/react";
 import Pagination from "../plugin/Pagination";
 import PropTypes from "prop-types";
-
+import DataTableDrawer from "../plugin/DataTableDrawer";
 import {
   getSortedData,
   getFilteredData,
@@ -35,6 +35,7 @@ const DataTable = ({
   onItemClick,
   onToolbarButtonClick,
   defaultAddButton = false,
+  columnsOptions = [],
   toolbarButtons = [],
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,6 +46,8 @@ const DataTable = ({
   const [selectedRows, setSelectedRows] = useState([]);
   const [contextMenu, setContextMenu] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [tableData, setTableData] = useState(data);
 
   const tableBgColor = "white";
   const tableBorderColor = "gray.200";
@@ -106,13 +109,20 @@ const DataTable = ({
     }
   };
 
-  const handleToolbarButtonClick = (key) => {
+  const handleToolbarButtonClick = (key) => { 
+    if (key === "DefaultAdd") {
+      setIsDrawerOpen(true);
+    }
     const primaryKey = columns.find((col) => col.primaryKey)?.key || "id";
     const selectedData = data.filter((row) =>
       selectedRows.includes(row[primaryKey])
     );
     console.log("Seçili Satırlar:", key, selectedData);
     if (onToolbarButtonClick) onToolbarButtonClick(key, selectedData);
+  };
+
+  const handleSave = (newData) => {
+    setTableData((prevData) => [...prevData, newData]);
   };
 
   const sortedData = useMemo(
@@ -148,7 +158,7 @@ const DataTable = ({
         setHiddenColumns={setHiddenColumns}
         toolbarButtons={toolbarButtons}
         onToolbarButtonClick={handleToolbarButtonClick}
-        defaultAddButton={defaultAddButton}
+        defaultAddButton={defaultAddButton} // Yeni prop
       />
 
       <Table.Root variant="striped" colorScheme="gray" bg={tableBgColor}>
@@ -213,6 +223,13 @@ const DataTable = ({
         setRowsPerPage={setRowsPerPageState}
         rowsPerPageOptions={rowsPerPageOptions}
       />
+      <DataTableDrawer
+       isOpen={isDrawerOpen}
+       onClose={() => setIsDrawerOpen(false)}
+       columnsOptions={columnsOptions}
+       onSave={handleSave}
+      />
+
     </Box>
   );
 };
@@ -249,6 +266,13 @@ DataTable.propTypes = {
   ),
   onToolbarButtonClick: PropTypes.func.isRequired,
   defaultAddButton: PropTypes.bool,
+  columnsOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+    })
+  ),
   toolbarButtons: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string.isRequired,
