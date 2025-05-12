@@ -8,13 +8,13 @@ import {
   Portal,
   Menu,
   Checkbox,
+  Icon,
 } from "@chakra-ui/react";
 import { Tooltip as ChakraTooltip } from "@chakra-ui/react";
 import { IoMdRefresh, IoIosAdd } from "react-icons/io";
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import { BiHide } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
-
 
 const Tooltip = ({ label, children }) => {
   return (
@@ -41,25 +41,43 @@ const TableControls = ({
   hiddenColumns,
   toggleColumnVisibility,
   setHiddenColumns,
-  
+  toolbarButtons,
+  onToolbarButtonClick,
+  defaultAddButton,
 }) => {
   return (
-    <Flex justify="space-between" mb={4} gap={4} align={"center"}>
+    <Flex justify="space-between" mb={4} gap={4} align="center" wrap="wrap">
+      <HStack spacing={2} flexWrap="wrap">
+        {/* Default Add Button */}
+        {defaultAddButton && (
+          <Tooltip label="Yeni" placement="top">
+            <Button onClick={() => onToolbarButtonClick("DefaultAdd")}>
+              <Icon as={IoIosAdd} mr={2} />
+              Yeni
+            </Button>
+          </Tooltip>
+        )}
+
+        {/* Ekstra Toolbar Butonları */}
+        {toolbarButtons &&
+          toolbarButtons.map((btn) => (
+            <Tooltip key={btn.key} label={btn.header} placement="top">
+              <Button onClick={() => onToolbarButtonClick(btn.key)}>
+                {btn.icon && <Icon as={btn.icon} mr={2} />}
+                {btn.header}
+              </Button>
+            </Tooltip>
+          ))}
+      </HStack>
+
       <HStack spacing={2}>
-      <Input
+        <Input
           placeholder="Ara..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           width="auto"
         />
-        <Tooltip label="Yeni Kayıt Ekle">
-          <Button>
-            <IoIosAdd size={30} />
-          </Button>
-        </Tooltip>
-      </HStack>
 
-      <HStack spacing={2}>
         {selectable && selectedRows.length > 0 && (
           <Tooltip label="Tümünü Sil">
             <Button
@@ -119,8 +137,6 @@ const TableControls = ({
             </Menu.Positioner>
           </Portal>
         </Menu.Root>
-
-        
       </HStack>
     </Flex>
   );

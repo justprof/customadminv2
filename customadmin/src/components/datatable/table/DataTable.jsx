@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Box} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { Table } from "@chakra-ui/react";
 import Pagination from "../plugin/Pagination";
 import PropTypes from "prop-types";
@@ -33,8 +33,9 @@ const DataTable = ({
   rowsPerPageOptions = [5, 10, 20, 50],
   contextMenuItems = [],
   onItemClick,
-  
   onToolbarButtonClick,
+  defaultAddButton = false,
+  toolbarButtons = [],
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
@@ -97,20 +98,23 @@ const DataTable = ({
   };
 
   const handleDelete = async (rowId) => {
-    const primaryKey = columns.find((col) => col.primaryKey).key;
+    const primaryKey = columns.find((col) => col.primaryKey)?.key || "id";
     const rowData = data.find((row) => row[primaryKey] === rowId);
     const confirm = await showConfirmModal([rowId]);
     if (confirm) {
       onDelete(rowId);
     }
   };
+
   const handleToolbarButtonClick = (key) => {
-    const primaryKey = columns.find((col) => col.primaryKey).key;
+    const primaryKey = columns.find((col) => col.primaryKey)?.key || "id";
     const selectedData = data.filter((row) =>
       selectedRows.includes(row[primaryKey])
     );
     console.log("Seçili Satırlar:", key, selectedData);
+    if (onToolbarButtonClick) onToolbarButtonClick(key, selectedData);
   };
+
   const sortedData = useMemo(
     () => getSortedData(data, sortConfig),
     [data, sortConfig]
@@ -129,12 +133,7 @@ const DataTable = ({
   );
 
   return (
-    <Box
-      bg={tableBgColor}
-      p={4}
-      boxShadow="sm"
-      overflow="auto"
-    >
+    <Box bg={tableBgColor} p={4} boxShadow="sm" overflow="auto">
       <TableControls
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -147,6 +146,9 @@ const DataTable = ({
         hiddenColumns={hiddenColumns}
         toggleColumnVisibility={toggleColumnVisibility}
         setHiddenColumns={setHiddenColumns}
+        toolbarButtons={toolbarButtons}
+        onToolbarButtonClick={handleToolbarButtonClick}
+        defaultAddButton={defaultAddButton}
       />
 
       <Table.Root variant="striped" colorScheme="gray" bg={tableBgColor}>
@@ -246,7 +248,14 @@ DataTable.propTypes = {
     })
   ),
   onToolbarButtonClick: PropTypes.func.isRequired,
-  
+  defaultAddButton: PropTypes.bool,
+  toolbarButtons: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      header: PropTypes.string,
+      icon: PropTypes.elementType,
+    })
+  ),
 };
 
 export default DataTable;

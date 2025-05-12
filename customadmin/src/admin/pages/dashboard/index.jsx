@@ -35,11 +35,11 @@ const Dashboard = () => {
         />
       ),
       width: "80px",
-      type: "File"
+      type: "File",
     },
-    { key: "name", header: "Ad" , type: "String" },
-    { key: "age", header: "Yaş" , type: "Number" },
-    { key: "email", header: "Email" , type: "String" },,
+    { key: "name", header: "Ad", type: "String" },
+    { key: "age", header: "Yaş", type: "Number" },
+    { key: "email", header: "Email", type: "String" }
   ];
 
   const contextMenuItems = [
@@ -48,7 +48,7 @@ const Dashboard = () => {
   ];
 
   const toolbarButtons = [
-    { key: "Add", header: "Yeni Ekle", icon: IoIosAdd },
+   
     { key: "Export", header: "Export", icon: MdFileDownload },
     { key: "Import", header: "Import", icon: MdFileUpload },
   ];
@@ -110,6 +110,7 @@ const handleToolbarButtonClick = (key, selectedRowsData) => {
               tableData.filter((row) => row.selected)
             )
           }
+          defaultAddButton={true}
         />
       </VStack>
     </Box>
