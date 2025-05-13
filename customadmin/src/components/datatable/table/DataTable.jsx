@@ -266,13 +266,7 @@ DataTable.propTypes = {
   ),
   onToolbarButtonClick: PropTypes.func.isRequired,
   defaultAddButton: PropTypes.bool,
-  columnsOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    })
-  ),
+  
   toolbarButtons: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string.isRequired,

@@ -37,11 +37,29 @@ const Dashboard = () => {
       ),
       width: "80px",
       type: "File",
+      acceptedFileTypes: "image/*",
+      valueType: "base64",
       
     },
-    { key: "name", header: "Ad",type:"String" },
-    { key: "age", header: "Yaş",type:"Number" },
-    { key: "email", header: "Email",type:"String" },
+    {
+      key: "name",
+      header: "Ad",
+      type: "String",
+      isRequired: true,
+      maxLength: 50,
+    },
+    {
+      key: "age",
+      header: "Yaş",
+      type: "Number",
+      isRequired: true,
+      min: 0,
+      max: 120,
+    },
+    { key: "email",
+      header: "Email",
+      type: "String",
+      isRequired: true },
   ];
 
   const contextMenuItems = [
