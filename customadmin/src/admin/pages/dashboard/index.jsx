@@ -97,6 +97,9 @@ const handleToolbarButtonClick = (key, selectedRowsData) => {
     console.log("Tıklanan Buton:", key);
     console.log("Seçili Satırlar:", selectedRowsData);
   };
+  const handleSaveData = (newData) => {
+    console.log("Eklenen Yeni Veri:", newData);
+  };
 
   return (
     <Box p={4}>
@@ -134,6 +137,7 @@ const handleToolbarButtonClick = (key, selectedRowsData) => {
           defaultAddButton={true}
           columnsOptions={columnsOptions}
         />
+        onSave={handleSaveData}
       </VStack>
     </Box>
   );
