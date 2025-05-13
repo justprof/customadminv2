@@ -158,7 +158,7 @@ const DataTable = ({
         setHiddenColumns={setHiddenColumns}
         toolbarButtons={toolbarButtons}
         onToolbarButtonClick={handleToolbarButtonClick}
-        defaultAddButton={defaultAddButton} // Yeni prop
+        defaultAddButton={defaultAddButton}
       />
 
       <Table.Root variant="striped" colorScheme="gray" bg={tableBgColor}>

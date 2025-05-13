@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Drawer,
   Button,
@@ -7,7 +7,7 @@ import {
   CloseButton,
   Field,
   Box,
-  Flex,
+  
 } from "@chakra-ui/react";
 import Form from "../../form";
 import { TextBox, NumberBox, TextArea } from "../../../components/textbox";
@@ -16,21 +16,14 @@ import { FileTypes, FileUpload } from "../../../components/fileupload";
 import { useColorModeValue } from "@/components/ui/color-mode";
 
 const DataTableDrawer = ({ isOpen, onClose, columnsOptions, onSave }) => {
-  const [formData, setFormData] = useState({});
-
-  const handleChange = (name, value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = () => {
+    const bgColor = useColorModeValue("white", "gray.800");
+    const textColor = useColorModeValue("black", "white");
+    
+    const handleSubmit = (formData) => {
     onSave(formData);
     onClose();
   };
-  const bgColor = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("black", "white");
+  
 
   const renderInput = (option) => {
     switch (option.type) {
@@ -122,19 +115,16 @@ const DataTableDrawer = ({ isOpen, onClose, columnsOptions, onSave }) => {
           <Drawer.Content maxW="lg">
             <Drawer.Header>
               <Drawer.Title>Yeni Kayıt Ekle</Drawer.Title>
-              <Flex my={2}>
-              <Button colorScheme="blue" onClick={handleSubmit}>
-                Kaydet
-              </Button>
-              </Flex>
             </Drawer.Header>
 
             <Drawer.Body>
             <Box bg={bgColor} color={textColor} p={4}>
              <Form
               onSubmit={handleSubmit}
-              buttonPosition="left"
-              defaultButton={false}
+              buttonPositionY="top"
+              buttonPositionX="left"
+              buttonLabel="Kaydet"
+              colorScheme="blue"
              >
               {columnsOptions.map((option) => renderInput(option))}
              </Form>
