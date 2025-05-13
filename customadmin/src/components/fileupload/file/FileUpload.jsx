@@ -148,7 +148,12 @@ const FileUpload = ({
 FileUpload.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  acceptedFileTypes: PropTypes.string.isRequired,
+  acceptedFileTypes: PropTypes.oneOf([
+    FileTypes.IMAGE,
+    FileTypes.PDF,
+    FileTypes.WORD,
+    FileTypes.EXCEL,
+  ]),
   maxFileSize: PropTypes.number,
   getFinalValue: PropTypes.func,
   isRequired: PropTypes.bool,

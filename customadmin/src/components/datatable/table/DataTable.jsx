@@ -35,7 +35,7 @@ const DataTable = ({
   onItemClick,
   onToolbarButtonClick,
   defaultAddButton = false,
-  columnsOptions = [],
+  
   onSave,
   toolbarButtons = [],
 }) => {
@@ -122,9 +122,7 @@ const DataTable = ({
     if (onToolbarButtonClick) onToolbarButtonClick(key, selectedData);
   };
 
-  const handleSave = (newData) => {
-    setTableData((prevData) => [...prevData, newData]);
-  };
+  
 
   const sortedData = useMemo(
     () => getSortedData(data, sortConfig),
@@ -227,7 +225,7 @@ const DataTable = ({
       <DataTableDrawer
        isOpen={isDrawerOpen}
        onClose={() => setIsDrawerOpen(false)}
-       columnsOptions={columnsOptions}
+       columns={columns}
        onSave={onSave}
       />
 
@@ -244,6 +242,7 @@ DataTable.propTypes = {
       visible: PropTypes.bool,
       render: PropTypes.func,
       width: PropTypes.string,
+      type: PropTypes.string.isRequired,
     })
   ).isRequired,
   data: PropTypes.array.isRequired,

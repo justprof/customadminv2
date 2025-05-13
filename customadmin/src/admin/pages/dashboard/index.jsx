@@ -24,7 +24,7 @@ const Dashboard = () => {
   }, [dispatch]);
 
   const columns = [
-    { key: "id", header: "ID", primaryKey: true, visible: false },
+    { key: "id", header: "ID", primaryKey: true, visible: false, type:"Number" },
     {
       key: "avatar",
       header: "Avatar",
@@ -36,11 +36,12 @@ const Dashboard = () => {
         />
       ),
       width: "80px",
+      type: "File",
       
     },
-    { key: "name", header: "Ad" },
-    { key: "age", header: "Yaş" },
-    { key: "email", header: "Email" },
+    { key: "name", header: "Ad",type:"String" },
+    { key: "age", header: "Yaş",type:"Number" },
+    { key: "email", header: "Email",type:"String" },
   ];
 
   const contextMenuItems = [
@@ -53,27 +54,7 @@ const Dashboard = () => {
     { key: "Export", header: "Export", icon: MdFileDownload },
     { key: "Import", header: "Import", icon: MdFileUpload },
   ];
-  // Aşağıda ColumnOptions Ayarları için  
-  const columnsOptions = [
-    { key: "name", label: "Ad", type: "String", isRequired: true },
-    {
-      key: "age",
-      label: "Yaş",
-      type: "Number",
-      isRequired: true,
-      min: 0,
-      max: 120,
-    },
-    { key: "email", label: "Email", type: "String", isRequired: true },
-    {
-      key: "avatar",
-      label: "Avatar",
-      type: "File",
-      acceptedFileTypes: "image/*",
-      valueType: "base64",
-      isRequired: true,
-    },
-  ];
+  
   const fetchData = ({ currentPage, rowsPerPageState, searchTerm }) => {
     console.log("Fetching data with Params", {
       currentPage,
@@ -98,7 +79,11 @@ const handleToolbarButtonClick = (key, selectedRowsData) => {
     console.log("Seçili Satırlar:", selectedRowsData);
   };
   const handleSaveData = (newData) => {
-    console.log("Eklenen Yeni Veri:", newData);
+    setTableData((prevData) => [
+      ...prevData,
+      { id: totalCount + 1, ...newData },
+    ]);
+    setTotalCount(totalCount + 1);
   };
 
   return (
@@ -135,9 +120,9 @@ const handleToolbarButtonClick = (key, selectedRowsData) => {
             )
           }
           defaultAddButton={true}
-          columnsOptions={columnsOptions}
+          onSave={handleSaveData}
         />
-        onSave={handleSaveData}
+        
       </VStack>
     </Box>
   );
