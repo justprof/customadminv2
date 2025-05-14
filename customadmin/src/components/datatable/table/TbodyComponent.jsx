@@ -4,10 +4,11 @@ import {
   Checkbox,
   Button,
   Flex,
-  Text,
   Spinner,
 } from "@chakra-ui/react";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
+import PropTypes from "prop-types";
+
 
 const TbodyComponent = ({
   columns,
@@ -29,22 +30,8 @@ const TbodyComponent = ({
   if (loading) {
     return (
       <Table.Row>
-        <Table.Cell colSpan={columns.length + (selectable ? 3 : 2)}>
-          <Flex justify="center" align="center" minHeight="300px">
-            <Spinner size="lg" />
-          </Flex>
-        </Table.Cell>
-      </Table.Row>
-    );
-  }
-
-  if (selectedData.length === 0) {
-    return (
-      <Table.Row>
-        <Table.Cell colSpan={columns.length + (selectable ? 3 : 2)}>
-          <Flex justify="center" align="center" minHeight="300px">
-            <Text>Gösterilecek bir veri yok!</Text>
-          </Flex>
+        <Table.Cell colSpan={columns.length + 2} textAlign="center">
+          Yükleniyor...
         </Table.Cell>
       </Table.Row>
     );
@@ -52,17 +39,17 @@ const TbodyComponent = ({
 
   return (
     <>
-      {selectedData.map((item) => {
-        const rowId = item[primaryKey];
-
+      {selectedData.map((row) => {
+        const rowId = row[primaryKey];
+  
         return (
           <Table.Row
             key={rowId}
-            onContextMenu={(e) => handleRightClick(e, item)}
+            onContextMenu={(e) => handleRightClick(e, row)}
             _hover={{ bg: "gray.100" }}
           >
             {selectable && (
-              <Table.Cell>
+              <Table.Cell maxW="20px">
                 <Checkbox.Root
                   defaultChecked={selectedRows.includes(rowId)}
                   onCheckedChange={() =>
@@ -76,36 +63,40 @@ const TbodyComponent = ({
                 </Checkbox.Root>
               </Table.Cell>
             )}
-
+  
             {columns.map(
-              ({ key, render, visible, width }) =>
-                !hiddenColumns.includes(key) &&
-                visible !== false && (
-                  <Table.Cell key={key} maxW={width || "auto"}>
-                    {render ? render(item[key], item) : item[key]}
+              (column) =>
+                !hiddenColumns.includes(column.key) &&
+                column.visible !== false && (
+                  <Table.Cell key={column.key} maxW={column.width || "auto"}>
+                    {column.render
+                      ? column.render(row[column.key], row)
+                      : row[column.key]}
                   </Table.Cell>
                 )
             )}
-
+  
             {editActive && (
-              <Table.Cell>
+              <Table.Cell maxW="20px">
                 <Flex justify="center">
                   <Button
+                    size="sm"
                     colorScheme="blue"
-                    onClick={() => onEdit(item[primaryKey])}
+                    onClick={() => onEdit(row)}
                   >
                     <MdEdit />
                   </Button>
                 </Flex>
               </Table.Cell>
             )}
-
+  
             {deleteActive && (
-              <Table.Cell>
+              <Table.Cell maxW="20px">
                 <Flex justify="center">
                   <Button
+                    size="sm"
                     colorScheme="red"
-                    onClick={() => handleDelete([item[primaryKey]])}
+                    onClick={() => handleDelete(rowId)}
                   >
                     <MdDeleteForever />
                   </Button>
@@ -118,5 +109,31 @@ const TbodyComponent = ({
     </>
   );
 };
+
+TbodyComponent.propTypes = {
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      header: PropTypes.string.isRequired,
+      primaryKey: PropTypes.bool,
+      visible: PropTypes.bool,
+      render: PropTypes.func,
+      width: PropTypes.string,
+    })
+  ).isRequired,
+  selectedData: PropTypes.array.isRequired,
+  hiddenColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectable: PropTypes.bool,
+  selectedRows: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setSelectedRows: PropTypes.func.isRequired,
+  handleSelectRow: PropTypes.func.isRequired,
+  handleRightClick: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  editActive: PropTypes.bool,
+  onEdit: PropTypes.func,
+  deleteActive: PropTypes.bool,
+  loading: PropTypes.bool.isRequired,
+};
+
 
 export default TbodyComponent;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Drawer,
   Button,
@@ -15,17 +15,34 @@ import SelectBox from "../../../components/selectbox";
 import { FileTypes, FileUpload } from "../../../components/fileupload";
 import { useColorModeValue } from "@/components/ui/color-mode";
 
-const DataTableDrawer = ({ isOpen, onClose, columns, onSave }) => {
+const DataTableDrawer = ({
+  isOpen,
+  onClose,
+  columns,
+  onSave,
+  editMode,
+  editData,
+}) => {
+
     const bgColor = useColorModeValue("white", "gray.800");
     const textColor = useColorModeValue("black", "white");
     
-    const handleSubmit = (formData) => {
-    onSave(formData);
+    const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    if (editMode && editData) {
+      setFormData(editData);
+    }
+  }, [editMode, editData]);
+
+  const handleSubmit = (newData) => {
+    onSave({ ...formData, ...newData });
     onClose();
   };
   
 
   const renderInput = (column) => {
+    const value = formData[column.key] || "";
     if (column.primaryKey) {
       return null;
     }
@@ -44,6 +61,7 @@ const DataTableDrawer = ({ isOpen, onClose, columns, onSave }) => {
           showCharacterCount={column.showCharacterCount || false}
           leftAddon={column.leftAddon || null}
           rightAddon={column.rightAddon || null}
+          initialValue={value}
            
           />
         );
@@ -60,7 +78,7 @@ const DataTableDrawer = ({ isOpen, onClose, columns, onSave }) => {
           precision={column.precision || undefined}
           step={column.step || undefined}
           helpText={column.helpText || ""}
-            
+          initialValue={value}  
           />
         );
       case "TextArea":
@@ -74,7 +92,7 @@ const DataTableDrawer = ({ isOpen, onClose, columns, onSave }) => {
           maxLength={column.maxLength || undefined}
           helpText={column.helpText || ""}
           showCharacterCount={column.showCharacterCount || false}
-           
+          initialValue={value} 
           />
         );
       case "Select":
@@ -89,7 +107,7 @@ const DataTableDrawer = ({ isOpen, onClose, columns, onSave }) => {
             isSearchable={column.isSearchable || false}
             helpText={column.helpText || ""}
             isRequired={column.isRequired || false}
-            
+            initialValue={value}
           />
         );
       case "File":
@@ -103,6 +121,7 @@ const DataTableDrawer = ({ isOpen, onClose, columns, onSave }) => {
           isRequired={column.isRequired || false}
           valueType={column.valueType || "base64"}
           helpText={column.helpText || ""}
+          initialValue={value}
           />
         );
       default:
@@ -117,7 +136,9 @@ const DataTableDrawer = ({ isOpen, onClose, columns, onSave }) => {
         <Drawer.Positioner>
           <Drawer.Content maxW="lg">
             <Drawer.Header>
-              <Drawer.Title>Yeni Kayıt Ekle</Drawer.Title>
+              <Drawer.Title>
+                 {editMode ? "Kaydı Düzenle" : "Yeni Kayıt Ekle"}
+               </Drawer.Title>
             </Drawer.Header>
 
             <Drawer.Body>

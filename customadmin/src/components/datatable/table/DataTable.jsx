@@ -27,7 +27,7 @@ const DataTable = ({
   deleteActive = false,
   onDelete,
   editActive = false,
-  onEdit,
+  
   selectable = false,
   onDeleteSelected,
   rowsPerPageOptions = [5, 10, 20, 50],
@@ -48,7 +48,8 @@ const DataTable = ({
   const [contextMenu, setContextMenu] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [tableData, setTableData] = useState(data);
+  const [editMode, setEditMode] = useState(false);
+  const [editData, setEditData] = useState(null);
 
   const tableBgColor = "white";
   const tableBorderColor = "gray.200";
@@ -112,6 +113,7 @@ const DataTable = ({
 
   const handleToolbarButtonClick = (key) => { 
     if (key === "DefaultAdd") {
+      setEditMode(false);
       setIsDrawerOpen(true);
     }
     const primaryKey = columns.find((col) => col.primaryKey)?.key || "id";
@@ -120,6 +122,24 @@ const DataTable = ({
     );
     console.log("Seçili Satırlar:", key, selectedData);
     if (onToolbarButtonClick) onToolbarButtonClick(key, selectedData);
+  };
+  const handleSave = (newData) => {
+    if (editMode) {
+      setTableData((prevData) =>
+        prevData.map((item) => (item.id === newData.id ? newData : item))
+      );
+    } else {
+      setTableData((prevData) => [
+        ...prevData,
+        { id: totalCount + 1, ...newData },
+      ]);
+    }
+  };
+
+  const handleEdit = (rowData) => {
+    setEditMode(true);
+    setEditData(rowData);
+    setIsDrawerOpen(true);
   };
 
   
@@ -175,6 +195,7 @@ const DataTable = ({
             editActive={editActive}
             deleteActive={deleteActive}
             handleDelete={handleDelete}
+            handleEdit={handleEdit}
           />
         </Table.Header>
 
@@ -190,7 +211,7 @@ const DataTable = ({
             handleRightClick={handleRightClick}
             handleDelete={handleDelete}
             editActive={editActive}
-            onEdit={onEdit}
+            onEdit={handleEdit}
             deleteActive={deleteActive}
             loading={loading}
           />
@@ -226,7 +247,9 @@ const DataTable = ({
        isOpen={isDrawerOpen}
        onClose={() => setIsDrawerOpen(false)}
        columns={columns}
-       onSave={onSave}
+       onSave={handleSave}
+       editMode={editMode}
+       editData={editData}
       />
 
     </Box>
@@ -253,7 +276,7 @@ DataTable.propTypes = {
   deleteActive: PropTypes.bool,
   onDelete: PropTypes.func,
   editActive: PropTypes.bool,
-  onEdit: PropTypes.func,
+ 
   selectable: PropTypes.bool,
   onDeleteSelected: PropTypes.func,
   rowsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
