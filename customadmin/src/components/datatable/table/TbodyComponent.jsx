@@ -64,17 +64,17 @@ const TbodyComponent = ({
               </Table.Cell>
             )}
   
-            {columns.map(
-              (column) =>
-                !hiddenColumns.includes(column.key) &&
-                column.visible !== false && (
-                  <Table.Cell key={column.key} maxW={column.width || "auto"}>
-                    {column.render
-                      ? column.render(row[column.key], row)
-                      : row[column.key]}
-                  </Table.Cell>
-                )
-            )}
+  {columns.map(
+  ({ key, render, visible, width, primaryKey }) =>
+    !hiddenColumns.includes(key) &&
+    visible !== false &&
+    !primaryKey && (
+      <Table.Cell key={key} maxW={width || "auto"}>
+        {render ? render(row[key], row) : row[key]}
+      </Table.Cell>
+    )
+)}
+
   
             {editActive && (
               <Table.Cell maxW="20px">
