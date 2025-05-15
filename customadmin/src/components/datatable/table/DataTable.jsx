@@ -49,7 +49,8 @@ const DataTable = ({
   const [loading, setLoading] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [editData, setEditData] = useState(null);
+  const [drawerData, setDrawerData] = useState({});
+
 
   const tableBgColor = "white";
   const tableBorderColor = "gray.200";
@@ -113,6 +114,7 @@ const DataTable = ({
 
   const handleToolbarButtonClick = (key) => { 
     if (key === "DefaultAdd") {
+      setDrawerData({});
       setEditMode(false);
       setIsDrawerOpen(true);
     }
@@ -123,24 +125,28 @@ const DataTable = ({
     console.log("Seçili Satırlar:", key, selectedData);
     if (onToolbarButtonClick) onToolbarButtonClick(key, selectedData);
   };
+
+  const handleEdit = (rowData) => {
+    setDrawerData(rowData);
+    setEditMode(true);
+    setIsDrawerOpen(true);
+  };
   const handleSave = (newData) => {
     if (editMode) {
-      setTableData((prevData) =>
-        prevData.map((item) => (item.id === newData.id ? newData : item))
+      const updatedData = tableData.map((item) =>
+        item.id === newData.id ? newData : item
       );
+      setTableData(updatedData)
     } else {
       setTableData((prevData) => [
         ...prevData,
         { id: totalCount + 1, ...newData },
       ]);
+      setTotalCount(totalCount + 1);
     }
   };
 
-  const handleEdit = (rowData) => {
-    setEditMode(true);
-    setEditData(rowData);
-    setIsDrawerOpen(true);
-  };
+  
 
   
 
@@ -195,7 +201,7 @@ const DataTable = ({
             editActive={editActive}
             deleteActive={deleteActive}
             handleDelete={handleDelete}
-            handleEdit={handleEdit}
+            
           />
         </Table.Header>
 
@@ -249,7 +255,7 @@ const DataTable = ({
        columns={columns}
        onSave={handleSave}
        editMode={editMode}
-       editData={editData}
+       editData={drawerData}
       />
 
     </Box>
@@ -297,7 +303,7 @@ DataTable.propTypes = {
       icon: PropTypes.elementType,
     })
   ),
-  onSave: PropTypes.func,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default DataTable;
