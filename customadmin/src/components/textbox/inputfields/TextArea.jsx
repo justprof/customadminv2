@@ -49,6 +49,10 @@ const CustomTextArea = ({
     setIsFocused(true);
   };
 
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+  
   const validateInput = () => {
     if (isRequired && !value) {
       setError(`${label} is required`);

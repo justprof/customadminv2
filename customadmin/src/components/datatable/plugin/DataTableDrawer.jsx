@@ -118,7 +118,7 @@ const DataTableDrawer = ({
           isRequired={column.isRequired || false}
           valueType={column.valueType || "base64"}
           helpText={column.helpText || ""}
-          
+          initialValue={initialValue}
           />
         );
       default:

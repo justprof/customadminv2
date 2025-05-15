@@ -38,6 +38,10 @@ const FileUpload = ({
   const [error, setError] = useState("");
   const [isTouched, setIsTouched] = useState(false);
 
+  useEffect(() => {
+    setFile(initialValue);
+  }, [initialValue]);
+
   const bgColor = useColorModeValue("gray.100", "gray.700");
   const hoverBg = useColorModeValue("gray.200", "gray.600");
   const borderColor = useColorModeValue("gray.200", "gray.600");

@@ -32,6 +32,8 @@ const NumberBox = ({
   const [isTouched, setIsTouched] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
+  
+
   const handleChange = (valueString) => {
     setValue(valueString);
   };
@@ -45,6 +47,11 @@ const NumberBox = ({
   const handleFocus = () => {
     setIsFocused(true);
   };
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
 
   const validateInput = () => {
     const numValue = parseFloat(value);
