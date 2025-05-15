@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+
+
 import {
   Drawer,
   Button,
@@ -27,25 +29,20 @@ const DataTableDrawer = ({
     const bgColor = useColorModeValue("white", "gray.800");
     const textColor = useColorModeValue("black", "white");
     
-    const [formData, setFormData] = useState({});
-
-  useEffect(() => {
-    if (editMode && editData) {
-      setFormData(editData);
+    const handleSubmit = (formData) => {
+      if (editMode) {
+        formData.id = editData.id;
     }
-  }, [editMode, editData]);
-
-  const handleSubmit = (newData) => {
-    onSave({ ...formData, ...newData });
+    onSave(formData);
     onClose();
   };
   
 
   const renderInput = (column) => {
-    const value = formData[column.key] || "";
-    if (column.primaryKey) {
-      return null;
-    }
+    if (column.primaryKey) return null;
+
+    const initialValue =
+      editMode && editData[column.key] ? editData[column.key] : "";
 
     switch (column.type) {
       case "String":
@@ -61,7 +58,7 @@ const DataTableDrawer = ({
           showCharacterCount={column.showCharacterCount || false}
           leftAddon={column.leftAddon || null}
           rightAddon={column.rightAddon || null}
-          initialValue={value}
+          initialValue={initialValue}
            
           />
         );
@@ -78,7 +75,7 @@ const DataTableDrawer = ({
           precision={column.precision || undefined}
           step={column.step || undefined}
           helpText={column.helpText || ""}
-          initialValue={value}  
+          initialValue={initialValue}
           />
         );
       case "TextArea":
@@ -92,7 +89,7 @@ const DataTableDrawer = ({
           maxLength={column.maxLength || undefined}
           helpText={column.helpText || ""}
           showCharacterCount={column.showCharacterCount || false}
-          initialValue={value} 
+          initialValue={initialValue}
           />
         );
       case "Select":
@@ -107,7 +104,7 @@ const DataTableDrawer = ({
             isSearchable={column.isSearchable || false}
             helpText={column.helpText || ""}
             isRequired={column.isRequired || false}
-            initialValue={value}
+            initialValue={initialValue}
           />
         );
       case "File":
@@ -121,7 +118,7 @@ const DataTableDrawer = ({
           isRequired={column.isRequired || false}
           valueType={column.valueType || "base64"}
           helpText={column.helpText || ""}
-          initialValue={value}
+          
           />
         );
       default:
@@ -147,7 +144,7 @@ const DataTableDrawer = ({
               onSubmit={handleSubmit}
               buttonPositionY="top"
               buttonPositionX="left"
-              buttonLabel="Kaydet"
+              buttonLabel={editMode ? "Güncelle" : "Kaydet"}
               colorScheme="blue"
              >
               {columns.map((column) => renderInput(column))}
