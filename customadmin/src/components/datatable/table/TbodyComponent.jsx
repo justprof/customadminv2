@@ -5,10 +5,10 @@ import {
   Button,
   Flex,
   Spinner,
+  IconButton,
 } from "@chakra-ui/react";
 import { MdEdit, MdDeleteForever } from "react-icons/md";
 import PropTypes from "prop-types";
-
 
 const TbodyComponent = ({
   columns,
@@ -31,7 +31,9 @@ const TbodyComponent = ({
     return (
       <Table.Row>
         <Table.Cell colSpan={columns.length + 2} textAlign="center">
-          Yükleniyor...
+          <Flex justify="center" align="center" py={4}>
+            <Spinner size="md" />
+          </Flex>
         </Table.Cell>
       </Table.Row>
     );
@@ -41,7 +43,7 @@ const TbodyComponent = ({
     <>
       {selectedData.map((row) => {
         const rowId = row[primaryKey];
-  
+
         return (
           <Table.Row
             key={rowId}
@@ -63,25 +65,25 @@ const TbodyComponent = ({
                 </Checkbox.Root>
               </Table.Cell>
             )}
-  
-  {columns.map(
-  ({ key, render, visible, width, primaryKey }) =>
-    !hiddenColumns.includes(key) &&
-    visible !== false &&
-    !primaryKey && (
-      <Table.Cell key={key} maxW={width || "auto"}>
-        {render ? render(row[key], row) : row[key]}
-      </Table.Cell>
-    )
-)}
 
-  
+            {columns.map(
+              ({ key, render, visible, width, primaryKey }) =>
+                !hiddenColumns.includes(key) &&
+                visible !== false &&
+                !primaryKey && (
+                  <Table.Cell key={key} maxW={width || "auto"}>
+                    {render ? render(row[key], row) : row[key]}
+                  </Table.Cell>
+                )
+            )}
+
             {editActive && (
               <Table.Cell maxW="20px">
                 <Flex justify="center">
                   <Button
                     size="sm"
-                    colorScheme="blue"
+                    variant="solid"
+                    colorPalette="blue"
                     onClick={() => onEdit(row)}
                   >
                     <MdEdit />
@@ -89,13 +91,14 @@ const TbodyComponent = ({
                 </Flex>
               </Table.Cell>
             )}
-  
+
             {deleteActive && (
               <Table.Cell maxW="20px">
                 <Flex justify="center">
                   <Button
                     size="sm"
-                    colorScheme="red"
+                    variant="solid"
+                    colorPalette="red"
                     onClick={() => handleDelete(rowId)}
                   >
                     <MdDeleteForever />
@@ -134,6 +137,5 @@ TbodyComponent.propTypes = {
   deleteActive: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
 };
-
 
 export default TbodyComponent;

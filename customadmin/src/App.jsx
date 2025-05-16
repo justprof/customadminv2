@@ -5,18 +5,16 @@ import Login from "./admin/pages/auth/login";
 import Signup from "./admin/pages/auth/signup";
 
 function App() {
- 
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path="/admin/*" element ={<AdminLayout />}  /> 
-      <Route path="/" element = {<Home/>} />
-      <Route path="/admin/login" element ={<Login />} />
-      <Route path="/admin/signup" element = {<Signup />} />
+      <Routes>
+        <Route path="/admin/*" element={<AdminLayout />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/admin/login" element={<Login />} />
+        <Route path="/admin/signup" element={<Signup />} />
       </Routes>
-      </BrowserRouter>
-  )
-   
+    </BrowserRouter>
+  );
 }
 
 export default App;
