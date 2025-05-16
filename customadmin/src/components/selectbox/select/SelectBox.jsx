@@ -49,13 +49,14 @@ const SelectBox = ({
   const wrapperRef = useRef(null);
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
-
+  
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
   };
+  useEffect(() => {
+  setValue(isMulti ? initialValue || [] : initialValue || "");
+}, [initialValue, isMulti]);
+
 
   const handleSelect = (selectedValue) => {
     if (isMulti) {
@@ -162,7 +163,7 @@ const SelectBox = ({
           }}
           width="100%"
         >
-           {isMulti &&
+           {Array.isArray(value) &&
   value.map((val) => (
     <Tag.Root
       key={val}
@@ -187,7 +188,7 @@ const SelectBox = ({
         />
       </Tag.EndElement>
     </Tag.Root>
-  ))}
+))}
 
             <Tag.Root
               

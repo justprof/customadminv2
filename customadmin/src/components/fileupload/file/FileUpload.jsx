@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Input,
@@ -8,7 +8,6 @@ import {
   Icon,
   IconButton,
   VisuallyHidden,
-
 } from "@chakra-ui/react";
 import {
   Field,
@@ -18,18 +17,25 @@ import {
 } from "@chakra-ui/react";
 import { FaUpload, FaFileAlt, FaTimes } from "react-icons/fa";
 import PropTypes from "prop-types";
-import { FileTypes } from "../enums";
-
 import { useColorModeValue } from "@/components/ui/color-mode";
+
+// Örnek FileTypes enumu (senin projenin enum klasöründen çekiyorsan gerek kalmaz)
+export const FileTypes = {
+  IMAGE: "image/*",
+  PDF: ".pdf",
+  WORD: ".doc,.docx",
+  EXCEL: ".xls,.xlsx",
+  ALL: "*",
+};
 
 const FileUpload = ({
   name,
   label,
-  acceptedFileTypes,
+  acceptedFileTypes = FileTypes.ALL,
   maxFileSize,
   getFinalValue,
   isRequired = false,
-  valueType = "base64",
+  valueType = "base64", // ya "base64" ya da "file"
   helpText,
   initialValue = null,
   ...props
@@ -38,22 +44,21 @@ const FileUpload = ({
   const [error, setError] = useState("");
   const [isTouched, setIsTouched] = useState(false);
 
-  useEffect(() => {
-    setFile(initialValue);
-  }, [initialValue]);
-
   const bgColor = useColorModeValue("gray.100", "gray.700");
   const hoverBg = useColorModeValue("gray.200", "gray.600");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
+  useEffect(() => {
+    setFile(initialValue);
+  }, [initialValue]);
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    if (!selectedFile) 
+    if (!selectedFile) return;
 
     if (maxFileSize && selectedFile.size > maxFileSize * 1024 * 1024) {
       setError(`Dosya boyutu ${maxFileSize} MB'dan büyük olamaz.`);
       setFile(null);
-      
       return;
     }
 
@@ -61,11 +66,12 @@ const FileUpload = ({
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Content = reader.result;
-        setFile({
+        const fileData = {
           name: selectedFile.name,
           size: selectedFile.size,
           content: base64Content,
-        });
+        };
+        setFile(fileData);
         getFinalValue?.(base64Content);
       };
       reader.readAsDataURL(selectedFile);
@@ -75,7 +81,6 @@ const FileUpload = ({
     }
 
     setError("");
-    
   };
 
   const handleBlur = () => {
@@ -90,7 +95,6 @@ const FileUpload = ({
   const handleRemove = () => {
     setFile(null);
     getFinalValue?.(null);
-   
   };
 
   return (
@@ -129,7 +133,7 @@ const FileUpload = ({
         {file && (
           <HStack spacing={2}>
             <Icon as={FaFileAlt} />
-            <Text>{file.name}</Text>
+            <Text>{file.name || "Dosya yüklendi"}</Text>
             <IconButton
               icon={<FaTimes />}
               onClick={handleRemove}
@@ -142,8 +146,8 @@ const FileUpload = ({
       </VStack>
 
       {helpText && !error && !file && (
-       <FieldHelperText>{helpText}</FieldHelperText>
-       )}
+        <FieldHelperText>{helpText}</FieldHelperText>
+      )}
       {isTouched && error && <FieldErrorText>{error}</FieldErrorText>}
     </Field.Root>
   );
@@ -152,12 +156,7 @@ const FileUpload = ({
 FileUpload.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  acceptedFileTypes: PropTypes.oneOf([
-    FileTypes.IMAGE,
-    FileTypes.PDF,
-    FileTypes.WORD,
-    FileTypes.EXCEL,
-  ]),
+  acceptedFileTypes: PropTypes.string,
   maxFileSize: PropTypes.number,
   getFinalValue: PropTypes.func,
   isRequired: PropTypes.bool,
