@@ -13,6 +13,7 @@ import { TextBox, NumberBox, TextArea } from "../../../components/textbox";
 import SelectBox from "../../../components/selectbox";
 import { FileTypes, FileUpload } from "../../../components/fileupload";
 import { useColorModeValue } from "@/components/ui/color-mode";
+import { Separator } from "@chakra-ui/react";
 
 const DataTableDrawer = ({
   isOpen,
@@ -30,8 +31,7 @@ const DataTableDrawer = ({
       formData.id = editData.id;
     }
     onSave(formData);
-    console.log(formData);
-    onClose();
+    
   };
 
   const renderInput = (column) => {
@@ -132,7 +132,7 @@ const DataTableDrawer = ({
                 {editMode ? "Kaydı Düzenle" : "Yeni Kayıt Ekle"}
               </Drawer.Title>
             </Drawer.Header>
-
+            <Separator my={2} />
             <Drawer.Body>
               <Box bg={bgColor} color={textColor} p={4}>
                 <Form
