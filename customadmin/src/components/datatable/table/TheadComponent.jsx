@@ -14,11 +14,18 @@ const TheadComponent = ({
   editActive,
   deleteActive,
   handleDelete,
+  tableBorderColor = "gray.200", // eski kodla uyum için varsayılan verdik
 }) => {
   return (
     <Table.Row>
       {selectable && (
-        <Table.ColumnHeader>
+        <Table.ColumnHeader
+          maxW="20px"
+          w="auto"
+          borderWidth="1px"
+          borderStyle="solid"
+          borderColor={tableBorderColor}
+        >
           <Checkbox.Root
             defaultChecked={
               selectedRows.length === selectedData.length &&
@@ -35,13 +42,20 @@ const TheadComponent = ({
           </Checkbox.Root>
         </Table.ColumnHeader>
       )}
+
       {columns.map(
         (col) =>
-          !hiddenColumns.includes(col.key) && (
+          !hiddenColumns.includes(col.key) &&
+          col.visible !== false && (
             <Table.ColumnHeader
               key={col.key}
+              cursor="pointer"
               onClick={() => requestSort(col.key, sortConfig, setSortConfig)}
-              style={{ cursor: "pointer" }}
+              maxW={col.width ? col.width : "auto"}
+              w={col.width ? col.width : "auto"}
+              borderWidth="1px"
+              borderStyle="solid"
+              borderColor={tableBorderColor}
             >
               {col.header}
               {sortConfig.key === col.key ? (
@@ -54,9 +68,30 @@ const TheadComponent = ({
             </Table.ColumnHeader>
           )
       )}
-      {editActive && <Table.ColumnHeader>Edit</Table.ColumnHeader>}
-      {deleteActive && <Table.ColumnHeader>Delete</Table.ColumnHeader>}
 
+      {editActive && (
+        <Table.ColumnHeader
+          maxW="20px"
+          w="auto"
+          borderWidth="1px"
+          borderStyle="solid"
+          borderColor={tableBorderColor}
+        >
+          Düzenle
+        </Table.ColumnHeader>
+      )}
+
+      {deleteActive && (
+        <Table.ColumnHeader
+          maxW="20px"
+          w="auto"
+          borderWidth="1px"
+          borderStyle="solid"
+          borderColor={tableBorderColor}
+        >
+          Sil
+        </Table.ColumnHeader>
+      )}
     </Table.Row>
   );
 };
