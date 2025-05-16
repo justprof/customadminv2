@@ -99,7 +99,7 @@ const TbodyComponent = ({
                     size="sm"
                     variant="solid"
                     colorPalette="red"
-                    onClick={() => handleDelete(rowId)}
+                    onClick={() => handleDelete([row.id])}
                   >
                     <MdDeleteForever />
                   </Button>
@@ -127,7 +127,7 @@ TbodyComponent.propTypes = {
   selectedData: PropTypes.array.isRequired,
   hiddenColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectable: PropTypes.bool,
-  selectedRows: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedRows: PropTypes.arrayOf(PropTypes.number).isRequired,
   setSelectedRows: PropTypes.func.isRequired,
   handleSelectRow: PropTypes.func.isRequired,
   handleRightClick: PropTypes.func.isRequired,
