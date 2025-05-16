@@ -59,7 +59,8 @@ const DataTableDrawer = ({
           showCharacterCount={column.showCharacterCount || false}
           leftAddon={column.leftAddon || null}
           rightAddon={column.rightAddon || null}
-          initialValue={initialValue}
+         
+          defaultValue={defaultValue}
            
           />
         );
@@ -76,7 +77,8 @@ const DataTableDrawer = ({
           precision={column.precision || undefined}
           step={column.step || undefined}
           helpText={column.helpText || ""}
-          initialValue={initialValue}
+
+          defaultValue={defaultValue}
           />
         );
       case "TextArea":
@@ -90,7 +92,7 @@ const DataTableDrawer = ({
           maxLength={column.maxLength || undefined}
           helpText={column.helpText || ""}
           showCharacterCount={column.showCharacterCount || false}
-          initialValue={initialValue}
+          defaultValue={defaultValue}
           />
         );
       case "Select":
@@ -105,7 +107,7 @@ const DataTableDrawer = ({
             isSearchable={column.isSearchable || false}
             helpText={column.helpText || ""}
             isRequired={column.isRequired || false}
-            initialValue={initialValue}
+            defaultValue={defaultValue}
           />
         );
       case "File":
@@ -119,7 +121,7 @@ const DataTableDrawer = ({
           isRequired={column.isRequired || false}
           valueType={column.valueType || "base64"}
           helpText={column.helpText || ""}
-          initialValue={initialValue}
+          defaultValue={defaultValue}
           />
         );
       default:

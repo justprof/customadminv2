@@ -28,12 +28,17 @@ const TextBox = ({
   showCharacterCount = false,
   startAddon,
   endAddon,
+  defaultValue,
   ...props
 }) => {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState("");
   const [isTouched, setIsTouched] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+
+   useEffect(() => {
+    if (defaultValue) setValue(defaultValue);
+  }, [defaultValue]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -101,7 +106,7 @@ const TextBox = ({
       </InputGroup>
       {showCharacterCount && maxLength && (
         <FieldHelperText width="4.5rem" mr= {startAddon ? 10 : 0} mt={0} >
-          {value.length}/{maxLength}
+          {value?.length}/{maxLength}
         </FieldHelperText>
       )}
       {helpText && !error && <FieldHelperText>{helpText}</FieldHelperText>}
@@ -117,6 +122,7 @@ TextBox.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   initialValue: PropTypes.string,
+  defaultValue: PropTypes.string,
   getFinalValue: PropTypes.func,
   getFinalValue: PropTypes.func,
   isRequired: PropTypes.bool,

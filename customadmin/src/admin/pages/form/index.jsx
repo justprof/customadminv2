@@ -39,6 +39,7 @@ import { setPageHeader } from "../../../store/root/rootSlice";
           helpText="Tam isminiz"
           showCharacterCount={true}
           startAddon="#"
+          defaultValue="Prof"
         />
         <TextBox
           label="E-posta"
@@ -48,6 +49,7 @@ import { setPageHeader } from "../../../store/root/rootSlice";
           isRequired={true}
           helpText="E-posta adresiniz"
           endAddon="@example.com"
+          initialValue="Prof"
         />
         <TextArea
           label="Açıklama"
