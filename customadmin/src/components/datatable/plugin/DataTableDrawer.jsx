@@ -34,6 +34,7 @@ const DataTableDrawer = ({
         formData.id = editData.id;
     }
     onSave(formData);
+     console.log(formData);
     onClose();
   };
   

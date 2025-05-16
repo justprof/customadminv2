@@ -50,7 +50,8 @@ const DataTable = ({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [drawerData, setDrawerData] = useState({});
-
+  const [tableData, setTableData] = useState(data);
+  const [totalCountState, setTotalCount] = useState(totalCount);
 
   const tableBgColor = "white";
   const tableBorderColor = "gray.200";
@@ -133,10 +134,10 @@ const DataTable = ({
   };
   const handleSave = (newData) => {
     if (editMode) {
-      const updatedData = tableData.map((item) =>
-        item.id === newData.id ? newData : item
+      setTableData((prevData) =>
+        prevData.map((item) => (item.id === newData.id ? newData : item))
       );
-      setTableData(updatedData)
+     
     } else {
       setTableData((prevData) => [
         ...prevData,
@@ -201,7 +202,7 @@ const DataTable = ({
             editActive={editActive}
             deleteActive={deleteActive}
             handleDelete={handleDelete}
-            
+            handleEdit={handleEdit}
           />
         </Table.Header>
 
@@ -282,7 +283,7 @@ DataTable.propTypes = {
   deleteActive: PropTypes.bool,
   onDelete: PropTypes.func,
   editActive: PropTypes.bool,
- 
+  onEdit: PropTypes.func,
   selectable: PropTypes.bool,
   onDeleteSelected: PropTypes.func,
   rowsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
@@ -303,7 +304,14 @@ DataTable.propTypes = {
       icon: PropTypes.elementType,
     })
   ),
-  onSave: PropTypes.func.isRequired,
+  columnsOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+    })
+  ),
+  onSave: PropTypes.func,
 };
 
 export default DataTable;

@@ -19,7 +19,7 @@ import { FaUpload, FaFileAlt, FaTimes } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { useColorModeValue } from "@/components/ui/color-mode";
 
-// Örnek FileTypes enumu (senin projenin enum klasöründen çekiyorsan gerek kalmaz)
+
 export const FileTypes = {
   IMAGE: "image/*",
   PDF: ".pdf",
@@ -35,7 +35,7 @@ const FileUpload = ({
   maxFileSize,
   getFinalValue,
   isRequired = false,
-  valueType = "base64", // ya "base64" ya da "file"
+  valueType = "base64", 
   helpText,
   initialValue = null,
   ...props
