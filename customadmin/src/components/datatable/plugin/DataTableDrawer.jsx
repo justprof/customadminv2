@@ -1,6 +1,4 @@
 import React from "react";
-
-
 import {
   Drawer,
   Button,
@@ -9,7 +7,6 @@ import {
   CloseButton,
   Field,
   Box,
-  
 } from "@chakra-ui/react";
 import Form from "../../form";
 import { TextBox, NumberBox, TextArea } from "../../../components/textbox";
@@ -25,19 +22,17 @@ const DataTableDrawer = ({
   editMode,
   editData,
 }) => {
+  const bgColor = useColorModeValue("white", "gray.800");
+  const textColor = useColorModeValue("black", "white");
 
-    const bgColor = useColorModeValue("white", "gray.800");
-    const textColor = useColorModeValue("black", "white");
-    
-    const handleSubmit = (formData) => {
-      if (editMode) {
-        formData.id = editData.id;
+  const handleSubmit = (formData) => {
+    if (editMode) {
+      formData.id = editData.id;
     }
     onSave(formData);
-     console.log(formData);
+    console.log(formData);
     onClose();
   };
-  
 
   const renderInput = (column) => {
     if (column.primaryKey) return null;
@@ -49,56 +44,53 @@ const DataTableDrawer = ({
       case "String":
         return (
           <TextBox
-          key={column.key}
-          label={column.header}
-          name={column.key}
-          placeholder={column.placeholder || ""}
-          isRequired={column.isRequired || false}
-          maxLength={column.maxLength || undefined}
-          helpText={column.helpText || ""}
-          showCharacterCount={column.showCharacterCount || false}
-          leftAddon={column.leftAddon || null}
-          rightAddon={column.rightAddon || null}
-         
-          defaultValue={defaultValue}
-           
+            key={column.key}
+            label={column.header}
+            name={column.key}
+            placeholder={column.placeholder || ""}
+            isRequired={column.isRequired || false}
+            maxLength={column.maxLength || undefined}
+            helpText={column.helpText || ""}
+            showCharacterCount={column.showCharacterCount || false}
+            leftAddon={column.leftAddon || null}
+            rightAddon={column.rightAddon || null}
+            defaultValue={initialValue}
           />
         );
       case "Number":
         return (
           <NumberBox
-          key={column.key}
-          label={column.header}
-          name={column.key}
-          placeholder={column.placeholder || ""}
-          isRequired={column.isRequired || false}
-          min={column.min || undefined}
-          max={column.max || undefined}
-          precision={column.precision || undefined}
-          step={column.step || undefined}
-          helpText={column.helpText || ""}
-
-          defaultValue={defaultValue}
+            key={column.key}
+            label={column.header}
+            name={column.key}
+            placeholder={column.placeholder || ""}
+            isRequired={column.isRequired || false}
+            min={column.min || undefined}
+            max={column.max || undefined}
+            precision={column.precision || undefined}
+            step={column.step || undefined}
+            helpText={column.helpText || ""}
+            defaultValue={initialValue}
           />
         );
       case "TextArea":
         return (
           <TextArea
-          key={column.key}
-          label={column.header}
-          name={column.key}
-          placeholder={column.placeholder || ""}
-          isRequired={column.isRequired || false}
-          maxLength={column.maxLength || undefined}
-          helpText={column.helpText || ""}
-          showCharacterCount={column.showCharacterCount || false}
-          defaultValue={defaultValue}
+            key={column.key}
+            label={column.header}
+            name={column.key}
+            placeholder={column.placeholder || ""}
+            isRequired={column.isRequired || false}
+            maxLength={column.maxLength || undefined}
+            helpText={column.helpText || ""}
+            showCharacterCount={column.showCharacterCount || false}
+            defaultValue={initialValue}
           />
         );
       case "Select":
         return (
           <SelectBox
-            kkey={column.key}
+            key={column.key}
             label={column.header}
             name={column.key}
             placeholder={column.placeholder || ""}
@@ -107,28 +99,28 @@ const DataTableDrawer = ({
             isSearchable={column.isSearchable || false}
             helpText={column.helpText || ""}
             isRequired={column.isRequired || false}
-            defaultValue={defaultValue}
+            defaultValue={initialValue}
           />
         );
       case "File":
         return (
           <FileUpload
-          key={column.key}
-          label={column.header}
-          name={column.key}
-          acceptedFileTypes={column.acceptedFileTypes || FileTypes.ALL}
-          maxFileSize={column.maxFileSize || undefined}
-          isRequired={column.isRequired || false}
-          valueType={column.valueType || "base64"}
-          helpText={column.helpText || ""}
-          defaultValue={defaultValue}
+            key={column.key}
+            label={column.header}
+            name={column.key}
+            acceptedFileTypes={column.acceptedFileTypes || FileTypes.ALL}
+            maxFileSize={column.maxFileSize || undefined}
+            isRequired={column.isRequired || false}
+            valueType={column.valueType || "base64"}
+            helpText={column.helpText || ""}
+            defaultValue={initialValue}
           />
         );
       default:
         return null;
     }
   };
-  
+
   return (
     <Drawer.Root open={isOpen} onClose={onClose}>
       <Portal>
@@ -137,23 +129,22 @@ const DataTableDrawer = ({
           <Drawer.Content maxW="lg">
             <Drawer.Header>
               <Drawer.Title>
-                 {editMode ? "Kaydı Düzenle" : "Yeni Kayıt Ekle"}
-               </Drawer.Title>
+                {editMode ? "Kaydı Düzenle" : "Yeni Kayıt Ekle"}
+              </Drawer.Title>
             </Drawer.Header>
 
             <Drawer.Body>
-            <Box bg={bgColor} color={textColor} p={4}>
-             <Form
-              onSubmit={handleSubmit}
-              buttonPositionY="top"
-              buttonPositionX="left"
-              buttonLabel={editMode ? "Güncelle" : "Kaydet"}
-              colorScheme="blue"
-             >
-              {columns.map((column) => renderInput(column))}
-             </Form>
-            </Box>
-              
+              <Box bg={bgColor} color={textColor} p={4}>
+                <Form
+                  onSubmit={handleSubmit}
+                  buttonPositionY="top"
+                  buttonPositionX="left"
+                  buttonLabel={editMode ? "Güncelle" : "Kaydet"}
+                  colorScheme="blue"
+                >
+                  {columns.map((column) => renderInput(column))}
+                </Form>
+              </Box>
             </Drawer.Body>
 
             <Drawer.Footer />

@@ -38,19 +38,24 @@ const FileUpload = ({
   valueType = "base64", 
   helpText,
   initialValue = null,
+  defaultValue,
+
+
   ...props
 }) => {
   const [file, setFile] = useState(initialValue);
   const [error, setError] = useState("");
   const [isTouched, setIsTouched] = useState(false);
 
+   useEffect(() => {
+    if (defaultValue) setFile(defaultValue);
+  }, [defaultValue]);
+
   const bgColor = useColorModeValue("gray.100", "gray.700");
   const hoverBg = useColorModeValue("gray.200", "gray.600");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
-  useEffect(() => {
-    setFile(initialValue);
-  }, [initialValue]);
+  
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -163,6 +168,7 @@ FileUpload.propTypes = {
   valueType: PropTypes.oneOf(["base64", "file"]),
   helpText: PropTypes.string,
   initialValue: PropTypes.any,
+  defaultValue: PropTypes.any,
 };
 
 export default FileUpload;

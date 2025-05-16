@@ -23,6 +23,7 @@ const SelectBox = ({
   label,
   placeholder,
   initialValue,
+  defaultValue,
   getFinalValue,
   isRequired = false,
   disabled = false,
@@ -49,13 +50,14 @@ const SelectBox = ({
   const wrapperRef = useRef(null);
   const inputRef = useRef(null);
 
-  
+  useEffect(() => {
+    if (defaultValue) setValue(defaultValue);
+  }, [defaultValue]);
+
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
   };
-  useEffect(() => {
-  setValue(isMulti ? initialValue || [] : initialValue || "");
-}, [initialValue, isMulti]);
+ 
 
 
   const handleSelect = (selectedValue) => {
@@ -312,6 +314,7 @@ SelectBox.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   getFinalValue: PropTypes.func,
   isRequired: PropTypes.bool,
   disabled: PropTypes.bool,
