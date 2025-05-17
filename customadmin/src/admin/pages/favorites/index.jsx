@@ -1,5 +1,7 @@
 import React from "react";
 import Menu from "../../../components/menu";
+import { FaChevronDown } from "react-icons/fa6";
+
 
 const menuItems = [
   { label: "Profile", key: "profile" },
@@ -29,6 +31,8 @@ const Favorites = () => {
         buttonLabel="Menu"
         items={menuItems}
         onItemClick={handleItemClick}
+        rightIcon={<FaChevronDown />}
+        colorPalette="blue"
       />
     </div>
   );

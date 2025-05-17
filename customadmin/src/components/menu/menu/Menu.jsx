@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Menu,
   Button,
   MenuItem,
   MenuRoot,
@@ -8,20 +7,28 @@ import {
   MenuPositioner,
   MenuContent,
 } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
-const Menu = ({ buttonLabel, items, onItemClick }) => {
-
-
+// Chakra Menu yerine CustomMenu adını kullandık ⬇️
+const CustomMenu = ({
+  buttonLabel,
+  items,
+  onItemClick,
+  rightIcon,
+  colorPalette = "gray",
+}) => {
   return (
     <MenuRoot>
       <MenuTrigger>
-        <Button>{buttonLabel}</Button>
+        <Button rightIcon={rightIcon} colorPalette={colorPalette}>
+          {buttonLabel}
+        </Button>
       </MenuTrigger>
 
       <MenuPositioner>
         <MenuContent>
           {items.map((item, index) => (
-               <MenuItem key={index} onClick={() => onItemClick(item)}>
+            <MenuItem key={index} onClick={() => onItemClick(item)}>
               {item.label}
             </MenuItem>
           ))}
@@ -29,6 +36,19 @@ const Menu = ({ buttonLabel, items, onItemClick }) => {
       </MenuPositioner>
     </MenuRoot>
   );
+};
+
+CustomMenu.propTypes = {
+  buttonLabel: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      key: PropTypes.string,
+    })
+  ).isRequired,
+  onItemClick: PropTypes.func.isRequired,
+  rightIcon: PropTypes.element,
+  colorPalette: PropTypes.string,
 };
 
 export default CustomMenu;
