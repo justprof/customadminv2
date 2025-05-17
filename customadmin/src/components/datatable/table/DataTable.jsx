@@ -3,7 +3,8 @@ import { Box } from "@chakra-ui/react";
 import { Table } from "@chakra-ui/react";
 import Pagination from "../plugin/Pagination";
 import PropTypes from "prop-types";
-import DataTableDrawer from "../plugin/DataTableDrawer";
+import DataTableForm from "../plugin/DataTableForm";
+
 import {
   getSortedData,
   getFilteredData,
@@ -239,7 +240,7 @@ const DataTable = ({
         setRowsPerPage={setRowsPerPageState}
         rowsPerPageOptions={rowsPerPageOptions}
       />
-      <DataTableDrawer
+      <DataTableForm
        isOpen={isDrawerOpen}
        onClose={() => setIsDrawerOpen(false)}
        columns={columns}
