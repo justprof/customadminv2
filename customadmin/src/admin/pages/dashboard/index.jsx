@@ -11,6 +11,7 @@ import {
   MdFileDownload,
   MdFileUpload,
 } from "react-icons/md";
+import { Accordion, Span } from "@chakra-ui/react";
 import { IoIosAdd } from "react-icons/io";
 import { FileTypes } from "../../../components/fileupload";
 
