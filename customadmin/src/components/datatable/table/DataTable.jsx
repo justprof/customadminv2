@@ -50,8 +50,7 @@ const DataTable = ({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [drawerData, setDrawerData] = useState({});
-  const [tableData, setTableData] = useState(data);
-  const [totalCountState, setTotalCount] = useState(totalCount);
+
 
   const tableBgColor = "white";
   const tableBorderColor = "gray.200";
@@ -133,18 +132,8 @@ const DataTable = ({
     setIsDrawerOpen(true);
   };
   const handleSave = (newData) => {
-    if (editMode) {
-      setTableData((prevData) =>
-        prevData.map((item) => (item.id === newData.id ? newData : item))
-      );
-     
-    } else {
-      setTableData((prevData) => [
-        ...prevData,
-        { id: totalCount + 1, ...newData },
-      ]);
-      setTotalCount(totalCount + 1);
-    }
+    onSave(newData);
+    setIsDrawerOpen(false);
   };
 
   
