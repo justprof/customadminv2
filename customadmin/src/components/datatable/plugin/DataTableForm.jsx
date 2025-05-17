@@ -1,12 +1,13 @@
 import React from "react";
 import {
-  Drawer,
+  
   Button,
   Input,
   Portal,
   CloseButton,
   Field,
   Box,
+  Dialog,
 } from "@chakra-ui/react";
 import Form from "../../form";
 import { TextBox, NumberBox, TextArea } from "../../textbox";
@@ -14,6 +15,7 @@ import SelectBox from "../../selectbox";
 import { FileTypes, FileUpload } from "../../fileupload";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { Separator } from "@chakra-ui/react";
+import { Drawer } from "@chakra-ui/react";
 
 const DataTableForm = ({
   isOpen,
@@ -22,6 +24,9 @@ const DataTableForm = ({
   onSave,
   editMode,
   editData,
+  showOn = "drawer",
+
+
 }) => {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("black", "white");
@@ -121,33 +126,70 @@ const DataTableForm = ({
     }
   };
 
+ const renderForm = () => (
+  <Box bg={bgColor} color={textColor} p={4}>
+    <Form
+      onSubmit={handleSubmit}
+      buttonPositionY="top"
+      buttonPositionX="left"
+      buttonLabel={editMode ? "Güncelle" : "Kaydet"}
+      colorPalette="blue"
+    >
+      {columns.map((column) => renderInput(column))}
+    </Form>
+  </Box>
+);
+
+if (showOn === "modal") {
   return (
-    <Drawer.Root open={isOpen} onClose={onClose}>
+    <Dialog.Root open={isOpen} onOpenChange={onClose} size="lg">
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header>
+              <Dialog.Title>
+                {editMode ? "Kaydı Düzenle" : "Yeni Kayıt Ekle"}
+              </Dialog.Title>
+            </Dialog.Header>
+
+            <Separator my={2} />
+
+           <Dialog.Body p={4}>{renderForm()}</Dialog.Body>
+
+
+            <Dialog.Footer />
+
+            <Dialog.CloseTrigger asChild>
+              <CloseButton position="absolute" top={2} right={2} />
+            </Dialog.CloseTrigger>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  );
+}
+
+
+  return (
+    <Drawer.Root open={isOpen} onClose={onClose} placement="right" size="x1">
+
       <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner>
-          <Drawer.Content maxW="lg">
+          <Drawer.Content borderRadius="md" boxShadow="lg">
+
             <Drawer.Header>
               <Drawer.Title>
                 {editMode ? "Kaydı Düzenle" : "Yeni Kayıt Ekle"}
               </Drawer.Title>
             </Drawer.Header>
             <Separator my={2} />
-            <Drawer.Body>
-              <Box bg={bgColor} color={textColor} p={4}>
-                <Form
-                  onSubmit={handleSubmit}
-                  buttonPositionY="top"
-                  buttonPositionX="left"
-                  buttonLabel={editMode ? "Güncelle" : "Kaydet"}
-                  colorScheme="blue"
-                >
-                  {columns.map((column) => renderInput(column))}
-                </Form>
-              </Box>
-            </Drawer.Body>
 
-            <Drawer.Footer />
+
+             <Drawer.Body p={4}>{renderForm()}</Drawer.Body>
+
+
 
             <Drawer.CloseTrigger asChild>
               <CloseButton position="absolute" top={2} right={2} />

@@ -36,8 +36,9 @@ const DataTable = ({
   onItemClick,
   onToolbarButtonClick,
   defaultAddButton = false,
-  
   onSave,
+  showOn,
+
   toolbarButtons = [],
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -247,6 +248,7 @@ const DataTable = ({
        onSave={handleSave}
        editMode={editMode}
        editData={drawerData}
+       showOn={showOn}
       />
 
     </Box>
@@ -302,6 +304,7 @@ DataTable.propTypes = {
     })
   ),
   onSave: PropTypes.func,
+  showOn: PropTypes.oneOf(["Dialog", "drawer"]),
 };
 
 export default DataTable;

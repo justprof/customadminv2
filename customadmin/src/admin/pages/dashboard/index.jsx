@@ -134,6 +134,7 @@ const handleToolbarButtonClick = (key, selectedRowsData) => {
           }
           defaultAddButton={true}
           onSave={handleSaveData}
+          showOn={"drawer"}
         />
         
       </VStack>
