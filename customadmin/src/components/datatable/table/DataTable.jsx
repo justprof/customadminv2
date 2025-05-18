@@ -265,6 +265,7 @@ DataTable.propTypes = {
       render: PropTypes.func,
       width: PropTypes.string,
       type: PropTypes.string.isRequired,
+      order: PropTypes.number,
     })
   ).isRequired,
   data: PropTypes.array.isRequired,
@@ -296,13 +297,7 @@ DataTable.propTypes = {
       icon: PropTypes.elementType,
     })
   ),
-  columnsOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    })
-  ),
+  
   onSave: PropTypes.func,
   showOn: PropTypes.oneOf(["Dialog", "drawer"]),
 };
