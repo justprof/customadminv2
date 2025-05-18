@@ -10,7 +10,7 @@ import {
 import Menu from "../../../components/menu";
 import { FaChevronDown } from "react-icons/fa6";
 import Modal from "../../../components/modal/modal/Modal";
-
+import { Box, Flex } from "@chakra-ui/react";
 const menuItems = [
   { label: "Profile", key: "profile" },
   { label: "Settings", key: "settings" },
@@ -55,7 +55,8 @@ const Favorites = () => {
   };
 
   return (
-    <div>
+    <Flex gap={4} direction={"column"} bg={"white"} p={4}>
+      <Box mb={4}>
       <Menu
         buttonLabel="Menu"
         items={menuItems}
@@ -92,7 +93,9 @@ const Favorites = () => {
           </Dialog.Positioner>
         </Portal>
       </Dialog.Root>
+    </Box>
 
+    <Box mb={4}>
       <Accordion.Root collapsible defaultValue={["section1"]} mt={4}>
         {accordionItems.map((item) => (
           <Accordion.Item key={item.value} value={item.value}>
@@ -106,6 +109,10 @@ const Favorites = () => {
           </Accordion.Item>
         ))}
       </Accordion.Root>
+
+      </Box>
+
+      <Box mb={4}>
       <Modal
   title="Başlık"
   bodyContent={<p>Modal içeriği</p>}
@@ -116,7 +123,8 @@ const Favorites = () => {
   triggerButtonProps={{ colorPalette: "blue" }}
 />
 
-    </div>
+    </Box>
+    </Flex>
   );
 };
 
