@@ -40,6 +40,7 @@ const Dashboard = () => {
       type: "File",
       acceptedFileTypes: "image/*",
       valueType: "base64",
+      order: 4,
       
     },
     {
@@ -48,6 +49,7 @@ const Dashboard = () => {
       type: "String",
       isRequired: true,
       maxLength: 50,
+      order: 4,
     },
     {
       key: "age",
@@ -56,11 +58,14 @@ const Dashboard = () => {
       isRequired: true,
       min: 0,
       max: 120,
+      order: 4,
     },
     { key: "email",
       header: "Email",
       type: "String",
-      isRequired: true },
+      isRequired: true,
+      order: 3 },
+      
   ];
 
   const contextMenuItems = [

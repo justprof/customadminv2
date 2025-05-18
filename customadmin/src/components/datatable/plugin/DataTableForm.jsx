@@ -130,12 +130,14 @@ const DataTableForm = ({
   <Box bg={bgColor} color={textColor} p={4}>
     <Form
       onSubmit={handleSubmit}
-      buttonPositionY="top"
-      buttonPositionX="left"
+      buttonPositionY="bottom"
+      buttonPositionX="right"
       buttonLabel={editMode ? "Güncelle" : "Kaydet"}
       colorPalette="blue"
     >
-      {columns.map((column) => renderInput(column))}
+      {columns
+          .sort((a, b) => a.order - b.order)
+          .map((column) => renderInput(column))}
     </Form>
   </Box>
 );
