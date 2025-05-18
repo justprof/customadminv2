@@ -10,6 +10,10 @@ import { useColorModeValue } from "@/components/ui/color-mode";
 import { useDispatch } from "react-redux";
 import { setPageHeader } from "../../../store/root/rootSlice";
 
+
+
+
+
  const MyForm = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -107,6 +111,10 @@ import { setPageHeader } from "../../../store/root/rootSlice";
           valueType="base64"
           helpText="Yüklemek istediğiniz dosyayı seçin."
         />
+
+
+
+
       </Form>
        
      </Box>

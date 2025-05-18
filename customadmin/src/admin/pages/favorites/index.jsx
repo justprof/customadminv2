@@ -11,6 +11,9 @@ import Menu from "../../../components/menu";
 import { FaChevronDown } from "react-icons/fa6";
 import Modal from "../../../components/modal/modal/Modal";
 import { Box, Flex } from "@chakra-ui/react";
+import { List } from "../../../components/list";
+import { MdCheckCircle } from "react-icons/md";
+
 const menuItems = [
   { label: "Profile", key: "profile" },
   { label: "Settings", key: "settings" },
@@ -34,6 +37,8 @@ const accordionItems = [
     content: "Content for section 3",
   },
 ];
+
+const items = ["Item 1", "Item 2", "Item 3"];
 
 const Favorites = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -124,6 +129,18 @@ const Favorites = () => {
 />
 
     </Box>
+
+     <Box>
+        <List
+          items={items}
+          icon={MdCheckCircle}
+          spacing={4}
+          listProps={{ styleType: "none" }}
+          listItemProps={{ fontSize: "lg", color: "blue.500" }}
+          iconProps={{ color: "green.500" }}
+        />
+      </Box>
+      
     </Flex>
   );
 };
