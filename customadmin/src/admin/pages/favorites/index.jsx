@@ -1,10 +1,14 @@
-import React from "react";
-import Menu from "../../../components/menu";
-import { FaChevronDown } from "react-icons/fa6";
+import React, { useState } from "react";
 import {
   Accordion,
-  Span
+  Span,
+  Dialog,
+  Portal,
+  CloseButton,
+  Button,
 } from "@chakra-ui/react";
+import Menu from "../../../components/menu";
+import { FaChevronDown } from "react-icons/fa6";
 
 const menuItems = [
   { label: "Profile", key: "profile" },
@@ -31,6 +35,8 @@ const accordionItems = [
 ];
 
 const Favorites = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const handleItemClick = (item) => {
     switch (item.key) {
       case "profile":
@@ -57,7 +63,35 @@ const Favorites = () => {
         colorPalette="blue"
       />
 
-      
+      <Button colorPalette="blue" onClick={() => setIsOpen(true)}>
+        Modalı Aç
+      </Button>
+
+      <Dialog.Root open={isOpen} onOpenChange={(e) => setIsOpen(e.open)} size="lg">
+        <Portal>
+          <Dialog.Backdrop />
+          <Dialog.Positioner>
+            <Dialog.Content>
+              <Dialog.Header>
+                <Dialog.Title>Başlık</Dialog.Title>
+              </Dialog.Header>
+
+              <Dialog.Body>
+                <p>Modal içeriği</p>
+              </Dialog.Body>
+
+              <Dialog.Footer>
+                <p>Footer içeriği</p>
+              </Dialog.Footer>
+
+              <Dialog.CloseTrigger asChild>
+                <CloseButton position="absolute" top={2} right={2} />
+              </Dialog.CloseTrigger>
+            </Dialog.Content>
+          </Dialog.Positioner>
+        </Portal>
+      </Dialog.Root>
+
       <Accordion.Root collapsible defaultValue={["section1"]} mt={4}>
         {accordionItems.map((item) => (
           <Accordion.Item key={item.value} value={item.value}>
