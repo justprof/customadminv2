@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import Menu from "../../../components/menu";
 import { FaChevronDown } from "react-icons/fa6";
+import Modal from "../../../components/modal/modal/Modal";
 
 const menuItems = [
   { label: "Profile", key: "profile" },
@@ -105,6 +106,16 @@ const Favorites = () => {
           </Accordion.Item>
         ))}
       </Accordion.Root>
+      <Modal
+  title="Başlık"
+  bodyContent={<p>Modal içeriği</p>}
+  footerContent={<p>Footer içeriği</p>}
+  size="lg"
+  closeButton={true}
+  triggerButtonLabel="Modalı Aç"
+  triggerButtonProps={{ colorPalette: "blue" }}
+/>
+
     </div>
   );
 };
