@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button} from "@chakra-ui/react";
 import { TextBox, NumberBox, TextArea } from "../../../components/textbox";
-import SelectBox from "../../../components/selectbox";
+
 import { FaGenderless } from "react-icons/fa";
 import { Icon } from "@chakra-ui/react";
 import { FileUpload, FileTypes } from "../../../components/fileupload";
@@ -9,6 +9,10 @@ import Form from "../../../components/form";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { useDispatch } from "react-redux";
 import { setPageHeader } from "../../../store/root/rootSlice";
+import { AutoComplate } from "../../../components/selectbox";
+
+
+
 
 
 
@@ -75,7 +79,7 @@ import { setPageHeader } from "../../../store/root/rootSlice";
           step={0.2}
           helpText="Yaşınız"
         />
-        <SelectBox
+        <AutoComplate
           label="Cinsiyet"
           name="gender"
           placeholder="Cinsiyetinizi seçin"
@@ -89,7 +93,7 @@ import { setPageHeader } from "../../../store/root/rootSlice";
           helpText="Cinsiyetiniz"
           isRequired={true}
         />
-        <SelectBox
+        <AutoComplate
           label="Ülke"
           name="country"
           placeholder="Ülkenizi seçin"
