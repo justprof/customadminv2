@@ -121,6 +121,21 @@ const DataTableForm = ({
             defaultValue={initialValue}
           />
         );
+
+        case "SelectBox":
+        return (
+          <SelectBox
+            key={column.key}
+            label={column.header}
+            name={column.key}
+            placeholder={column.placeholder || ""}
+            options={column.options || []}
+            isRequired={column.isRequired || false}
+            helpText={column.helpText || ""}
+            defaultValue={defaultValue}
+          />
+        );
+        
       default:
         return null;
     }

@@ -9,12 +9,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Field } from "@chakra-ui/react";
-import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
+import { useColorModeValue } from "@/components/ui/color-mode";
+
 
 
 export default function Login() {
-  const bg = useCustomColorModeValue("gray.50", "gray.800");
-  const boxBg = useCustomColorModeValue("white", "gray.700");
+  const bg = useColorModeValue("gray.50", "gray.800");
+  const boxBg = useColorModeValue("white", "gray.700");
 
   return (
     <Flex

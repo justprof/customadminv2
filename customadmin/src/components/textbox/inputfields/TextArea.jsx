@@ -15,6 +15,7 @@ const CustomTextArea = ({
   label,
   placeholder,
   initialValue = "",
+  defaultValue,
   getFinalValue,
   isRequired = false,
   disabled = false,
@@ -28,12 +29,17 @@ const CustomTextArea = ({
   showCharacterCount=false,
   startAddon,
   endAddon,
+  
   ...props
 }) => {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState("");
   const [isTouched, setIsTouched] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    if (defaultValue) setValue(defaultValue);
+  }, [defaultValue]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -107,6 +113,7 @@ CustomTextArea.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   initialValue: PropTypes.string,
+  defaultValue: PropTypes.string,
   getFinalValue: PropTypes.func,
   getFinalValue: PropTypes.func,
   isRequired: PropTypes.bool,

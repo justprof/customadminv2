@@ -12,7 +12,8 @@ import {
   import { useState } from "react";
   import { FaEye, FaEyeSlash } from "react-icons/fa";
   import { Link } from "react-router-dom";
-  import  useCustomColorModeValue  from "/src/hooks/useCustomColorModeValue";
+ import { useColorModeValue } from "@/components/ui/color-mode";
+
   import { Field } from "@chakra-ui/react"
   
   
@@ -24,7 +25,7 @@ import {
         minH={"100vh"}
         align={"center"}
         justify={"center"}
-        bg={useCustomColorModeValue("gray.50", "gray.800")}
+        bg={useColorModeValue("gray.50", "gray.800")}
       >
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Stack align={"center"}>
@@ -37,7 +38,7 @@ import {
           </Stack>
           <Box
             rounded={"lg"}
-            bg={useCustomColorModeValue("white", "gray.700")}
+            bg={useColorModeValue("white", "gray.700")}
             boxShadow={"lg"}
             p={8}
           >
