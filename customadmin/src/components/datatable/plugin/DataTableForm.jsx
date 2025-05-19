@@ -94,7 +94,7 @@ const DataTableForm = ({
             defaultValue={initialValue}
           />
         );
-      case "Select":
+      case "AutoComplate":
         return (
           <AutoComplate
             key={column.key}

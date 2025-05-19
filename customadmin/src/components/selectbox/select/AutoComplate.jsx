@@ -18,7 +18,9 @@ import { FaChevronDown, FaTimes, FaChevronUp } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { useColorModeValue } from "@/components/ui/color-mode";
 
-const SelectBox = ({
+const AutoComplate = ({
+
+
   name,
   label,
   placeholder,
@@ -309,7 +311,7 @@ const SelectBox = ({
   );
 };
 
-SelectBox.propTypes = {
+AutoComplate.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   placeholder: PropTypes.string,
@@ -335,4 +337,4 @@ SelectBox.propTypes = {
   isSearchable: PropTypes.bool,
 };
 
-export default SelectBox;
+export default AutoComplate;
