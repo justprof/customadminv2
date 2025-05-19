@@ -37,9 +37,9 @@ const SidebarWithHeader = ({ children }) => {
       <MobileNav onOpen={onOpen} />
 
       <Box
-  ml={{ base: 0, md: 60 }} // Chakra'nın kendi spacing unit'i, yani 240px
+  ml={{ base: 0, md: 60 }} 
   p="4"
-  w={{ base: "100%", md: "calc(100% - 240px)" }} // işte doğru genişlik
+  w={{ base: "100%", md: "calc(100% - 240px)" }} 
 >
   {children}
 </Box>

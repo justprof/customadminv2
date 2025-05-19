@@ -29,7 +29,7 @@ const DataTableForm = ({
 
 }) => {
   const bgColor = useColorModeValue("white", "gray.800");
-  const textColor = useColorModeValue("black", "white");
+  const textColor = useColorModeValue("black", "purple");
 
   const handleSubmit = (formData) => {
     if (editMode) {
@@ -135,7 +135,7 @@ const DataTableForm = ({
             defaultValue={defaultValue}
           />
         );
-        
+
       default:
         return null;
     }

@@ -8,7 +8,8 @@ import {
 } from "@chakra-ui/react";
 import NavItem from "./NavItem";
 import LinkItems from "./LinkItems";
-import { useColorModeValue } from "@chakra-ui/color-mode";
+import { useColorModeValue } from "@/components/ui/color-mode";
+
 
 const SidebarContent = ({ onClose, ...rest }) => {
   return (

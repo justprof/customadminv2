@@ -4,6 +4,7 @@ import { Table } from "@chakra-ui/react";
 import Pagination from "../plugin/Pagination";
 import PropTypes from "prop-types";
 import DataTableForm from "../plugin/DataTableForm";
+import { useColorModeValue } from "@/components/ui/color-mode";
 
 import {
   getSortedData,
@@ -54,8 +55,10 @@ const DataTable = ({
   const [drawerData, setDrawerData] = useState({});
 
 
-  const tableBgColor = "white";
-  const tableBorderColor = "gray.200";
+  
+const tableBgColor = useColorModeValue("white", "gray.800");
+const tableBorderColor = useColorModeValue("gray.200", "gray.600");
+const textColor = useColorModeValue("gray.800", "white");
 
   const {
     isModalOpen,
@@ -160,7 +163,8 @@ const DataTable = ({
   );
 
   return (
-    <Box bg={tableBgColor} p={4} boxShadow="sm" overflow="auto">
+    <Box bg={tableBgColor} color={textColor} p={4} boxShadow="sm" overflow="auto">
+
       <TableControls
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}

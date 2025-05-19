@@ -9,8 +9,11 @@ import {
   VStack,
   Heading,
 } from "@chakra-ui/react";
+import {
+  useColorMode,
+  useColorModeValue,
+} from "@/components/ui/color-mode";
 
-import { useColorMode, useColorModeValue } from "@chakra-ui/color-mode";
 import { Menu, MenuButton, MenuDivider, MenuItem, MenuList } from "@chakra-ui/menu";
 import { FiMenu, FiChevronDown } from "react-icons/fi";
 import { BsSun, BsMoon } from "react-icons/bs";
