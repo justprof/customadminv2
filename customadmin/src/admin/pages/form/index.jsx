@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button} from "@chakra-ui/react";
 import { TextBox, NumberBox, TextArea } from "../../../components/textbox";
-
+import SelectBox from "../../../components/selectbox";
 import { FaGenderless } from "react-icons/fa";
 import { Icon } from "@chakra-ui/react";
 import { FileUpload, FileTypes } from "../../../components/fileupload";
@@ -9,8 +9,6 @@ import Form from "../../../components/form";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { useDispatch } from "react-redux";
 import { setPageHeader } from "../../../store/root/rootSlice";
-import { AutoComplate } from "../../../components/selectbox";
-
 
 
 
@@ -79,7 +77,7 @@ import { AutoComplate } from "../../../components/selectbox";
           step={0.2}
           helpText="Yaşınız"
         />
-        <AutoComplate
+        <SelectBox
           label="Cinsiyet"
           name="gender"
           placeholder="Cinsiyetinizi seçin"
@@ -93,7 +91,7 @@ import { AutoComplate } from "../../../components/selectbox";
           helpText="Cinsiyetiniz"
           isRequired={true}
         />
-        <AutoComplate
+        <SelectBox
           label="Ülke"
           name="country"
           placeholder="Ülkenizi seçin"
@@ -106,6 +104,19 @@ import { AutoComplate } from "../../../components/selectbox";
           isSearchable={true}
           helpText="Ülkeniz"
         />
+        <SelectBox
+          label="Şehir"
+          name="city"
+          placeholder="Şehrinizi seçin"
+          options={[
+            { value: "ist", label: "İstanbul" },
+            { value: "skr", label: "Sakarya" },
+            { value: "kce", label: "Kocaeli" },
+          ]}
+          isRequired={false}
+          helpText="Şehir"
+          defaultValue="ist"
+        />
         <FileUpload
           label="Dosya Yükle"
           name="file"
@@ -115,6 +126,8 @@ import { AutoComplate } from "../../../components/selectbox";
           valueType="base64"
           helpText="Yüklemek istediğiniz dosyayı seçin."
         />
+
+       
 
 
 

@@ -1,7 +1,3 @@
-import AutoComplate from "./select/AutoComplate";
-import SelectBox from "./selectbox/select/SelectBox";
+import SelectBox from "./select/SelectBox";
 
-
-
-export { AutoComplate, SelectBox };
-
+export default SelectBox;
