@@ -14,7 +14,7 @@ const TheadComponent = ({
   editActive,
   deleteActive,
   handleDelete,
-  tableBorderColor = "gray.200", // eski kodla uyum için varsayılan verdik
+  tableBorderColor = "gray.200", 
 }) => {
   return (
     <Table.Row>
@@ -71,7 +71,7 @@ const TheadComponent = ({
 
       {editActive && (
         <Table.ColumnHeader
-          maxW="20px"
+          maxW="50px"
           w="auto"
           borderWidth="1px"
           borderStyle="solid"
@@ -83,7 +83,7 @@ const TheadComponent = ({
 
       {deleteActive && (
         <Table.ColumnHeader
-          maxW="20px"
+          maxW="30px"
           w="auto"
           borderWidth="1px"
           borderStyle="solid"

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Box, VStack } from "@chakra-ui/react";
 import DataTable from "../../../components/datatable/table/DataTable";
 import { data } from "../../../data/FakeUserData";
-import avatar from "../../../assets/pp.webp";
+import avatar from "../../../assets/pp.jpg";
 import { setPageHeader } from "../../../store/root/rootSlice";
 import { useDispatch } from "react-redux";
 import {
@@ -33,7 +33,7 @@ const Dashboard = () => {
         <img
           src={avatar}
           alt="user"
-          style={{ maxWidth: "100px", height: "auto" }}
+          style={{ maxWidth: "50px", height: "auto" }}
         />
       ),
       width: "80px",
