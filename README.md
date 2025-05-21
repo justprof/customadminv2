@@ -1,12 +1,111 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# CustomAdmin v2
 
-Currently, two official plugins are available:
+CustomAdmin v2 is a modern React 19 + Chakra UI v3 based admin dashboard template designed for building highly customizable, accessible, and responsive admin panels. This version is a complete redesign and migration of the earlier Chakra UI v2 + React 17 implementation, leveraging slot-based API, new theming structure, and full dark/light mode support.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧩 Technologies Used
 
-## Expanding the ESLint configuration
+- **React 19**
+- **Vite**
+- **Chakra UI v3**
+- **Redux Toolkit**
+- **React Router DOM v7**
+- **PropTypes**
+- **Framer Motion**
+- **React Icons**
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ⚙️ Features
+
+- 💡 Light/Dark Mode toggle using `useColorModeValue`
+- 🔧 Fully customizable form inputs: `TextBox`, `NumberBox`, `TextArea`, `SelectBox`, `FileUpload`
+- 📋 DataTable with:
+  - Sorting
+  - Pagination
+  - Column visibility toggling
+  - Search/filter
+  - Right-click ContextMenu
+  - Toolbar buttons (Add, Export, Import)
+  - Drawer and Modal support for forms
+- 🎨 Chakra UI v3 theming using `colorPalette` tokens
+- 🔄 Lazy loading images
+- 🗂 Slot-based Chakra components: `Table.Root`, `Dialog.Root`, `Drawer.Root`, `Accordion.Root`
+- ✅ Form validation and accessibility
+- 📁 Favorites page with `Accordion`, `Menu`, and `Modal` examples
+- 🧪 Clean architecture with reusable components and scoped props
+
+## 📁 Folder Structure
+
+```
+src/
+├── admin/
+│   └── pages/
+│       └── dashboard/
+│       └── favorites/
+├── components/
+│   ├── datatable/
+│   ├── menu/
+│   ├── modal/
+│   ├── list/
+│   ├── accordion/
+│   ├── form/
+│   ├── textbox/
+│   ├── fileupload/
+├── theme/
+├── store/
+├── App.jsx
+```
+
+## 📌 Getting Started
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start development server
+
+```bash
+npm run dev
+```
+
+## 🗃 Example Usage
+
+```jsx
+<DataTable
+  columns={columns}
+  data={tableData}
+  totalCount={totalCount}
+  rowsPerPage={5}
+  onDataChange={fetchData}
+  handleRefresh={() => data}
+  deleteActive
+  onDelete={(e) => console.log(e)}
+  editActive
+  onDeleteSelected={(e) => console.log(e)}
+  contextMenuItems={contextMenuItems}
+  onItemClick={handleItemClick}
+  toolbarButtons={toolbarButtons}
+  onToolbarButtonClick={(key) =>
+    handleToolbarButtonClick(
+      key,
+      tableData.filter((row) => row.selected)
+    )
+  }
+  defaultAddButton
+  onSave={handleSaveData}
+  showOn="drawer"
+/>
+```
+
+## 👨‍💻 Author & Credits
+
+This project was originally developed during a university internship at **Bimser Çözüm** in 2025.
+
+
+
+
+- Onur ALTUNTAŞ – for project mentorship and guidance
+
+
+
