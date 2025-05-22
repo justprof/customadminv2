@@ -36,7 +36,7 @@ CustomAdmin v2 is a modern React 19 + Chakra UI v3 based admin dashboard templat
 Form Component
 The Form component allows for dynamic form creation and management. Inputs received from the user are automatically collected into a state object within the component and processed through the onSubmit function. Components used inside the Form component receive custom props specific to the form, allowing for customization and validation.
 
-// Form bileşeni onSubmit eventinde bileşen içindeki childrenlardan aldığı verileri geri döner
+
 const handleSubmit = (values) => {
     console.log("Form values:", values);
     alert(JSON.stringify(values, null, 2));
