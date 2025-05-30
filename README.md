@@ -1,7 +1,7 @@
 
 # CustomAdmin v2
 
-CustomAdmin v2 is a modern React 19 + Chakra UI v3 based admin dashboard template designed for building highly customizable, accessible, and responsive admin panels. This version is a complete redesign and migration of the earlier Chakra UI v2 + React 17 implementation, leveraging slot-based API, new theming structure, and full dark/light mode support.
+CustomAdmin v2 is a modern React 19 + Chakra UI v3 based admin dashboard template designed for building highly customizable, accessible, and responsive admin panels. This version is a complete redesign and migration of the earlier Chakra UI v2 + React 18 implementation, leveraging slot-based API, new theming structure, and full dark/light mode support.
 
 ## 🧩 Technologies Used
 
